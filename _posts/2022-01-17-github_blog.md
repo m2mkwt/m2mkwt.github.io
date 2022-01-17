@@ -1,6 +1,6 @@
 ---
 title:  "[github 블로그] - github 블로그 생성 (feat - jekyll, ruby)"
-excerpt: "post 게제용 jekyll 변환용 마크다운 에제파일"
+excerpt: "github 블로그 생성을 위한 Rudy, jekyll 설치 및 Theme 설정등"
 
 categories:
   - Blog
