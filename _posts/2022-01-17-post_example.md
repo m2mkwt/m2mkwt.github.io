@@ -1,22 +1,19 @@
 ---
-title:  "[github 블로그] - md 샘플파일 "
-excerpt: "post 게제용 jekyll 변환용 마크다운 에제파일"
-
-categories:
-  - Blog
-tags:
-  - [Blog, jekyll, Github]
-
-toc: true
-toc_sticky: true
- 
-date: 2022-01-17
-last_modified_at: 2022-01-17
-
-
-
-
-layout: single
+# title:  "[github 블로그] - md 샘플파일 "
+# excerpt: "post 게제용 jekyll 변환용 마크다운 에제파일"
+# 
+# categories:
+#   - Blog
+# tags:
+#   - [Blog, jekyll, Github]
+# 
+# toc: true
+# toc_sticky: true
+#  
+# date: 2022-01-17
+# last_modified_at: 2022-01-17
+# 
+layout: wide
 
 title: "포스트의 제목"
 excerpt: "발췌부분 설정하면 이 글이 들어가고, 설정하지 않는다면 글의 첫 문단이 들어가게됨"

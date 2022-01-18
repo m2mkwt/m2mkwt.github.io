@@ -233,21 +233,21 @@ last_modified_at: 2022-01-21
 
       ```java
         CloseableHttpClient httpclient = HttpClients.createDefault();
-        메소드에 따라 new HttpGet("http:// ....");
+        메소드에 따라 new HttpGet("http:// ~~~ ");
         CloseableHttpResponse response = httpclient.execute(httpget);
         HttpEntity entity = response.getEntity();
-        Stream으로 entity.getContent() 처리 등
+        Stream으로 entity.getContent() 처리 등 ~~
       ```
 
   * URLConnection 와 비교하였을 때 장점
-    - 모든 응답코드를 읽을 수 있다. httpResponse.getStatusLine().getStatusCode()
+    - **모든 응답코드를 반환받을수 있음** => httpResponse.getStatusLine().getStatusCode()
     - 타임아웃 설정 가능
     - 쿠키 제어가 가능
 
   * 문제점
-    - URLConnection 을 이용한 방식보다 코드가 간결해졌지만, 여전히 반복적이고 코드들이 길다.
-    - 스트림 처리 로직을 별도로 짜야한다. (EntityUtils 를 쓰면 되는거 같긴하지만)
-    - 응답의 컨텐츠타입에 따라 별도 로직이 필요하다. (RestTemplate 가 이때 유용!!)
+    - URLConnection 방식보다 코드가 간결하나, 여전히 반복적이고 코드가 길어짐.
+    - 스트림 처리 로직이 별도필요. 
+    - 응답의 컨텐츠타입에 따라 별도 로직 필요. (RestTemplate 가 이때 유용)
 
   * 예제 [출처](https://hc.apache.org/httpcomponents-client-ga/httpclient/examples/org/apache/http/examples/client/ClientWithResponseHandler.java)
 
@@ -283,13 +283,13 @@ last_modified_at: 2022-01-21
 
 
 ## 4. HttpURLConnection
- * 기본 JDK에 포함되어 있음. (jdk1.2부터 내장되어 있으며 java.net 패키지에 있다.)
+ * 기본 JDK에 포함되어 있음. (jdk1.2부터 내장, java.net 패키지)
 
  * 상대적으로 가벼우며 핵심적인 API만 지원하고 있음.
 
- * HttpClient 보다 성능이 좋다고 함. (유사 사례 확인 결과 HttpClient에서 Server와 Client연결에 속도 이슈가 있어 HttpURLConnection으로 수정한 사례가 확인됨.) 
+ * HttpClient 보다 성능이 좋다고 함. (HttpClient에서 Server와 Client연결에 속도 이슈가 있어 HttpURLConnection으로 수정한 사례있다고 함) 
 
- * 서버로부터 전달 받은 Response 결과를 Stream으로 직접 처리해야 하는 등.. 개발 생산성이 떨어지는 요소가 다소 있음.
+ * 서버로부터 전달 받은 Response 결과를 Stream으로 직접 처리해야 하는 등 개발 생산성이 떨어지는 요소가 다소 있음.
 
  * 문제점
    - 응답코드가 4xx 거나 5xx 면 IOException 이 터진다.
@@ -318,10 +318,10 @@ last_modified_at: 2022-01-21
 
  * RESTful 서비스 및 클라이언트 개발을 더욱 단순화하기 위해 추가 기능 및 유틸리티로 JAX-RS 툴킷을 확장하는 자체 API 를 제공
 
- * 개발자가 필요에 따라 커스터마이징 및 확장간으하도록 수많은 확장 SPI 제공
+ * 개발자가 필요에 따라 커스터마이징 및 확장가능하도록 수많은 확장 SPI 제공
 
 ### 참고
- * Spring5 환경에서 비동기등의 사용을 위해서는 WebClient 사용.
- * Eclipse Jersey 사용시에는 Dozer Mappter 참고
+ * Spring5 환경에서 비동기등의 기능을 위해 WebClient 사용.
+ * Eclipse Jersey 사용시 Dozer Mappter 참고
  * 가볍고 빠른 속도의 성능 우선시 HttpURLConnection 사용.
  * 개발 생산성 및 안정성을 우선시 한다면 Retrofit or RestTemplate(Spring 프로젝트) 사용.
