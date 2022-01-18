@@ -15,6 +15,14 @@ main:
   # - title: "Sitemap"
   #   url: /sitemap/
 docs:
+  - title: JAVA
+    children:
+      - title: "Java"
+        url: java/
+        category: "java"
+      - title: "Java Lib."
+        url: java-lib/
+        category: "java-lib"
   - title: Framewwork
     children:
       - title: "Spring boot"
