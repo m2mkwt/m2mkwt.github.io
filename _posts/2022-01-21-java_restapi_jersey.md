@@ -16,17 +16,17 @@ last_modified_at: 2022-01-21
 
 # REST API Client 라이브러리
  * REST API Client에 JAVA Library로는 WebClient, HttpURLConnection, HttpClient, OkHttp, Retrofit, RestTemplate가 대표적
- * 부가적으로 Eclipse Jersey(JAX-RS구현 등을 제공하는 REST 프레임워크) 소개
+ * Eclipse Jersey(JAX-RS구현 등을 제공하는 REST 프레임워크) 소개
 
 ## 1. WebClient
  * Spring5 에서 추가된 인터페이스
- * spring5 이전 비동기 클라이언트로 AsyncRestTemplate를 사용했지만 Spring5에서 Deprecated
- * **spring5 이후 버전을 사용한다면 AsyncRestTemplate 보다는 WebClient 사용하는 것을 추천.** (아직 spring 5.2(현재기준) 에서도 AsyncRestTemplate 도 존재)
-
- * 기본 문법
-   - 기본적으로 사용방법은 아주 간단. WebClient 인터페이스의 static 메서드인 create()를 사용해서 WebClient 를 생성.
+ * Spring5 이전에는 비동기 클라이언트로 AsyncRestTemplate를 사용 Spring5에서 Deprecated
+ * **spring5 이후 버전을 사용한다면 AsyncRestTemplate 보다는 WebClient 사용하는 것을 추천.** 
+   (아직 spring 5.2(현재기준) 에서도 AsyncRestTemplate 도 존재)
+ * 기본적으로 사용방법은 아주 간단. WebClient 인터페이스의 static 메서드인 create()를 사용해서 WebClient 를 생성.
 
  * 예제 (퍼옴 - 추후 출처 기록할것)
+
     ```java
       @Test
       void test1() {
@@ -115,7 +115,7 @@ last_modified_at: 2022-01-21
  * **spring 5.0버전에서 WebFlux와 함께 WebClient라는 새로운 HTTP client가 RestTemplate의 대안으로 등장. 동기, 비동기, 스트리밍과 최신 API를 지원가능하게 됨. RestTemplate 클래스는 유지보수 모드에 있으며, 앞으로는 변경 및 버그에 대한 사소한 요청만 허용될 예정.**
  * Boilerplate code를 줄여줌.(Spring의 Template이 제공하는 장점 중 하나)
  * [connection pool 적용](https://stackoverflow.com/questions/31869193/using-spring-rest-template-either-creating-too-many-connections-or-slow/)
-   -  **RestTemplate 은 기본적으로 connection pool 을 사용하지 않는다. 따라서 연결할 때 마다, 로컬 포트를 열고 tcp connection 을 맺는다. 이때 문제는 close() 이후에 사용된 소켓은 TIME_WAIT 상태가 되는데, 요청량이 많다면 이런 소켓들을 재사용하지 못하고 소켓이 오링나서 응답이 지연될 것이다.**
+   -  **RestTemplate 은 기본적으로 connection pool 을 사용하지 않는다. 따라서 연결할 때 마다, 로컬 포트를 열고 tcp connection 을 맺는다. 이때 문제는 close() 이후에 사용된 소켓은 TIME_WAIT 상태가 되는데, 요청량이 많다면 이런 소켓들을 재사용하지 못하고 소켓이 부족으로 응답이 지연.**
    - 이런 경우 connection pool 을 사용해서 해결할 수 있는데, DBCP마냥 소켓의 갯수를 정해서 재사용하는 것이다. RestTemplate 에서 connection pool 을 적용하려면, 위와 같이 HttpClient 를 만들고 setHttpClient() 를 해야한다.
       * setMaxConnPerRoute : IP,포트 1쌍에 대해 수행 할 연결 수를 제한한다.
       * setMaxConnTotal : 최대 오픈되는 커넥션 수를 제한한다.
@@ -135,12 +135,14 @@ last_modified_at: 2022-01-21
    - 사용법 및 샘플 소스  : http://blog.saltfactory.net/using-resttemplate-in-spring/
 
    - 기본 생성예제 
+
     ```java
       RestTemplate restTemplate = getRestTempalte();
       String result = restTemplate.getForObject("http://example.com/hotels/{hotel}/bookings/{booking}", String.class, "42", "21");
     ```
   
    - 설정 생성예제
+   
     ```java
         import org.apache.http.client.HttpClient;
         import org.apache.http.impl.client.HttpClientBuilder;
@@ -158,9 +160,7 @@ last_modified_at: 2022-01-21
                     .build();
                 factory.setHttpClient(httpClient); // 동기실행에 사용될 HttpClient 세팅
                 RestTemplate restTemplate = new RestTemplate(factory);
-
                 String url = "http://testapi.com/search?boardNo=1111"; 
-
                 Object obj = restTemplate.getForObject("요청 URI 주소", "응답내용과 자동으로 매핑시킬 java object");
             }
         }
@@ -191,14 +191,11 @@ last_modified_at: 2022-01-21
                       .expand(100)
                       .expand("steve")
                       .toUri();
-
         //http body -> object -> object mapper -> json -> rest template -> http body json
           UserRequest req = new UserRequest("steve", 10);
-
           RestTemplate restTemplate = new RestTemplate();
           //uri주소에 req를 보내서 UserResponse 타입을 받는다
           ResponseEntity<UserResponse> result = restTemplate.postForEntity(uri, req, UserResponse.class);
-          
           return result.getBody();
         }
 
@@ -296,8 +293,6 @@ last_modified_at: 2022-01-21
  * Volley
    - 사용법이 복잡한 HttpUrlConnection 대안으로 구글이 제공하는 라이브러리로 안드로이드에서 사용.
 
-
-
 # Eclipse Jersey
  * Jersey 2.x : JAX-RS API에 대한 지원을 제공하고 JAX-RS(JSR 311 & JSR 339 & JSR 370) 참조 구현의 역할을 하는 Java로 RESTful 웹 서비스를 개발하기 위한 오픈 소스, 프로덕션 품질, 프레임워크
 
@@ -306,7 +301,6 @@ last_modified_at: 2022-01-21
  * RESTful 서비스 및 클라이언트 개발을 더욱 단순화하기 위해 추가 기능 및 유틸리티로 JAX-RS 툴킷을 확장하는 자체 API 를 제공
 
  * 개발자가 필요에 따라 커스터마이징 및 확장간으하도록 수많은 확장 SPI 제공
-
 
  ### 참고
  * Spring5 환경에서 비동기등의 사용을 위해서는 WebClient 사용.
