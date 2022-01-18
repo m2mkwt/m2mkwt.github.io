@@ -12,25 +12,39 @@
       </li>
       <li>
         <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
-        <span class="nav__sub-title">C/C++/C#</span>
+        <span class="nav__sub-title">Framework</span>
             <!--ul 태그로 같은 카테고리들 모아둔 페이지들 나열-->
             <ul>
                 <!--Cpp 카테고리 글들을 모아둔 페이지인 /categories/cpp 주소의 글로 링크 연결-->
                 <!--category[1].size 로 해당 카테고리를 가진 글의 개수 표시--> 
+                {% for category in site.categories  %}
+                    {% if category[0] == "Spring Boot" %}
+                        <li><a href="/categories/spring-boot" class="">Spring Boot ({{category[1].size}})</a></li>
+                    {% endif %}
+                    {% if category[0] == "Spring Boot" %}
+                        <li><a href="/categories/spring-cloud" class="">Spring Cloud ({{category[1].size}})</a></li>
+                    {% endif %}
+                    {% if category[0] == "Spring Boot" %}
+                        <li><a href="/categories/spring-security" class="">Spring Security ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        <span class="nav__sub-title">Open Source</span>
+            <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "Cpp" %}
-                        <li><a href="/categories/cpp" class="">C ++ ({{category[1].size}})</a></li>
+                    {% if category[0] == "Redis" %}
+                        <li><a href="/categories/redis" class="">Redis ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "STL" %}
-                        <li><a href="/categories/stl" class="">C++ STL & 표준 ({{category[1].size}})</a></li>
+                    {% if category[0] == "ELK Stack" %}
+                        <li><a href="/categories/elk" class="">ELK Stack ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
-        <span class="nav__sub-title">Coding Test</span>
+        <span class="nav__sub-title">MSA</span>
             <ul>
                 {% for category in site.categories %}
                     {% if category[0] == "Algorithm" %}
@@ -44,7 +58,22 @@
                         <li><a href="/categories/programmers" class="">프로그래머스 ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
+            </ul>            
+        <span class="nav__sub-title">Dev. Env</span>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "Blog" %}
+                        <li><a href="/categories/algorithm" class="">Github Blog. ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
             </ul>
+            <ul>
+                {% for category in site.categories %}
+                    {% if category[0] == "VSCode" %}
+                        <li><a href="/categories/programmers" class="">VSCode ({{category[1].size}})</a></li>
+                    {% endif %}
+                {% endfor %}
+            </ul>               
       </li>
   </ul>
 </nav>
