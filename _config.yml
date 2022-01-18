@@ -31,7 +31,7 @@ masthead_title           : "개인용 기억정리 Note"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
 comments:
-  provider               : # false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "giscus", "custom"
+  provider               : false # false (default), "disqus", "discourse", "facebook", "staticman", "staticman_v2", "utterances", "giscus", "custom"
   disqus:
     shortname            : # https://help.disqus.com/customer/portal/articles/466208-what-s-a-shortname-
   discourse:
@@ -131,24 +131,24 @@ author:
 # Site Footer
 footer:
   links:
-  #  - label: "Twitter"
-  #    icon: "fab fa-fw fa-twitter-square"
-  #    # url:
-  #  - label: "Facebook"
-  #    icon: "fab fa-fw fa-facebook-square"
-  #    # url:
-  #  - label: "GitHub"
-  #    icon: "fab fa-fw fa-github"
-  #    # url:
-  #  - label: "GitLab"
-  #    icon: "fab fa-fw fa-gitlab"
-  #    # url:
-  #  - label: "Bitbucket"
-  #    icon: "fab fa-fw fa-bitbucket"
-  #    # url:
-  #  - label: "Instagram"
-  #    icon: "fab fa-fw fa-instagram"
-  #    # url:
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      # url:
+    - label: "Facebook"
+      icon: "fab fa-fw fa-facebook-square"
+      # url:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      # url:
+    - label: "GitLab"
+      icon: "fab fa-fw fa-gitlab"
+      # url:
+    - label: "Bitbucket"
+      icon: "fab fa-fw fa-bitbucket"
+      # url:
+    - label: "Instagram"
+      icon: "fab fa-fw fa-instagram"
+      # url:
 
 
 # Reading Files
@@ -284,10 +284,10 @@ defaults:
       type: posts
     values:
       layout: single
-      author_profile: true
+      author_profile: false
       read_time: true
       comments: # true
-      share: true
+      share: false
       related: true
 
   # _pages
@@ -296,4 +296,4 @@ defaults:
       type: pages
     values:
       layout: single
-      author_profile: true      
+      author_profile: false      
