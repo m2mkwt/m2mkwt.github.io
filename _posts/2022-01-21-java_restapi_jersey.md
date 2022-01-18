@@ -142,7 +142,7 @@ last_modified_at: 2022-01-21
     ```
   
    - 설정 생성예제
-   
+
     ```java
         import org.apache.http.client.HttpClient;
         import org.apache.http.impl.client.HttpClientBuilder;
@@ -302,7 +302,7 @@ last_modified_at: 2022-01-21
 
  * 개발자가 필요에 따라 커스터마이징 및 확장간으하도록 수많은 확장 SPI 제공
 
- ### 참고
+### 참고
  * Spring5 환경에서 비동기등의 사용을 위해서는 WebClient 사용.
  * Eclipse Jersey 사용시에는 Dozer Mappter을 같이 사용하는 경우가 많음.
  * 가볍고 빠른 속도의 성능을 원한다면 개발 생산성이 다소 떨어지지만 HttpURLConnection를 사용.
