@@ -19,22 +19,22 @@ last_modified_at: 2022-01-18
 
 ---
 # 일단은 Framework
- * Spring Boot
-   - Spring Security
-   
- * Spring Cloud
-   - Spring Cloud Config
-   - Spring Cloud Eureka
-   - Spring Cloud Bus
-   - Spring Cloud Monitor
-   - Spring Cloud Zuul
-   - Spring Cloud Ribbon
-   - Spring Cloud Hystrix
-   - Spring Cloud Sleuth, Zipkin
-   - Spring Cloud Actuator 
-   - Spring Cloud Gateway
-   - Spring Cloud Circuit Breaker와 Resilience4J
-   - Spring Cloud LoadBalancer
+## 1. Spring Boot
+ * Spring Security
+
+## 2. Spring Cloud
+ * Spring Cloud Config
+ * Spring Cloud Eureka
+ * Spring Cloud Bus
+ * Spring Cloud Monitor
+ * Spring Cloud Zuul
+ * Spring Cloud Ribbon
+ * Spring Cloud Hystrix
+ * Spring Cloud Sleuth, Zipkin
+ * Spring Cloud Actuator 
+ * Spring Cloud Gateway
+ * Spring Cloud Circuit Breaker와 Resilience4J
+ * Spring Cloud LoadBalancer
 
 # 이하 오픈소스 솔루션에 대해 학습할 예정
 ## 1. 컨테이너 실행환경
