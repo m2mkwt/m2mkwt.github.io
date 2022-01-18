@@ -4,8 +4,8 @@ main:
     url: /categories/
   - title: "Tags"
     url: /tags/
-  - title: "연도별 포스트"
-    url: /posts/
+  # - title: "Year"
+  #   url: /posts/
   # - title: "About"
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
   # - title: "Sample Posts"
@@ -14,3 +14,41 @@ main:
   #   url: /collection-archive/
   # - title: "Sitemap"
   #   url: /sitemap/
+docs:
+  - title: Framewwork
+    children:
+      - title: "Spring boot"
+        url: spring-boot/
+        category: "spring-boot"
+      - title: "Spring Cloud"
+        url: spring-cloud/
+        category: "spring-cloud"
+      - title: "Spring Security"
+        url: spring-security/
+        category: "spring-security"
+  - title: Container
+    children:
+      - title: "Docker"
+        url: docker/
+        category: "docker"
+      - title: "Kubernates"
+        url: kubernates/
+        category: "kubernates"        
+  - title: Open Source
+    children:
+      - title: "Redis"
+        url: redis/
+        category: "redis"
+      - title: "ELK Stack"
+        url: elk/
+        category: "elk"
+  - title: Dev. Env
+    children:
+      - title: "VSCode"
+        url: vscode/
+        category: "vscode"     
+  - title: Etc
+    children:
+      - title: "Secure Coding"
+        url: secure/
+        category: "secure"  
