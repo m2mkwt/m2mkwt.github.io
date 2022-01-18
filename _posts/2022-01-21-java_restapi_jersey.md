@@ -166,9 +166,13 @@ last_modified_at: 2022-01-21
     }
     ```
     
- * HttpRequest는 java.net.HttpURLConenction에서 제공해주는 SimpleClientHttpRequest를 쓰고 있다.
- * 위에서 설명한 아파치에서 제공하는 jakarta Commons HttpClient의 CommonsClientHttpRequest를 쓰거나 사용자가 정의한 HttpRequest를 쓸수도 있다. 즉, 통신하는 로직에서는 Apache Http Client 3,4와 URLConnection 등을 사용한다.
- * HTTP 응답에 대한 +다양한 MessageConverter를+ 구현한다. ** HttpMessageConverters를 interface로 구현하여 다양한 형식의 converter를 제공해주고 또 확장 할 수도 있다. ** 이렇게 하면 따로 inputstream을 받아서 파싱해줄 필요가 없이 더 편하게 매핑해줄 수 있다. ** text, application/json, xml, recourse등 다양한 converter들이 있다
+ * HttpRequest는 java.net.HttpURLConenction에서 제공해주는 SimpleClientHttpRequest 사용.
+ * 아파치에서 제공하는 jakarta Commons HttpClient의 CommonsClientHttpRequest를 쓰거나 사용자가 정의한 HttpRequest 사용가능, 통신하는 로직에서는 Apache Http Client 3,4와 URLConnection 등을 사용.
+ * HTTP 응답에 대한 다양한 MessageConverter를 구현가능.
+   - HttpMessageConverters를 interface로 구현하여 다양한 형식의 converter를 제공및 확장 가능. 
+   - 따로 inputstream을 받아서 파싱해줄 필요가 없이 더 편하게 매핑가능.
+   - text, application/json, xml, recourse등 다양한 converter 지원
+
     ```java
       RestTemplate restTemplate = new RestTemplate();
       restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
@@ -267,17 +271,17 @@ last_modified_at: 2022-01-21
     ```
 
 
- ## 4. HttpURLConnection
-  * 기본 JDK에 포함되어 있음. (jdk1.2부터 내장되어 있으며 java.net 패키지에 있다.)
-  * 상대적으로 가벼우며 핵심적인 API만 지원하고 있음.
-  * HttpClient 보다 성능이 좋다고 함. (유사 사례 확인 결과 HttpClient에서 Server와 Client연결에 속도 이슈가 있어 HttpURLConnection으로 수정한 사례가 확인됨.) 
-  * 서버로부터 전달 받은 Response 결과를 Stream으로 직접 처리해야 하는 등.. 개발 생산성이 떨어지는 요소가 다소 있음.
-  * 문제점
+## 4. HttpURLConnection
+ * 기본 JDK에 포함되어 있음. (jdk1.2부터 내장되어 있으며 java.net 패키지에 있다.)
+ * 상대적으로 가벼우며 핵심적인 API만 지원하고 있음.
+ * HttpClient 보다 성능이 좋다고 함. (유사 사례 확인 결과 HttpClient에서 Server와 Client연결에 속도 이슈가 있어 HttpURLConnection으로 수정한 사례가 확인됨.) 
+ * 서버로부터 전달 받은 Response 결과를 Stream으로 직접 처리해야 하는 등.. 개발 생산성이 떨어지는 요소가 다소 있음.
+ * 문제점
    - 응답코드가 4xx 거나 5xx 면 IOException 이 터진다.
    - 타임아웃을 설정할 수 없다.
    - 쿠키 제어가 불가
 
- ## 5. 그 외 라이브러리
+## 5. 그 외 라이브러리
  * OKHttp
    - Square의 오픈소스 프로젝트 
    - OKHttp는 통신을 동기화로 할지 비동기로 처리 할지 선택하여 사용할 수 있음.
