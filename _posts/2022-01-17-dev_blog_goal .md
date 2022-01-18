@@ -1,6 +1,6 @@
 ---
 layout: single # wide
-title:  "[github 블로그] - 추후 블로그에서 학습할 솔루션 계획"
+title:  "[github 블로그] - 블로그 학습 목표"
 excerpt: "블로그에서 학습할 오픈소스등 정리"
 
 categories:
@@ -9,8 +9,8 @@ tags:
   - [Blog, Archi, Tech]
 
 # table of contents
-toc: true # 오른쪽 부분에 목차를 자동 생성해준다.
-toc_label: "table of content" # toc 이름 설정
+toc: false # 오른쪽 부분에 목차를 자동 생성해준다.
+toc_label: "목차" # toc 이름 설정
 toc_icon: "bars" # 아이콘 설정
 toc_sticky: true # 마우스 스크롤과 함께 내려갈 것인지 설정
 
