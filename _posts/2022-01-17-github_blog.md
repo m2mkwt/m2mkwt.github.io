@@ -108,3 +108,7 @@ last_modified_at: 2022-01-17
    - 댓글 관련설정
    - 구글 검색관련설정 (sitemap.xml, robots.txt 등)
 
+## minimal-mistakes 커스터마이징
+ * 폰트크기 수정 : _sass/minimal-mistakes/_reset.scss
+ * 우측레이아웃 크기수정 :  _sass/minimal-mistakes/_variables.scss 
+
