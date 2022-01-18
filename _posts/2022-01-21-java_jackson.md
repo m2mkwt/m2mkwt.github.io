@@ -1,3 +1,19 @@
+---
+title:  "[JAVA] - Jackson 관련 Object Mapping 및 어노테이션 정리"
+excerpt: "[작업전] Jackson 라이브러리 정리"
+
+categories:
+  - Java
+tags:
+  - [java, library, mapper]
+
+toc: false
+toc_sticky: true
+ 
+date: 2022-01-21
+last_modified_at: 2022-01-21
+---
+
 # Jackson 라이브러리
  * Spring 개발을 하다 보면, 컨트롤러 text/html 형식이 아닌 데이터 전달 목적으로 사용하고 싶을 때가 있습니다. 물론, 쌩 문자열인 plain/text 형식으로 보내도 상관은 없습니다만, 보통은 데이터 구조를 표현하는 방식인 XML 또는 JSON 형태로 많이 보냅니다. 
 
