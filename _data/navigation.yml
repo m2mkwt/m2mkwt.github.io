@@ -15,12 +15,12 @@ main:
   # - title: "Sitemap"
   #   url: /sitemap/
 docs:
-  - title: JAVA
+  - title: Java
     children:
       - title: "Java"
         url: java/
         category: "java"
-      - title: "Java Lib."
+      - title: "Java Lib"
         url: java-lib/
         category: "java-lib"
   - title: Framewwork
@@ -54,9 +54,12 @@ docs:
     children:
       - title: "VSCode"
         url: vscode/
-        category: "vscode"     
+        category: "vscode"             
   - title: Etc
     children:
       - title: "Secure Coding"
         url: secure/
         category: "secure"  
+      - title: "Blog"
+        url: blog/
+        category: "blog"
