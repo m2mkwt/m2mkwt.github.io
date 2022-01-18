@@ -16,14 +16,18 @@ last_modified_at: 2022-01-21
 
 # REST API Client 라이브러리
  * REST API Client에 JAVA Library로는 WebClient, HttpURLConnection, HttpClient, OkHttp, Retrofit, RestTemplate가 대표적
+ 
  * Eclipse Jersey(JAX-RS구현 등을 제공하는 REST 프레임워크) 소개
 
 ## 1. WebClient
  * Spring5 에서 추가된 인터페이스
+
  * Spring5 이전에는 비동기 클라이언트로 AsyncRestTemplate를 사용 Spring5에서 Deprecated
+
  * **spring5 이후 버전을 사용한다면 AsyncRestTemplate 보다는 WebClient 사용하는 것을 추천.** 
-   (아직 spring 5.2(현재기준) 에서도 AsyncRestTemplate 도 존재)
- * 기본적으로 사용방법은 아주 간단. WebClient 인터페이스의 static 메서드인 create()를 사용해서 WebClient 를 생성.
+    (아직 spring 5.2(현재기준) 에서도 AsyncRestTemplate 도 존재)
+
+ * 기본적으로 사용방법은 간단. WebClient 인터페이스의 static 메서드인 create()를 사용해서 WebClient 를 생성.
 
  * 예제 (퍼옴 - 추후 출처 기록할것)
 
@@ -111,25 +115,33 @@ last_modified_at: 2022-01-21
     ```
 
 ## 2. RestTemplate
- * Spring3부터 지원함.
+ * Spring3부터 지원.
+
  * **spring 5.0버전에서 WebFlux와 함께 WebClient라는 새로운 HTTP client가 RestTemplate의 대안으로 등장. 동기, 비동기, 스트리밍과 최신 API를 지원가능하게 됨. RestTemplate 클래스는 유지보수 모드에 있으며, 앞으로는 변경 및 버그에 대한 사소한 요청만 허용될 예정.**
+
  * Boilerplate code를 줄여줌.(Spring의 Template이 제공하는 장점 중 하나)
+
  * [connection pool 적용](https://stackoverflow.com/questions/31869193/using-spring-rest-template-either-creating-too-many-connections-or-slow/)
    -  **RestTemplate 은 기본적으로 connection pool 을 사용하지 않는다. 따라서 연결할 때 마다, 로컬 포트를 열고 tcp connection 을 맺는다. 이때 문제는 close() 이후에 사용된 소켓은 TIME_WAIT 상태가 되는데, 요청량이 많다면 이런 소켓들을 재사용하지 못하고 소켓이 부족으로 응답이 지연.**
    - 이런 경우 connection pool 을 사용해서 해결할 수 있는데, DBCP마냥 소켓의 갯수를 정해서 재사용하는 것이다. RestTemplate 에서 connection pool 을 적용하려면, 위와 같이 HttpClient 를 만들고 setHttpClient() 를 해야한다.
       * setMaxConnPerRoute : IP,포트 1쌍에 대해 수행 할 연결 수를 제한한다.
       * setMaxConnTotal : 최대 오픈되는 커넥션 수를 제한한다.
+
  * 요청할 URL
    - UriComponentsBuilder 로 파라미터를 붙이거나 String.format 로 붙이거나 등등
    - (/user/{id}, ... , "redboy") 처럼 rest하게 넘길 수도 있다.
    - map 을 이용해서 더 깔끔하게 할 수도 있다.
+
  * Object 로 받기
     ForObject 를 사용할때, 응답 xml이나 json 에 맞는 java object(Class responseType)가 필요하다. 
     @XmlElement 를 사용하거나 @JsonProperty 등을 사용하여 매핑해줘야한다.
+
  * 에러 처리
     DefaultResponseErrorHandler를 사용하여 HTTP Error 를 제어한다. restTemplate.setErrorHandler 를 통해 커스텀 핸들러를 등록할 수 있다.
+
  * 비동기 처리
     RestTemplate 는 동기처리에 사용된다. 비동기 처리는 org.springframework.web.client.AsyncRestTemplate 를 사용. 
+
  * 예제 및 사용법
    - 출처 : http://spring.io/blog/2009/03/27/rest-in-spring-3-resttemplate
    - 사용법 및 샘플 소스  : http://blog.saltfactory.net/using-resttemplate-in-spring/
@@ -167,7 +179,9 @@ last_modified_at: 2022-01-21
     ```
     
  * HttpRequest는 java.net.HttpURLConenction에서 제공해주는 SimpleClientHttpRequest 사용.
+
  * 아파치에서 제공하는 jakarta Commons HttpClient의 CommonsClientHttpRequest를 쓰거나 사용자가 정의한 HttpRequest 사용가능, 통신하는 로직에서는 Apache Http Client 3,4와 URLConnection 등을 사용.
+
  * HTTP 응답에 대한 다양한 MessageConverter를 구현가능.
    - HttpMessageConverters를 interface로 구현하여 다양한 형식의 converter를 제공및 확장 가능. 
    - 따로 inputstream을 받아서 파싱해줄 필요가 없이 더 편하게 매핑가능.
@@ -210,13 +224,12 @@ last_modified_at: 2022-01-21
     ```    
 
 ## 3. HttpClient
-  * Apache에서 제공
-  * HttpClient는 3버전과 4버전이 존재. 4버전부터는 HttpComponents로 불림.
+  * Apache에서 제공하며 3버전과 4버전이 존재. 4버전부터는 HttpComponents로 불림.
     (단, 3버전과 4버전은 둘간 직접적인 호환은 되지 않음)
-  * HttpComponents(4버전) 부터는 Thread에 안정적인 기능들을 많이 제공함.
-  * 상대적으로 무겁다는 평.
+
+  * HttpComponents(4버전) 부터는 Thread에 안정적인 기능들을 많이 제공하나 무겁다는 평.
+
   * HttpURLConnection 대비 다양한 API를 지원함.
-  * 사용법
 
       ```java
         CloseableHttpClient httpclient = HttpClients.createDefault();
@@ -230,6 +243,7 @@ last_modified_at: 2022-01-21
     - 모든 응답코드를 읽을 수 있다. httpResponse.getStatusLine().getStatusCode()
     - 타임아웃 설정 가능
     - 쿠키 제어가 가능
+
   * 문제점
     - URLConnection 을 이용한 방식보다 코드가 간결해졌지만, 여전히 반복적이고 코드들이 길다.
     - 스트림 처리 로직을 별도로 짜야한다. (EntityUtils 를 쓰면 되는거 같긴하지만)
@@ -270,9 +284,13 @@ last_modified_at: 2022-01-21
 
 ## 4. HttpURLConnection
  * 기본 JDK에 포함되어 있음. (jdk1.2부터 내장되어 있으며 java.net 패키지에 있다.)
+
  * 상대적으로 가벼우며 핵심적인 API만 지원하고 있음.
+
  * HttpClient 보다 성능이 좋다고 함. (유사 사례 확인 결과 HttpClient에서 Server와 Client연결에 속도 이슈가 있어 HttpURLConnection으로 수정한 사례가 확인됨.) 
+
  * 서버로부터 전달 받은 Response 결과를 Stream으로 직접 처리해야 하는 등.. 개발 생산성이 떨어지는 요소가 다소 있음.
+
  * 문제점
    - 응답코드가 4xx 거나 5xx 면 IOException 이 터진다.
    - 타임아웃을 설정할 수 없다.
@@ -304,6 +322,6 @@ last_modified_at: 2022-01-21
 
 ### 참고
  * Spring5 환경에서 비동기등의 사용을 위해서는 WebClient 사용.
- * Eclipse Jersey 사용시에는 Dozer Mappter을 같이 사용하는 경우가 많음.
- * 가볍고 빠른 속도의 성능을 원한다면 개발 생산성이 다소 떨어지지만 HttpURLConnection를 사용.
- * 개발 생산성 및 안정성을 더욱 우선시 한다면 Retrofit or RestTemplate(Spring 프로젝트) 사용.
+ * Eclipse Jersey 사용시에는 Dozer Mappter 참고
+ * 가볍고 빠른 속도의 성능 우선시 HttpURLConnection 사용.
+ * 개발 생산성 및 안정성을 우선시 한다면 Retrofit or RestTemplate(Spring 프로젝트) 사용.
