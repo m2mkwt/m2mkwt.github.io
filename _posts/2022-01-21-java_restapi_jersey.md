@@ -1,5 +1,5 @@
 ---
-layout: wide
+layout: single
 title:  "[JAVA] - RESTful Api 라이브러리 정리 (feat - WebClient, Jersey)"
 excerpt: "RESTful API 개발에 사용되는 Library 정리"
 
