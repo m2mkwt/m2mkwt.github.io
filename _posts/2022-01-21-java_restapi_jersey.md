@@ -142,28 +142,28 @@ last_modified_at: 2022-01-21
   
    - 설정 생성예제
     ```java
-    import org.apache.http.client.HttpClient;
-    import org.apache.http.impl.client.HttpClientBuilder;
-    import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-    import org.springframework.web.client.RestTemplate;
+        import org.apache.http.client.HttpClient;
+        import org.apache.http.impl.client.HttpClientBuilder;
+        import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+        import org.springframework.web.client.RestTemplate;
 
-    public class RestTemplateEx {
-        public static void main(String[] args) {
-            HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-            factory.setReadTimeout(5000);  // 읽기시간초과, ms
-            factory.setConnectTimeout(3000); // 연결시간초과, ms
-            HttpClient httpClient = HttpClientBuilder.create()
-                .setMaxConnTotal(100) // connection pool 적용
-                .setMaxConnPerRoute(5) // connection pool 적용
-                .build();
-            factory.setHttpClient(httpClient); // 동기실행에 사용될 HttpClient 세팅
-            RestTemplate restTemplate = new RestTemplate(factory);
+        public class RestTemplateEx {
+            public static void main(String[] args) {
+                HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+                factory.setReadTimeout(5000);  // 읽기시간초과, ms
+                factory.setConnectTimeout(3000); // 연결시간초과, ms
+                HttpClient httpClient = HttpClientBuilder.create()
+                    .setMaxConnTotal(100) // connection pool 적용
+                    .setMaxConnPerRoute(5) // connection pool 적용
+                    .build();
+                factory.setHttpClient(httpClient); // 동기실행에 사용될 HttpClient 세팅
+                RestTemplate restTemplate = new RestTemplate(factory);
 
-            String url = "http://testapi.com/search?boardNo=1111"; 
+                String url = "http://testapi.com/search?boardNo=1111"; 
 
-            Object obj = restTemplate.getForObject("요청 URI 주소", "응답내용과 자동으로 매핑시킬 java object");
+                Object obj = restTemplate.getForObject("요청 URI 주소", "응답내용과 자동으로 매핑시킬 java object");
+            }
         }
-    }
     ```
     
  * HttpRequest는 java.net.HttpURLConenction에서 제공해주는 SimpleClientHttpRequest 사용.
@@ -241,33 +241,33 @@ last_modified_at: 2022-01-21
   * 예제 [출처](https://hc.apache.org/httpcomponents-client-ga/httpclient/examples/org/apache/http/examples/client/ClientWithResponseHandler.java)
 
     ```java
-    /** HttpComponent 4.x **/
-    CloseableHttpClient httpclient = HttpClients.createDefault();
-            try {
-                HttpGet httpget = new HttpGet("http://localhost/");
-                System.out.println("Executing request " + httpget.getRequestLine());
+        /** HttpComponent 4.x **/
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        try {
+            HttpGet httpget = new HttpGet("http://localhost/");
+            System.out.println("Executing request " + httpget.getRequestLine());
 
-                // Create a custom response handler
-                ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
+            // Create a custom response handler
+            ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
 
-                    public String handleResponse(
-                            final HttpResponse response) throws ClientProtocolException, IOException {
-                        int status = response.getStatusLine().getStatusCode();
-                        if (status >= 200 && status < 300) {
-                            HttpEntity entity = response.getEntity();
-                            return entity != null ? EntityUtils.toString(entity) : null;
-                        } else {
-                            throw new ClientProtocolException("Unexpected response status: " + status);
-                        }
+                public String handleResponse(
+                        final HttpResponse response) throws ClientProtocolException, IOException {
+                    int status = response.getStatusLine().getStatusCode();
+                    if (status >= 200 && status < 300) {
+                        HttpEntity entity = response.getEntity();
+                        return entity != null ? EntityUtils.toString(entity) : null;
+                    } else {
+                        throw new ClientProtocolException("Unexpected response status: " + status);
                     }
+                }
 
-                };
-                String responseBody = httpclient.execute(httpget, responseHandler);
-                System.out.println("----------------------------------------");
-                System.out.println(responseBody);
-            } finally {
-                httpclient.close();
-            }
+            };
+            String responseBody = httpclient.execute(httpget, responseHandler);
+            System.out.println("----------------------------------------");
+            System.out.println(responseBody);
+        } finally {
+            httpclient.close();
+        }
     ```
 
 
