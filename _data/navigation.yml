@@ -1,5 +1,30 @@
 # main links
 main:
+  - title: Java
+    children:
+      - title: "Java"
+        url: java/
+        category: "java"
+      - title: "Java Lib"
+        url: java-lib/
+        category: "java-lib" 
+      - title: "Spring boot"
+        url: spring-boot/
+        category: "spring-boot"
+      - title: "Spring Cloud"
+        url: spring-cloud/
+        category: "spring-cloud"
+      - title: "Spring Security"
+        url: spring-security/
+        category: "spring-security"
+  - title: Open Source
+    children:
+      - title: "Redis"
+        url: redis/
+        category: "redis"
+      - title: "ELK Stack"
+        url: elk/
+        category: "elk"        
   - title: "Categories"
     url: /categories/
   - title: "Tags"
