@@ -7,9 +7,11 @@
   <label for="ac-toc">{{ site.data.ui-text[site.locale].menu_label }}</label>
   <ul class="nav__items" id="category_tag_menu">
       <!--전체 글 수-->
+<!-- 
       <li>
           📂<span style="font-family:'Cafe24Oneprettynight';">전체 글</style> <span style="font-family:'Coming Soon';">{{sum}}</style> <span style="font-family:'Cafe24Oneprettynight';">개</style> 
       </li>
+-->   
       <li>
         <!--span 태그로 카테고리들을 크게 분류 ex) C/C++/C#-->
         <span class="nav__sub-title">JAVA</span>
@@ -21,7 +23,7 @@
                     {% if category[0] == "Java" %}
                         <li><a href="/categories/java" class="">Java ({{category[1].size}})</a></li>
                     {% endif %}
-                    {% if category[0] == "Java Open Source" %}
+                    {% if category[0] == "Java Lib" %}
                         <li><a href="/categories/java-lib" class="">Java Open Source ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
@@ -36,10 +38,10 @@
                     {% if category[0] == "Spring Boot" %}
                         <li><a href="/categories/spring-boot" class="">Spring Boot ({{category[1].size}})</a></li>
                     {% endif %}
-                    {% if category[0] == "Spring Boot" %}
+                    {% if category[0] == "Spring Cloud" %}
                         <li><a href="/categories/spring-cloud" class="">Spring Cloud ({{category[1].size}})</a></li>
                     {% endif %}
-                    {% if category[0] == "Spring Boot" %}
+                    {% if category[0] == "Spring Security" %}
                         <li><a href="/categories/spring-security" class="">Spring Security ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}

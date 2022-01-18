@@ -105,13 +105,13 @@ analytics:
 author:
   name             : "Wontae Kim"
   avatar           : images/profile/img_mmall.jpg # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "M2M"
-  location         : "Republic of Korea"
-  email            : "wontae_k@m2mglobal.co.kr"
+  bio              : "M2MGlobal, Seoul"
+  # location         : "Seoul"
+  # email            : "wontae_k@m2mglobal.co.kr"
   links:
     - label: "Email"
       icon: "fas fa-fw fa-envelope-square"
-      url: "mailto:wontae_k@m2mglobal.co.kr"
+      # url: "mailto:wontae_k@m2mglobal.co.kr"
     - label: "Website"
       icon: "fas fa-fw fa-link"
       # url: "https://your-website.com"
