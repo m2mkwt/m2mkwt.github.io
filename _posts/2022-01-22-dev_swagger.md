@@ -37,15 +37,15 @@ last_modified_at: 2022-01-22
 
 ## 4. 장단점 (vs 스프레드시트)
  * 장점
-  - API 를 테스트할 수 있는 HTML 페이지 제공. (API docs + Postman)
-  - 간단한 Annotation 을 통해 문서에 표기할 수 있고, 주석을 겸함.
-  - 개발과 동시에 API 문서를 생성. (소스코드 빌드 시 문서 자동 생성)
+   - API 를 테스트할 수 있는 HTML 페이지 제공. (API docs + Postman)
+   - 간단한 Annotation 을 통해 문서에 표기할 수 있고, 주석을 겸함.
+   - 개발과 동시에 API 문서를 생성. (소스코드 빌드 시 문서 자동 생성)
 
  * 단점
- - 실제 코드에 영향을 주지는 않지만 지속적으로 Annotation이 추가됨에 따라 실제 코드보다 API 명세에 대한 코드가 더 길어짐. (전체 가독성이 떨어짐)
- - Swagger 코드는 주석일 뿐 실제 로직에 영향을 미치지 않지만, 비즈니스 로직이 변경됨에 따라 API 문서를 갱신하지 않으면 서로 일치하지 않게 됨.
- - 변경 이력 관리가 어려움.
- - 서버가 실행이 안 되어있으면, 문서를 확인할 수 없다.
+   - 실제 코드에 영향을 주지는 않지만 지속적으로 Annotation이 추가됨에 따라 실제 코드보다 API 명세에 대한 코드가 더 길어짐. (전체 가독성이 떨어짐)
+   - Swagger 코드는 주석일 뿐 실제 로직에 영향을 미치지 않지만, 비즈니스 로직이 변경됨에 따라 API 문서를 갱신하지 않으면 서로 일치하지 않게 됨.
+   - 변경 이력 관리가 어려움.
+   - 서버가 실행이 안 되어있으면, 문서를 확인할 수 없다.
 
 ## 5. 의존성(dependency) 추가
  * Swagger 를 사용하기 위해서는 springfox-swagger2 를 의존성에 추가해야 한다.
@@ -54,7 +54,7 @@ last_modified_at: 2022-01-22
  * 최신 버전은 Maven Central 에서 확인할 수 있습니다.
 
  * Maven - pom.xml
-    ```xml
+```xml
         <dependency>
         <groupId>io.springfox</groupId>
         <artifactId>springfox-swagger2</artifactId>
@@ -66,18 +66,18 @@ last_modified_at: 2022-01-22
         <artifactId>springfox-swagger-ui</artifactId>
         <version>2.9.2</version>
         </dependency>
-    ```
+```
 
  * Gradle - build.gradle
-    ```gradle
+```gradle
         compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
         compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
-    ```
+```
  
 ## 6. Swagger 설정
  * Swagger 설정을 위해 SwaggerConfig 클래스가 필요.
  * Docket Bean 을 지정하면 기본적인 Api Docs 을 만들 수 있다.
-    ```java
+```java
         @Configuration
         @EnableSwagger2
         public class SwaggerConfig {
@@ -92,7 +92,7 @@ last_modified_at: 2022-01-22
                     .build();
             }
         }
-    ```
+```
 
  * @EnableSwagger2 : Swagger2 를 활성화 하는 Annotation.
  * Docket : Swagger 를 설정의 핵심이 되는 Bean. (API 자체에 대한 스펙은 Controller 에서 작성.)
@@ -106,7 +106,7 @@ last_modified_at: 2022-01-22
 
  * Docket Bean 에 대한 자세한 설명은 springfox docs 에서 확인할 수 있다.
  * SpringBoot가 아닌 일반 Spring MVC 프로젝트일 경우 아래와 같이 추가 설정이 필요하다.
-    ```java
+```java
         public class SwaggerConfig implements WebMvcConfigurer {
             
             @Override
@@ -120,11 +120,11 @@ last_modified_at: 2022-01-22
 
             ... Docket Bean ...
         }
-    ```
+```
 
  * Spring Secutiry 우회를 위해 실제사용했던 SwaggerConfig.
 
-    ```java
+```java
         @Configuration
         @Profile("swagger")
         @EnableSwagger2
@@ -163,26 +163,26 @@ last_modified_at: 2022-01-22
                         .build();
             }
         }    
-    ```
+```
 
 ### Annotation
  * Swagger Annotation 에 대한 자세한 설명은 github 또는 docs 에서 확인할 수 있다.
-  - @Api	클래스를 Swagger 자원으로 표시한다.
-  - @ApiImplicitParam	API 작업에서 단일 매개 변수를 나타낸다.
-  - @ApiImplicitParams	여러 ApiImplicitParam 객체 목록을 허용하는 warpper 이다.
-  - @ApiModel	Swagger 모델(VO)에 대한 추가 정보를 제공한다.
-  - @ApiModelProperty	모델 속성의 데이터를 추가하고 관리한다.
-  - @ApiOperation	특정 경로에 대한 작업 또는 일반적으로 HTTP 메서드를 설명한다.
-  - @ApiParam	작업 매개 변수에 대한 추가 메타 데이터를 추가한다.
-  - @ApiResponse	결과에 대한 응답 값을 설명한다.
-  - @ApiResponses	여러 ApiResponse 객체 목록을 허용하는 wrapper 이다.
-  - @Authorization	리소스 또는 작업에 사용할 권한 부여 체계를 선언한다.
-  - @AuthorizationScope	OAuth2 인증 범위를 설명한다.
-  - @ResponseHeader	응답의 일부로 제공될 수 있는 헤더를 나타낸다.
+   - @Api	클래스를 Swagger 자원으로 표시한다.
+   - @ApiImplicitParam	API 작업에서 단일 매개 변수를 나타낸다.
+   - @ApiImplicitParams	여러 ApiImplicitParam 객체 목록을 허용하는 warpper 이다.
+   - @ApiModel	Swagger 모델(VO)에 대한 추가 정보를 제공한다.
+   - @ApiModelProperty	모델 속성의 데이터를 추가하고 관리한다.
+   - @ApiOperation	특정 경로에 대한 작업 또는 일반적으로 HTTP 메서드를 설명한다.
+   - @ApiParam	작업 매개 변수에 대한 추가 메타 데이터를 추가한다.
+   - @ApiResponse	결과에 대한 응답 값을 설명한다.
+   - @ApiResponses	여러 ApiResponse 객체 목록을 허용하는 wrapper 이다.
+   - @Authorization	리소스 또는 작업에 사용할 권한 부여 체계를 선언한다.
+   - @AuthorizationScope	OAuth2 인증 범위를 설명한다.
+   - @ResponseHeader	응답의 일부로 제공될 수 있는 헤더를 나타낸다.
  
 ### Controller
  * 간단한 기본 컨트롤러에 Swagger Annotation 을 추가.
-    ```java
+```java
         @RestController
         @Api(value = "SwaggerTestController")
         @RequestMapping("/v1/test")
@@ -200,7 +200,7 @@ last_modified_at: 2022-01-22
                 return result;
             }
         }
-    ```
+```
 
 ### 간단한 Swagger 적용예제
  * 1. Maven 의존성 추가
@@ -229,8 +229,6 @@ last_modified_at: 2022-01-22
  * 기본 접속 주소 : http://서버주소/swagger-ui.html (ex: http://localhost:8080/프로젝트이름/swagger-ui.html)
 
 ### 참조
-- https://victorydntmd.tistory.com/341
 - https://www.popit.kr/spring-rest-docs/
-- https://mellowp-dev.tistory.com/7
 - https://springfox.github.io/springfox/javadoc/2.7.0/overview-summary.htm
 - https://github.com/swagger-api/swagger-core/wiki/Swagger-2.X---Annotations
