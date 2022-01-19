@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "[JAVA] - OXM Jackson, Jackson2HttpMessageConverter 사용 시 주의점"
+title:  "[JAVA] - OXM Jackson 정리 (feat. Converter 사용 시 주의점)"
 excerpt: "OXM(Object to XML) Jackson 관련 Timestamp, Converter관련오류 정리"
 
 categories:
@@ -16,24 +16,20 @@ last_modified_at: 2022-01-21
 ---
 
 # Jackson 라이브러리
-## 1. Jackson?
- * Jackson은 json 데이터 구조를 처리해주는 라이브러리. 
-
+## 1. Jackson
+ * Spring에서 json 데이터 구조 및 xml의 오브젝트 맵핑을 처리. 
  * Spring에서 json, XML <---> Java Object Mapping 담당.
    - 직렬화, serializing, marshal : java 객체 -> json
    - 역직렬화, deserializing, umarshal : json -> java 객체
-
- * Spring 3.0 이후로부터, Jacskon 관련 API제공
-   - Jackson 이전 GSON or SimpleJSON 방식(직접 키와 벨류를 셋팅) 사용
+ * Spring 3.0 이후부터, Jacskon 관련 API제공
+   - Jackson 이전에는 GSON or SimpleJSON 방식(직접 키와 벨류를 셋팅) 사용
 
 ## 2. Jackson 동작방식
- * Spring3.0 이후 컨트롤러가 @RequestBody 형식이면 Spring은 MessageConverter API를 통해 리턴객체를 후킹.
-
+ * Spring3.0 이후 컨트롤러가 @RequestBody 형식이면 Spring은 MessageConverter 를 통해 반환객체를 후킹.
  * Jackson은 JSON데이터를 출력하기 위한  MappingJacksonHttpMessageConverter를 제공.
-   - 스프링 MessageConverter를 MappingJacksonHttpMessageConverter으로 등록하면
-   - 컨트롤러가 리턴하는 객체를 뜯어(자바 리플렉션 사용)
-   - Jackson의 ObjectMapper API로 JSON 객체를 생성 후, 출력하여 JSON데이터를 완성.
-
+   - 스프링 MessageConverter를 MappingJacksonHttpMessageConverter으로 등록
+   - 자바 리플렉션 사용하여 컨트롤러가 리턴하는 객체를 정보를 취득
+   - Jackson의 ObjectMapper API로 json 객체를 생성 후, 출력하여 json데이터를 완성.
  * Spring 3.1 이후 클래스패스에 Jackson 라이브러리가 존재하면 자동적으로 MessageConverter가 등록.
 
     ```java
@@ -49,7 +45,6 @@ last_modified_at: 2022-01-21
  * Jackson은 기본적으로 프로퍼티로 동작(Getter, Setter를 기준)
   - **멤버변수명과는 상관없음**
   - Jackson을 사용한다면, Getter에 주의.
-
  * Getter가 아닌 멤버변수로 하고 싶다면?
   - @JsonProperty 어노테이션 API 사용
 
@@ -62,7 +57,6 @@ last_modified_at: 2022-01-21
 
 ## 4. 데이터 매핑 법칙 변경
  * Jackson은 매핑법칙 변경관련 @JsonAutoDetect API 제공.
-
  * 멤버변수 기준 Jackson 변환.
 
     ```java
@@ -341,7 +335,6 @@ last_modified_at: 2022-01-21
 
 ### @JsonCreator
  * JsonCreater 는 생성자메소드에 지정되어 JSON Object 의 필드 와 메소드의 파라미터 매칭을 통해 Java Object를 생성가능하게 한다.
-
  * @JsonSetter를 사용할수 없거나, 불변객체이기 때문에 setter 메소드가 존재하지 않을때 초기화 데이터 주입을 위해 유용하다.
 
 ```java 
@@ -378,7 +371,6 @@ last_modified_at: 2022-01-21
 
 ### @JacksonInject
  * JacksonInject 어노테이션은 Jackson 에의해 역직렬화된 Java Object에 공통정인 값을 주입할 수 있는 java Object의 프로퍼티를 지정한다.
-
  * 예를들어 여러 소스에서 Person Json Object를 파싱할때에 , 이 Json Object 의 소스가 어디인지 주입을 통해 저장할수 있다.
 
 ```java 
@@ -426,7 +418,6 @@ last_modified_at: 2022-01-21
 ```
 
  * JsonDeserializer<T t> 를 상속을 통해 구현할때 필드에 맞는 genericType을 지정하여 상속받고, desirialze 메소드를 작성한다.
-
 
 ## 8. Write Annotations (Java Object to Json Object : Serialize)
 ### @JsonInclude
@@ -599,24 +590,15 @@ last_modified_at: 2022-01-21
  * Timestamp를 사용하게 되면 기본적으로 time-zone 이 default로 치환 
    - 다음과 같이 될수 있음 
    DB :  2018-02-08 09:10:45 →  timestamp  2018-02-08 00:10:45 
-
  * API 에서 BO 로 리턴시 만약 위와 같이 설정시 jackson.time-zone: Asia/Seoul json 변환시 정상적으로 2018-02-08 09:10:45 반환
-
  * 하지만 BO 에서도 jackson.time-zone: Asia/Seoul 설정 되어있다면 
  model의 @ 설정에 따라 최종적으로 Front에 전달시 2018-02-08 18:10:45 로 될수도 있음
-
  * 반대로 Front에서 datetime을 설정후 DB 저장시 model의 @ 설정에 따라 +9 +9 될수도 있음
-
  * 또한 API, BO  layer에서 model의 getXXX()를 가져올때 -9 시간의 데이터가 있을 가능성이 있어
  비지니스 로직 수행시 잘못된 데이터 처리가 발생할수도 있음
-
  * **이런 timestamp 의 단점을 보완하기 위해서 java8에서 java.time 클래스가 추가됨**
  **Timestamp 대신 LocalDateTime 클래스를 쓰기를 권장**
-
-
- * java의 Date, Calendar  클래스는 사용에 있어 문제가 많은점 발견, 이를 보완한 jodatime 라이브러가 있으며 
- jodatime의 기능을 jdk8 java.time이 수용해서 발표 했습니다 
-
+ * java의 Date, Calendar  클래스는 사용에 있어 문제가 많은점 발견, 이를 보완한 jodatime 라이브러리가 사용되었으며 jodatime의 기능을 jdk8 java.time이 수용해서 발표 
 
 ## 이슈 해결
  * pom.xml 에 아래 라이브러리를 추가한다 
@@ -653,7 +635,7 @@ last_modified_at: 2022-01-21
 ```
 
 
- * Model 클래스의 Timestamp를 다음과 같이 변경한다 
+ * Model 클래스의 Timestamp를 다음과 같이 변경
 
 ```java
   ## 변경전
@@ -689,7 +671,7 @@ last_modified_at: 2022-01-21
 
 
  ## Thymeleaf  java.time  formatter 오류 나는 경우 해결 방법 
- 다음과 같이 #dates.format 사용할 경우 오류가 발생할수 있다 ( Thymeleaf  페이지에서 format 없거나 String으로  내려받을경우는 오류 없음 )
+ 다음과 같이 #dates.format 사용할 경우 오류가 발생할수 있음 ( Thymeleaf  페이지에서 format 없거나 String으로  내려받을경우는 오류 없음)
 
  ### 오류 발생
 ```html 
@@ -727,19 +709,20 @@ last_modified_at: 2022-01-21
 ```
 
  * java8 time 을 대응하기 위해서는 thymeleaf 3 이상이 필요
- * 참고로 spring-boot 1.5.6 의 spring-boot-starter-thymeleaf 는 2.x.x 를 사용하고 있다 
- * spring-boot-starter-thymeleaf 를 주석 또는 삭제하고  버전업을 시켜 준다 
- * 아래와 같이 #temporals.format() 를 사용한다 
+ * 참고로 spring-boot 1.5.6 의 spring-boot-starter-thymeleaf 는 2.x.x 를 사용
+ * spring-boot-starter-thymeleaf 를 주석 또는 삭제하고 버전업
+ * 아래와 같이 #temporals.format() 를 사용
 
 ```html 
 <td width="80" th:text="${#temporals.format(board.writeDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
 ```
 
- * Thymeleaf Dialect를 사용한 프로젝트의 경우 Thymeleaf 3 이상 설정시 몇 가지 더 세팅이 필요합니다.
+ * Thymeleaf Dialect를 사용한 프로젝트의 경우 Thymeleaf 3 이상 설정시 몇 가지 더 세팅이 필요
 
 
 ## API 또는 BO 에서  Serialization/Deserialization 못찾는 경우 
- * API 는 정상인데 BO 에서 Serialization/Deserialization 못찾는 경우 이하와 비슷한 에러가 발생한다 
+ * API 는 정상인데 BO 에서 Serialization/Deserialization 못찾는 경우 이하와 비슷한 에러가 발생
+
 ```txt
   java.lang.NoSuchMethodError: com.fasterxml.jackson.databind.DeserializationContext.wrongTokenException(Lcom/fasterxml/jackson/core/JsonParser;Ljava/lang/Class;Lcom/fasterxml/jackson/core/JsonToken;Ljava/lang/String;)Lcom/fasterxml/jackson/databind/JsonMappingException;
       at com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer.deserialize(LocalDateTimeDeserializer.java:141)
@@ -756,11 +739,10 @@ last_modified_at: 2022-01-21
   private LocalDateTime rgstDttm;
 ```
 
- * 위와 같이 model에 Serialization/Deserialization 를 명시적으로 선언해 주면 해결 된다 
- * 모든 model에 @JsonSerialize/@JsonDeserialize 를 추가해 주어야하므로 근본적으로 에러 원인을 찾아 해결 해야 한다 
- * 가이드대로 진행한 경우 에러가 발생하지 않지만 위의 에러가 발생하는 경우는 추가적으로 Custom Serialization/Deserialization 를 추가 했을 경우 발생할수 있다  
-
- * API 의 WebConfig.java 에 다음과 같이 추가 등록한 경우 발생할수 있다 
+ * 위와 같이 model에 Serialization/Deserialization 를 명시적으로 선언해 주면 해결
+ * 모든 model에 @JsonSerialize/@JsonDeserialize 를 추가해 주어야하므로 근본적으로 에러 원인을 찾아 해결 해야함
+ * 가이드대로 진행한 경우 에러가 발생하지 않지만 위의 에러가 발생하는 경우는 추가적으로 Custom Serialization/Deserialization 를 추가 했을 경우 발생
+ * API 의 WebConfig.java 에 다음과 같이 추가 등록한 경우 발생가능
 
  ```java
   에러 발생 코드
