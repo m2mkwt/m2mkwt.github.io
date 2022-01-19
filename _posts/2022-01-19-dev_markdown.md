@@ -48,15 +48,12 @@ last_modified_at: 2022-01-19
  * 방법 1. tab을 이용해서 코드블럭 만들기
    - 코드 블럭 시키고 싶은 내용 앞뒤로 enter
 
-
-    ```text
       code 1
-
+                              <- Enter
           code 2 // code block 할 내용
-
+                              <- Enter
       code 3 // 정상적으로 출력
-    ​```
-    
+
 >  code 1
 >
 >      code 2 // code block 할 내용
