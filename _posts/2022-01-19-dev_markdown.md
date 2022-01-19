@@ -27,22 +27,20 @@ last_modified_at: 2022-01-19
  * 제목을 정할 때는 '#'을 이용해서 강조
  * '#'과 제목사이의 간격을 띄워야 변환. 최대 6개까지 지원
 
-```markdown
   # 가장큰 크기의 text로 변환
   ## 그다음 작은 크기위 text로 변환
   ### 그다음 작은 크기의 text로 변환
   #### 그다음 작은 크기의 text로 변환
   ##### 그다음 작은 크기의 text로 변환
   ###### 그다음 작은 크기의 text로 변환
-​```
 
  * 출력화면
-  # 가장큰 크기의 text로 변환
-  ## 그다음 작은 크기위 text로 변환
-  ### 그다음 작은 크기의 text로 변환
-  #### 그다음 작은 크기의 text로 변환
-  ##### 그다음 작은 크기의 text로 변환
-  ###### 그다음 작은 크기의 text로 변환
+# 가장큰 크기의 text로 변환
+## 그다음 작은 크기위 text로 변환
+### 그다음 작은 크기의 text로 변환
+#### 그다음 작은 크기의 text로 변환
+##### 그다음 작은 크기의 text로 변환
+###### 그다음 작은 크기의 text로 변환
 
 ### 2) source 코드삽입
  * 방법 1. tab을 이용해서 코드블럭 만들기
@@ -55,9 +53,10 @@ last_modified_at: 2022-01-19
 
   code 3 // 정상적으로 출력
 ​```
+
  * 방법 2. ``` 과 ``` 사이 코드 삽입
 
-```markdown
+```html
   '``java
     public class Test {
       @JsonIgnore
@@ -79,7 +78,7 @@ last_modified_at: 2022-01-19
 
 ### 3) BlockQuote 사용하기(인용구)
 
-```markdown
+```html
   > 테스트문구 1
   > > 테스트문구 2
   > > > 테스트문구 3
@@ -102,21 +101,21 @@ last_modified_at: 2022-01-19
  * +, *, -  총 3가지의 기호사용
  * tab을 사용해 소속을 만들 수 있습니다.
 
-```markdown
-  + 안녕
-    + Hello
-      + hi
-
-  * 안녕
-    * Hello
-      * hi
-
-  - 안녕
-    - Hello
-      - hi
+>  + 안녕
+>    + Hello
+>      + hi
+>
+>  * 안녕
+>    * Hello
+>      * hi
+>
+>  - 안녕
+>    - Hello
+>      - hi
 ​```
 
  * 출력화면
+
  + 안녕
    + Hello
      + hi
@@ -132,7 +131,7 @@ last_modified_at: 2022-01-19
 
 ### 6) 구분선, 수평선 만들기
 
-```markdown
+```html
   테스트문구 1
   ------------
   테스트문구 2
@@ -175,17 +174,17 @@ last_modified_at: 2022-01-19
  * 헤더를 구분할 때는 - 를 각 column에 3개 이상 사용해야한다.
 
 <작성 방법>
-```markdown
-  | First Header | Second Header |
-  | --- | --- |
-  | Content Cell | Content Cell  |
-  | Content Cell | Content Cell  |
+```html
+  |First Header|Second Header|
+  |---|---|
+  |Content Cell| Content Cell  |
+  |Content Cell| Content Cell  |
 ```
 
-  | First Header | Second Header |
-  | --- | --- |
-  | Content Cell | Content Cell  |
-  | Content Cell | Content Cell  |
+ |First Header|Second Header|
+ |---|---|
+ |Content Cell| Content Cell  |
+ |Content Cell| Content Cell  |
 
 
  * 표 내부 서식 및 정렬 방법
@@ -195,34 +194,30 @@ last_modified_at: 2022-01-19
 
 ```markdown
   | Command      | Description |
-  | --- | --- |
+  |---|---|
   | `git status` | List all *new or modified* files |
   | `git diff`   | Show file differences that **haven't been** staged |
 ```
 
-  | Command      | Description |
-  | --- | --- |
-  | `git status` | List all *new or modified* files |
-  | `git diff`   | Show file differences that **haven't been** staged |
+ | Command      | Description |
+ |---|---|
+ | `git status` | List all *new or modified* files |
+ | `git diff`   | Show file differences that **haven't been** staged |
 
 
  * 헤더 행의 하이픈-의 오른쪽, 왼쪽, 양쪽에 콜론:을 포함시켜서 오른쪽, 왼쪽, 중앙 정렬할 수 있다.
 
  * <작성 방법>
 ```markdown
-  | Left-aligned | Center-aligned | Right-aligned |
-  | :----------- | :------------: | ------------: |
-  | git status   |   git status   |    git status |
-  | git diff     |    git diff    |      git diff |
+ | Left-aligned | Center-aligned | Right-aligned |
+ |:---|:---:|---:|
+ | git status   |   git status   |    git status |
+ | git diff     |    git diff    |      git diff |
 ```
 
-  | Left-aligned | Center-aligned | Right-aligned |
-  | :----------- | :------------: | ------------: |
-  | git status   |   git status   |    git status |
-  | git diff     |    git diff    |      git diff |
+ | Left-aligned | Center-aligned | Right-aligned |
+ |:---|:---:|---:|
+ | git status   |   git status   |    git status |
+ | git diff     |    git diff    |      git diff |
 
  * 파이프를 셀 내용에 포함시키려면 이스케이프\를 사용하면 된다.
-
-
-
-출처: https://young-cow.tistory.com/25 [어린소]
