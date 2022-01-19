@@ -24,7 +24,7 @@
                         <li><a href="/categories/java" class="">Java ({{category[1].size}})</a></li>
                     {% endif %}
                     {% if category[0] == "Java Lib" %}
-                        <li><a href="/categories/java-lib" class="">Java Open Source ({{category[1].size}})</a></li>
+                        <li><a href="/categories/java-lib" class="">Java Lib. ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>        
