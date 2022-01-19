@@ -6,7 +6,7 @@ excerpt: "OXM(Object to XML) Jackson 관련 Timestamp, Converter관련오류 정
 categories:
   - Java Lib
 tags:
-  - [Java, Java Lib, OXM]
+  - [Jackson, Spring Boot, OXM]
 
 toc: true
 toc_sticky: true
@@ -32,14 +32,14 @@ last_modified_at: 2022-01-21
    - Jackson의 ObjectMapper API로 json 객체를 생성 후, 출력하여 json데이터를 완성.
  * Spring 3.1 이후 클래스패스에 Jackson 라이브러리가 존재하면 자동적으로 MessageConverter가 등록.
 
-    ```java
-      @RequestMapping("/json")
-      @ResponseBody()
-      public Object printJSON() {
-        Person person = new Person("Mommoo", "Developer");
-        return person;
-      }
-    ```
+```java
+  @RequestMapping("/json")
+  @ResponseBody()
+  public Object printJSON() {
+    Person person = new Person("Mommoo", "Developer");
+    return person;
+  }
+```
 
 ## 3. 기본지식
  * Jackson은 기본적으로 프로퍼티로 동작(Getter, Setter를 기준)
@@ -48,60 +48,60 @@ last_modified_at: 2022-01-21
  * Getter가 아닌 멤버변수로 하고 싶다면?
   - @JsonProperty 어노테이션 API 사용
 
-    ```java
-        public class Person {
-          @JsonProperty("name")
-            private String myName = "Mommoo";
-          }
-    ```
+```java
+    public class Person {
+      @JsonProperty("name")
+        private String myName = "Mommoo";
+      }
+```
 
 ## 4. 데이터 매핑 법칙 변경
  * Jackson은 매핑법칙 변경관련 @JsonAutoDetect API 제공.
  * 멤버변수 기준 Jackson 변환.
 
-    ```java
-      @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-      public class Person {
-        private String myName = "Mommoo";
-      }
-    ```
+```java
+  @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+  public class Person {
+    private String myName = "Mommoo";
+  }
+```
 
  * 제외범위를 설정 : Getter정책으로 private 만 데이터 바인딩에 제외
 
-    ```java
-      @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NON_PRIVATE)
-      public class Person {
-        private String myName = "Mommoo";
-        
-        public String getJob() {
-            return "Developer";
-        }
-      }
-    ```
+```java
+  @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY, getterVisibility = JsonAutoDetect.Visibility.NON_PRIVATE)
+  public class Person {
+    private String myName = "Mommoo";
+    
+    public String getJob() {
+        return "Developer";
+    }
+  }
+```
 
 ## 5. 데이터 상태에 따른 포함 관계 설정
  * NULL값 과 같은 특정 데이터 상태인 경우 제외 시 @JsonInclude 사용.
    - 클래스 위 또는 프로퍼티에 선언가능.
 
-    ```java
-      @JsonInclude(JsonInclude.Include.NON_NULL)
-      public class Person {
-        private String myName = "Mommoo";
-        
-        public String getJob() {
-            return "Developer";
-        }
-      }
-      ​
-      public class Person {
-        private String myName = "Mommoo";
-        
-        @JsonInclude(JsonInclude.Include.NON_NULL)
-        public String getJob() {
-            return "Developer";
-        }
-      }
-    ```
+```java
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  public class Person {
+    private String myName = "Mommoo";
+    
+    public String getJob() {
+        return "Developer";
+    }
+  }
+  ​
+  public class Person {
+    private String myName = "Mommoo";
+    
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public String getJob() {
+        return "Developer";
+    }
+  }
+```
 
 ## 6. Read + Write Annotations 정리
 ### @JsonIgnore
@@ -120,6 +120,7 @@ last_modified_at: 2022-01-21
 
 ### @JsonIgnoreProperties
  * @JsonIgnore 와 같은 기능, 해당 클래스의 여러 필드리스트를 무시하기 위해 사용한다.
+
 ```java
   @JsonIgnoreProperties({"firstName", "lastName"})
   public class PersonIgnoreProperties {
@@ -217,6 +218,7 @@ last_modified_at: 2022-01-21
 
   }
 ```
+
  * JsonAutoDetect.Visibility 는 접근레벨에 맞는 상수가 정의되어있다.
       ANY
     , DEFAULT
@@ -368,7 +370,6 @@ last_modified_at: 2022-01-21
     }
 ```
 
-
 ### @JacksonInject
  * JacksonInject 어노테이션은 Jackson 에의해 역직렬화된 Java Object에 공통정인 값을 주입할 수 있는 java Object의 프로퍼티를 지정한다.
  * 예를들어 여러 소스에서 Person Json Object를 파싱할때에 , 이 Json Object 의 소스가 어디인지 주입을 통해 저장할수 있다.
@@ -502,6 +503,7 @@ last_modified_at: 2022-01-21
 ```
 
  * 일반적으로 문자열은 Json Output 시에 쌍따옴표로 감싸진체 출려됩니다.
+
 ```java 
     {"personId":0,"address":"$#"}
 
@@ -515,9 +517,10 @@ last_modified_at: 2022-01-21
     }
 ```
 
-    - @JsonRawValue를 사용하면 쌍따움표 없이 그대로 출력됩니다. {"personId":0,"address":$#} 하지만, 이것은 잘못된 Json형식입니다.
+   - @JsonRawValue를 사용하면 쌍따움표 없이 그대로 출력됩니다. {"personId":0,"address":$#} 하지만, 이것은 잘못된 Json형식입니다.
 
  * @JsonRawValue 는 Raw Json 문자열을 String 타입변수에 담아 출력할때 사용될수 있습니다.
+ 
 ```java
   public class PersonRawValue {
 

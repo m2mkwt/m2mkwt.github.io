@@ -56,24 +56,24 @@ last_modified_at: 2022-01-22
  * Maven - pom.xml
  
 ```xml
-        <dependency>
-        <groupId>io.springfox</groupId>
-        <artifactId>springfox-swagger2</artifactId>
-        <version>2.9.2</version>
-        </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger2</artifactId>
+      <version>2.9.2</version>
+    </dependency>
 
-        <dependency>
-        <groupId>io.springfox</groupId>
-        <artifactId>springfox-swagger-ui</artifactId>
-        <version>2.9.2</version>
-        </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger-ui</artifactId>
+      <version>2.9.2</version>
+    </dependency>
 ```
 
  * Gradle - build.gradle
 
 ```gradle
-        compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
-        compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 ```
  
 ## 6. Swagger 설정
@@ -81,20 +81,20 @@ last_modified_at: 2022-01-22
  * Docket Bean 을 지정하면 기본적인 Api Docs 을 만들 수 있다.
 
 ```java
-        @Configuration
-        @EnableSwagger2
-        public class SwaggerConfig {
+    @Configuration
+    @EnableSwagger2
+    public class SwaggerConfig {
 
-        // 기본 swagger 선언
-        @Bean
-            public Docket api() {
-                return new Docket(DocumentationType.SWAGGER_2)
-                    .select()
-                    .apis(RequestHandlerSelectors.any())
-                    .paths(PathSelectors.any())
-                    .build();
-            }
+    // 기본 swagger 선언
+    @Bean
+        public Docket api() {
+            return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build();
         }
+    }
 ```
 
  * @EnableSwagger2 : Swagger2 를 활성화 하는 Annotation.
@@ -111,62 +111,62 @@ last_modified_at: 2022-01-22
  * SpringBoot가 아닌 일반 Spring MVC 프로젝트일 경우 아래와 같이 추가 설정이 필요하다.
 
 ```java
-        public class SwaggerConfig implements WebMvcConfigurer {
-            
-            @Override
-            public void addResourceHandlers(ResourceHandlerRegistry registry) {
-                registry.addResourceHandler("swagger-ui.html")
-                    .addResourceLocations("classpath:/META-INF/resources/");
+    public class SwaggerConfig implements WebMvcConfigurer {
+        
+        @Override
+        public void addResourceHandlers(ResourceHandlerRegistry registry) {
+            registry.addResourceHandler("swagger-ui.html")
+                .addResourceLocations("classpath:/META-INF/resources/");
 
-                registry.addResourceHandler("/webjars/**")
-                    .addResourceLocations("classpath:/META-INF/resoucres/webjars/");
-            }
-
-            ... Docket Bean ...
+            registry.addResourceHandler("/webjars/**")
+                .addResourceLocations("classpath:/META-INF/resoucres/webjars/");
         }
+
+        ... Docket Bean ...
+    }
 ```
 
  * Spring Secutiry 우회를 위해 실제사용했던 SwaggerConfig.
 
 ```java
-        @Configuration
-        @Profile("swagger")
-        @EnableSwagger2
-        public class SwaggerConfig {
-            @Bean
-            public Docket api() {
-                List<SecurityScheme> 	ssList;
-                List<SecurityContext>	scList;
-                
-                ssList	= new ArrayList<>();
-                ssList.add(this.getApiKey());
-                scList	= new ArrayList<>();
-                scList.add(this.securityContext());
-                return new Docket(DocumentationType.SWAGGER_2)
-                        .select()
-                        .apis(RequestHandlerSelectors.any())
-                        .paths(PathSelectors.any())
-                        .build()
-                        .securitySchemes(ssList)
-                        .securityContexts(scList);
-            }
+    @Configuration
+    @Profile("swagger")
+    @EnableSwagger2
+    public class SwaggerConfig {
+        @Bean
+        public Docket api() {
+            List<SecurityScheme> 	ssList;
+            List<SecurityContext>	scList;
             
-            private ApiKey getApiKey() {
-                return new ApiKey("Authorization Bearer Token", "Authorization", "header");
-            }
+            ssList	= new ArrayList<>();
+            ssList.add(this.getApiKey());
+            scList	= new ArrayList<>();
+            scList.add(this.securityContext());
+            return new Docket(DocumentationType.SWAGGER_2)
+                    .select()
+                    .apis(RequestHandlerSelectors.any())
+                    .paths(PathSelectors.any())
+                    .build()
+                    .securitySchemes(ssList)
+                    .securityContexts(scList);
+        }
+        
+        private ApiKey getApiKey() {
+            return new ApiKey("Authorization Bearer Token", "Authorization", "header");
+        }
+        
+        private SecurityContext securityContext() {
+            List<SecurityReference>	srList;
             
-            private SecurityContext securityContext() {
-                List<SecurityReference>	srList;
-                
-                srList	= new ArrayList<>();
-                srList.add(new SecurityReference("Authorization Bearer Token", new AuthorizationScope[] {new AuthorizationScope("private", "require authtoken api")}));
-                
-                return SecurityContext.builder()
-                        .securityReferences(srList)
-                        .forPaths(PathSelectors.regex("^\\/((?!open-).)*$"))
-                        .build();
-            }
-        }    
+            srList	= new ArrayList<>();
+            srList.add(new SecurityReference("Authorization Bearer Token", new AuthorizationScope[] {new AuthorizationScope("private", "require authtoken api")}));
+            
+            return SecurityContext.builder()
+                    .securityReferences(srList)
+                    .forPaths(PathSelectors.regex("^\\/((?!open-).)*$"))
+                    .build();
+        }
+    }    
 ```
 
 ### Annotation
@@ -188,23 +188,23 @@ last_modified_at: 2022-01-22
  * 간단한 기본 컨트롤러에 Swagger Annotation 을 추가.
 
 ```java
-        @RestController
-        @Api(value = "SwaggerTestController")
-        @RequestMapping("/v1/test")
-        public class SwaggerTestController {
-            @ApiOperation(value = "test", notes = "테스트입니다.")
-            @ApiResponses({
-                @ApiResponse(code = 200, message = "OK~!"),
-                @ApiResponse(code = 404, message = "page not found!!!")
-            })
-            @GetMapping(value = "/board")
-            public Map<String, String> selectBoard(@ApiParam(value = "게시판번호", required = true, example = "1") @RequestParam String no) {
-                Map<String, String> result = new HashMap<>();
-                result.put("test title", "테스트");
-                result.put("test content", "테스트 내용");
-                return result;
-            }
+    @RestController
+    @Api(value = "SwaggerTestController")
+    @RequestMapping("/v1/test")
+    public class SwaggerTestController {
+        @ApiOperation(value = "test", notes = "테스트입니다.")
+        @ApiResponses({
+            @ApiResponse(code = 200, message = "OK~!"),
+            @ApiResponse(code = 404, message = "page not found!!!")
+        })
+        @GetMapping(value = "/board")
+        public Map<String, String> selectBoard(@ApiParam(value = "게시판번호", required = true, example = "1") @RequestParam String no) {
+            Map<String, String> result = new HashMap<>();
+            result.put("test title", "테스트");
+            result.put("test content", "테스트 내용");
+            return result;
         }
+    }
 ```
 
 ### 간단한 Swagger 적용예제
