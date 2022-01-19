@@ -166,7 +166,7 @@ last_modified_at: 2022-01-22
         }    
     ```
 
-## Annotation
+### Annotation
  * Swagger Annotation 에 대한 자세한 설명은 github 또는 docs 에서 확인할 수 있다.
   - @Api	클래스를 Swagger 자원으로 표시한다.
   - @ApiImplicitParam	API 작업에서 단일 매개 변수를 나타낸다.
@@ -181,7 +181,7 @@ last_modified_at: 2022-01-22
   - @AuthorizationScope	OAuth2 인증 범위를 설명한다.
   - @ResponseHeader	응답의 일부로 제공될 수 있는 헤더를 나타낸다.
  
-## Controller
+### Controller
  * 간단한 기본 컨트롤러에 Swagger Annotation 을 추가.
     ```java
         @RestController
@@ -226,7 +226,7 @@ last_modified_at: 2022-01-22
 
  * 3. 기동 후 localhost:8080/{context}/swagger-ui.html 호출 
 
-## 실행화면
+### 실행화면
  * 기본 접속 주소 : http://서버주소/swagger-ui.html (ex: http://localhost:8080/프로젝트이름/swagger-ui.html)
 
 ### 참조
