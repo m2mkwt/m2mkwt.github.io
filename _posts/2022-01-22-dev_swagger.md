@@ -54,6 +54,7 @@ last_modified_at: 2022-01-22
  * 최신 버전은 Maven Central 에서 확인할 수 있습니다.
 
  * Maven - pom.xml
+ 
 ```xml
         <dependency>
         <groupId>io.springfox</groupId>
@@ -69,6 +70,7 @@ last_modified_at: 2022-01-22
 ```
 
  * Gradle - build.gradle
+
 ```gradle
         compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
         compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
@@ -77,6 +79,7 @@ last_modified_at: 2022-01-22
 ## 6. Swagger 설정
  * Swagger 설정을 위해 SwaggerConfig 클래스가 필요.
  * Docket Bean 을 지정하면 기본적인 Api Docs 을 만들 수 있다.
+
 ```java
         @Configuration
         @EnableSwagger2
@@ -106,6 +109,7 @@ last_modified_at: 2022-01-22
 
  * Docket Bean 에 대한 자세한 설명은 springfox docs 에서 확인할 수 있다.
  * SpringBoot가 아닌 일반 Spring MVC 프로젝트일 경우 아래와 같이 추가 설정이 필요하다.
+
 ```java
         public class SwaggerConfig implements WebMvcConfigurer {
             
@@ -182,6 +186,7 @@ last_modified_at: 2022-01-22
  
 ### Controller
  * 간단한 기본 컨트롤러에 Swagger Annotation 을 추가.
+
 ```java
         @RestController
         @Api(value = "SwaggerTestController")
