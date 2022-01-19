@@ -170,20 +170,21 @@ last_modified_at: 2022-01-22
 ```
 
 ### Annotation (github 또는 docs 에서 확인가능)
-| Annotation | 내용 |
-|---|---|
-| @Api	| 클래스를 Swagger 자원으로 표시한다. |
-| @ApiImplicitParam | API 작업에서 단일 매개 변수를 나타낸다. |
-| @ApiImplicitParams | 여러 ApiImplicitParam 객체 목록을 허용하는 warpper 이다. |
-| @ApiModel | Swagger 모델(VO)에 대한 추가 정보를 제공한다. |
-| @ApiModelProperty | 모델 속성의 데이터를 추가하고 관리한다. |
-| @ApiOperation | 특정 경로에 대한 작업 또는 일반적으로 HTTP 메서드를 설명한다. |
-| @ApiParam	| 작업 매개 변수에 대한 추가 메타 데이터를 추가한다. |
-| @ApiResponse | 결과에 대한 응답 값을 설명한다. |
-| @ApiResponses | 여러 ApiResponse 객체 목록을 허용하는 wrapper 이다. |
-| @Authorization | 리소스 또는 작업에 사용할 권한 부여 체계를 선언한다. |
-| @AuthorizationScope | OAuth2 인증 범위를 설명한다. |
-| @ResponseHeader | 응답의 일부로 제공될 수 있는 헤더를 나타낸다. |
+
+  |Annotation|설명|
+  |---|---|
+  |@Api|클래스를 Swagger 자원으로 표시한다. |
+  |@ApiImplicitParam|API 작업에서 단일 매개 변수를 나타낸다. |
+  |@ApiImplicitParams|여러 ApiImplicitParam 객체 목록을 허용하는 warpper 이다. |
+  |@ApiModel|Swagger 모델(VO)에 대한 추가 정보를 제공한다. |
+  |@ApiModelProperty|모델 속성의 데이터를 추가하고 관리한다. |
+  |@ApiOperation|특정 경로에 대한 작업 또는 일반적으로 HTTP 메서드를 설명한다. |
+  |@ApiParam|작업 매개 변수에 대한 추가 메타 데이터를 추가한다. |
+  |@ApiResponse|결과에 대한 응답 값을 설명한다. |
+  |@ApiResponses|여러 ApiResponse 객체 목록을 허용하는 wrapper 이다. |
+  |@Authorization|리소스 또는 작업에 사용할 권한 부여 체계를 선언한다. |
+  |@AuthorizationScope|OAuth2 인증 범위를 설명한다. |
+  |@ResponseHeader|응답의 일부로 제공될 수 있는 헤더를 나타낸다. |
  
 ### Controller
  * 간단한 기본 컨트롤러에 Swagger Annotation 을 추가.
