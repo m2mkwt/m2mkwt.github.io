@@ -1,7 +1,7 @@
 ---
 title: "Java Lib."
 layout: archive
-permalink: categories/ava-lib
+permalink: categories/java-lib
 author_profile: true
 sidebar_main: true
 ---
