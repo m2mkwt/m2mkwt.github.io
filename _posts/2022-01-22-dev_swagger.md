@@ -17,7 +17,6 @@ last_modified_at: 2022-01-22
 
 # Swagger(springfox) 사용하기
 ## 1. 스웨거(swagger) 이미지
- * [Swagger 예제 코드Github](https://github.com/jaewon0913/springboot-swagger)
  * [Swagger 샘플](http://springboot-swagger.herokuapp.com/swagger-ui.html)
 
 ## 2. Swagger(스웨거) - API developer tool
