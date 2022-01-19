@@ -48,13 +48,13 @@ last_modified_at: 2022-01-19
  * 방법 1. tab을 이용해서 코드블럭 만들기
    - 코드 블럭 시키고 싶은 내용 앞뒤로 enter
 
-```text
-  code 1
+  ```text
+    code 1
 
-      code 2 // code block 할 내용
+        code 2 // code block 할 내용
 
-  code 3 // 정상적으로 출력
-​```
+    code 3 // 정상적으로 출력
+  ​```
 
 >  code 1
 >
@@ -64,15 +64,15 @@ last_modified_at: 2022-01-19
 
  * 방법 2. ``` 과 ``` 사이 코드 삽입
 
-```text
-  '``java
-    public class Test {
-      @JsonIgnore
-      public long id = 0;
-      public String name = null;
-    }
-  '``
-```
+  ```text
+    '``java
+      public class Test {
+        @JsonIgnore
+        public long id = 0;
+        public String name = null;
+      }
+    '``
+  ```
 
  * 출력화면
 
@@ -86,11 +86,11 @@ last_modified_at: 2022-01-19
 
 ### 3) BlockQuote 사용하기(인용구)
 
-```text
-  > 테스트문구 1
-  > > 테스트문구 2
-  > > > 테스트문구 3
-```  
+  ```text
+    > 테스트문구 1
+    > > 테스트문구 2
+    > > > 테스트문구 3
+  ```  
 
  * 출력결과
 
@@ -109,19 +109,19 @@ last_modified_at: 2022-01-19
  * +, *, -  총 3가지의 기호사용
  * tab을 사용해 소속을 만들 수 있습니다.
 
-```text
-  + 안녕
-    + Hello
-      + hi
+  ```text
+    + 안녕
+      + Hello
+        + hi
 
-  * 안녕
-    * Hello
-      * hi
+    * 안녕
+      * Hello
+        * hi
 
-  - 안녕
-    - Hello
-      - hi
-​```
+    - 안녕
+      - Hello
+        - hi
+  ​```
 
  * 출력화면
 
@@ -139,11 +139,11 @@ last_modified_at: 2022-01-19
 
 ### 6) 구분선, 수평선 만들기
 
-```text
-  테스트문구 1
-  ------------
-  테스트문구 2
-```
+  ```text
+    테스트문구 1
+    ------------
+    테스트문구 2
+  ```
 
  * 출력화면
 
@@ -152,12 +152,12 @@ last_modified_at: 2022-01-19
 > 테스트문구 2
 
 ### 7) 링크(Link)
-```text
-  * 유형 1. : `설명어`를 클릭하면 URL로 이동 [테스트 블로그](https://m2mkwt.github.io "마우스를 올려놓으면 말풍선이 나옵니다.")  
-  * 유형 2. : URL 보여주고 `자동연결` <https://m2mkwt.github.io>  
-  * 유형 3. : 동일 파일 내 `문단 이동`  [동일파일 내 문단 이동](## 2. 사용법)  
+  ```text
+    * 유형 1. : `설명어`를 클릭하면 URL로 이동 [테스트 블로그](https://m2mkwt.github.io "마우스를 올려놓으면 말풍선이 나옵니다.")  
+    * 유형 2. : URL 보여주고 `자동연결` <https://m2mkwt.github.io>  
+    * 유형 3. : 동일 파일 내 `문단 이동`  [동일파일 내 문단 이동](## 2. 사용법)  
 
-```
+  ```
 
  * 출력화면
 
@@ -171,13 +171,13 @@ last_modified_at: 2022-01-19
  + 셀 너비는 내용에 맞게 알아서 정해지므로 굳이 Markdown 소스 상에서 맞추지 않아도 된다.
  * 헤더를 구분할 때는 - 를 각 column에 3개 이상 사용해야한다.
 
- * <작성 방법>
-```text
-  |First Header|Second Header|
-  |---|---|
-  |Content Cell| Content Cell  |
-  |Content Cell| Content Cell  |
-```
+ * 작성 방법
+  ```text
+    |First Header|Second Header|
+    |---|---|
+    |Content Cell| Content Cell  |
+    |Content Cell| Content Cell  |
+  ```
 
  |First Header|Second Header|
  |---|---|
@@ -188,14 +188,14 @@ last_modified_at: 2022-01-19
  * 표 내부 서식 및 정렬 방법
    - 표 내에서도 링크, 인라인 코드, 텍스트 스타일 사용가능
 
- * <작성 방법>
+ * 작성 방법
 
-```text
-  | Command      | Description |
-  |---|---|
-  | `git status` | List all *new or modified* files |
-  | `git diff`   | Show file differences that **haven't been** staged |
-```
+  ```text
+    | Command      | Description |
+    |---|---|
+    | `git status` | List all *new or modified* files |
+    | `git diff`   | Show file differences that **haven't been** staged |
+  ```
 
  |Command|Description|
  |---|---|
@@ -205,13 +205,14 @@ last_modified_at: 2022-01-19
 
  * 헤더 행의 하이픈-의 오른쪽, 왼쪽, 양쪽에 콜론:을 포함시켜서 오른쪽, 왼쪽, 중앙 정렬할 수 있다.
 
- * <작성 방법>
-```text
- | Left-aligned | Center-aligned | Right-aligned |
- |:---|:---:|---:|
- | git status   |   git status   |    git status |
- | git diff     |    git diff    |      git diff |
-```
+ * 작성 방법
+
+  ```text
+  | Left-aligned | Center-aligned | Right-aligned |
+  |:---|:---:|---:|
+  | git status   |   git status   |    git status |
+  | git diff     |    git diff    |      git diff |
+  ```
 
  | Left-aligned | Center-aligned | Right-aligned |
  |:---|:---:|---:|
