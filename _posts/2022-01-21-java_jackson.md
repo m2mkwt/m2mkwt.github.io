@@ -112,16 +112,17 @@ last_modified_at: 2022-01-21
 ## 6. Read + Write Annotations 정리
 ### @JsonIgnore
  * Jackson이 해당 프로퍼티를 무시하도록 하는 역할을 한다.
+ 
 ```java
   public class Test {
       @JsonIgnore
       public long id = 0;
       public String name = null;
   }
-```
   <-->
 
   {"name":"circlee"}
+```
 
 ### @JsonIgnoreProperties
  * @JsonIgnore 와 같은 기능, 해당 클래스의 여러 필드리스트를 무시하기 위해 사용한다.
@@ -135,10 +136,10 @@ last_modified_at: 2022-01-21
       public String  lastName  = null;
 
   }
-```
   <-->
 
   {"firstName":"circlee7","lastName":"eldie"}
+```
 
 ### @JsonIgnoreType
  * JsonIgnoreType 은 해당타입이 사용되는 모든곳에서 무시되도록 한다.
@@ -211,7 +212,7 @@ last_modified_at: 2022-01-21
 ```
 
 ### @JsonAutoDetect
-  -> JsonAutoDetect는 특정접근제한자의 필드들을 추가하라고 Jackson에게 알려주는 역할을 한다.
+ * JsonAutoDetect는 특정접근제한자의 필드들을 추가하라고 Jackson에게 알려주는 역할을 한다.
 
 ```java
   @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY )
@@ -222,7 +223,7 @@ last_modified_at: 2022-01-21
 
   }
 ```
-  * JsonAutoDetect.Visibility 는 접근레벨에 맞는 상수가 정의되어있다.
+ * JsonAutoDetect.Visibility 는 접근레벨에 맞는 상수가 정의되어있다.
       ANY
     , DEFAULT
     , NON_PRIVATE
@@ -233,7 +234,7 @@ last_modified_at: 2022-01-21
 ## @JsonView
  * JsonView 는 어노테이션 인자로 넘겨진 View 에 해당하는 클래스로 구분되어 직렬화/역직렬화 시 설정된 JsonView 에 따라 매칭되는 프로퍼티들이 역/직렬화 대상에 포함된다.
 
-  ```java
+```java
     @AllArgsConstructor
     public @Data class Person {
       private String name;
@@ -257,11 +258,11 @@ last_modified_at: 2022-01-21
         interface HOBBIES extends NORMAL{}
       }
     }
-  ```
+```
 
  * 실행: ObjectMapper writer/reader를 사용시 원하는 View를 지정한다.
   
-  ```java 
+```java 
     ObjectMapper om = new ObjectMapper();
     Person p = new Person("eldi", "male", 10, "seoul", "basketball");
     System.out.println(om.writeValueAsString(p));
@@ -269,7 +270,7 @@ last_modified_at: 2022-01-21
     System.out.println(om.writerWithView(PersonView.ADDITIONAL.class).writeValueAsString(p));
     System.out.println(om.writerWithView(PersonView.PRIVATE.class).writeValueAsString(p));
     System.out.println(om.writerWithView(PersonView.HOBBIES.class).writeValueAsString(p));
-  ```
+```
 
  * 출력:
   {"name":"eldi","gender":"male","age":10,"address":"seoul","hobbies":"basketball"} 
@@ -316,7 +317,7 @@ last_modified_at: 2022-01-21
 ### @JsonAnySetter
  * JSON Object 의 모든 setter 메소드를 인지할수 없는 필드에 대해 JsonAnySetter 어노테이션을 통해 Map<String, Object> 변수로 담을 수 있습니다.
 
-  ```java  
+```java  
     {
       "id"   : 1234,
       "name" : "John"
@@ -336,12 +337,14 @@ last_modified_at: 2022-01-21
             return this.properties.get(fieldName);
         }
     }
-  ```
+```
 
 ### @JsonCreator
  * JsonCreater 는 생성자메소드에 지정되어 JSON Object 의 필드 와 메소드의 파라미터 매칭을 통해 Java Object를 생성가능하게 한다.
+
  * @JsonSetter를 사용할수 없거나, 불변객체이기 때문에 setter 메소드가 존재하지 않을때 초기화 데이터 주입을 위해 유용하다.
-  ```java 
+
+```java 
     {
       "id"   : 1234,
       "name" : "John"
@@ -370,12 +373,15 @@ last_modified_at: 2022-01-21
         }
 
     }
-  ```
+```
+
 
 ### @JacksonInject
  * JacksonInject 어노테이션은 Jackson 에의해 역직렬화된 Java Object에 공통정인 값을 주입할 수 있는 java Object의 프로퍼티를 지정한다.
+
  * 예를들어 여러 소스에서 Person Json Object를 파싱할때에 , 이 Json Object 의 소스가 어디인지 주입을 통해 저장할수 있다.
-  ```java 
+
+```java 
     public class PersonInject {
         public long   id   = 0;
         public String name = null;
@@ -390,13 +396,14 @@ last_modified_at: 2022-01-21
     PersonInject personInject = new ObjectMapper().reader(inject)
                             .forType(PersonInject.class)
                             .readValue(new File("data/person.json"));
-  ```
+```
 
  * inject 리더가 지정된 ObjectMapper 를 이용하여 파싱하게 되면 jacksonInject 어노테이션을 확인하여 필드의 타입기반 매칭으로 값을 주입한다.
 
 ### @JsonDeserialize
  * JsonDeserialize 는 필드가 커스텀한 Deserializer class를 사용할수 있도록 한다. 
-  ```java 
+
+```java 
     public class PersonDeserialize {
         public long    id      = 0;
         public String  name    = null;
@@ -416,14 +423,16 @@ last_modified_at: 2022-01-21
         return true;
       }      
     }
-  ```
+```
+
  * JsonDeserializer<T t> 를 상속을 통해 구현할때 필드에 맞는 genericType을 지정하여 상속받고, desirialze 메소드를 작성한다.
 
 
 ## 8. Write Annotations (Java Object to Json Object : Serialize)
 ### @JsonInclude
  * JsonInclude 는 특정한 상황? 상태? 의 필드만 Json Object 변경시 포함되도록 지정할수 있다. 
-  ```java 
+
+```java 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     public class PersonInclude {
 
@@ -431,7 +440,7 @@ last_modified_at: 2022-01-21
         public String name     = null;
 
     }
-  ```
+```
 
  * JsonInclude.Include 는 아래와 같은 include 상수들이 지정되어 있고 NON_EMPTY의 경우 not null과 not empty를 의미한다. java8 Optional 타입의 isAbsent 도 체크한다.
  *  ALWAYS
@@ -443,7 +452,8 @@ last_modified_at: 2022-01-21
 
 ### @JsonGetter
  * @JsonSetter 와 반대로 setter메소드에 지정되며 해당하는 이름으로 Json Object 의 data field 가 생성된다.
-  ```java 
+
+```java 
     public class PersonGetter {
         private long  personId = 0;
 
@@ -453,11 +463,12 @@ last_modified_at: 2022-01-21
         @JsonSetter("id")
         public void personId(long personId) { this.personId = personId; }
     }
-  ```
+```
 
 ### @JsonAnyGetter
  * @JsonAnySetter 와 반대 역할로써 Key, Value 형식의 Map을 리턴하는 메소드에 지정함으로써  Json Object의 프로퍼티로 작성되게끔 한다.
-  ```java 
+
+```java 
     public class PersonAnyGetter {
 
         private Map<String, Object> properties = new HashMap<>();
@@ -475,32 +486,32 @@ last_modified_at: 2022-01-21
       ,"map.key2" : map.key2.value
     ...
     }
-  ```
+```
 
 ### @JsonPropertyOrder
  * JsonPropertyOrder는 Java Object가 Json 으로 직렬화 될때 필드의 순서를 지정할 수 있다. (일반적으로 Jackson은 class 에서 필드를 발견하는 순서대록 직렬화 해버림)
 
-  ```java
+```java
     @JsonPropertyOrder({"name", "personId"})
     public class PersonPropertyOrder {
         public long  personId  = 0;
         public String name     = null;
     }
-  ```
+```
 
 ### @JsonRawValue
  * JsonRawValue 는 특정필드에 지정되어, 해당 필드의 값이 raw하게 Json Output이 되도록 할 수 있습니다.
 
-  ```java 
+```java 
     public class PersonRawValue {
         public long   personId = 0;
         public String address  = "$#";
     }
 
-  ```
+```
 
  * 일반적으로 문자열은 Json Output 시에 쌍따옴표로 감싸진체 출려됩니다.
-  ```java 
+```java 
     {"personId":0,"address":"$#"}
 
     --- 
@@ -511,7 +522,7 @@ last_modified_at: 2022-01-21
         @JsonRawValue
         public String address  = "$#";
     }
-  ```
+```
 
     - @JsonRawValue를 사용하면 쌍따움표 없이 그대로 출력됩니다. {"personId":0,"address":$#} 하지만, 이것은 잘못된 Json형식입니다.
 
@@ -531,16 +542,17 @@ last_modified_at: 2022-01-21
 
 ### @JsonValue
  * @JsonValue 를 지정함으로써 Jackson이 객체자체를 직렬화하지 않고 JsonValue 가 지정된 메소드를 호출하는것으로 대체할 수 있습니다.
+
 ```java
   public class PersonValue {
 
-      public long   personId = 0;
-      public String name = null;
+    public long   personId = 0;
+    public String name = null;
 
-      @JsonValue
-      public String toJson(){
-          return this.personId + "," + this.name;
-      }
+    @JsonValue
+    public String toJson(){
+        return this.personId + "," + this.name;
+    }
 
   }
   출력 : 
@@ -551,7 +563,8 @@ last_modified_at: 2022-01-21
 
 ### @JsonSerialize
  * JsonSerialize를 이용하여 특정필드에 커스텀 serialzer를 지정할 수 있다.
- ``` java
+
+``` java
   public class PersonSerializer {
 
       public long   personId = 0;
@@ -731,9 +744,11 @@ last_modified_at: 2022-01-21
   java.lang.NoSuchMethodError: com.fasterxml.jackson.databind.DeserializationContext.wrongTokenException(Lcom/fasterxml/jackson/core/JsonParser;Ljava/lang/Class;Lcom/fasterxml/jackson/core/JsonToken;Ljava/lang/String;)Lcom/fasterxml/jackson/databind/JsonMappingException;
       at com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer.deserialize(LocalDateTimeDeserializer.java:141)
       at com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer.deserialize(LocalDateTimeDeserializer.java:39)
+
 ```
 
- * 위와 같이 발생할 경우 다음과 같이 해결 방법은 있다 
+ * 위와 같이 발생할 경우 해결 방법
+
 ```java
   @JsonSerialize(using = LocalDateTimeSerializer.class)  //추가
   @JsonDeserialize(using = LocalDateTimeDeserializer.class) //추가
@@ -753,13 +768,11 @@ last_modified_at: 2022-01-21
   
   @Override
   public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-      
       converters.add(mappingJackson2XmlHttpMessageConverter());
       converters.add(mappingJackson2HttpMessageConverter());
   }
   
   private MappingJackson2XmlHttpMessageConverter mappingJackson2XmlHttpMessageConverter() {
-      
       return new MappingJackson2XmlHttpMessageConverter(
               new Jackson2ObjectMapperBuilder().createXmlMapper(true).propertyNamingStrategy(new NamingStrategy()).build());
   }
@@ -779,13 +792,11 @@ last_modified_at: 2022-01-21
  
   @Override
   public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-      
       converters.add(mappingJackson2XmlHttpMessageConverter());
       //converters.add(mappingJackson2HttpMessageConverter()); //사용하지 않는다
   }
   
   private MappingJackson2XmlHttpMessageConverter mappingJackson2XmlHttpMessageConverter() {
-      
       return new MappingJackson2XmlHttpMessageConverter(
               new Jackson2ObjectMapperBuilder().createXmlMapper(true).propertyNamingStrategy(new NamingStrategy()).build());
   }
