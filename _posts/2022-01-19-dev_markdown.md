@@ -48,14 +48,15 @@ last_modified_at: 2022-01-19
  * 방법 1. tab을 이용해서 코드블럭 만들기
    - 코드 블럭 시키고 싶은 내용 앞뒤로 enter
 
-  ```text
-    code 1
 
-        code 2 // code block 할 내용
+    ```text
+      code 1
 
-    code 3 // 정상적으로 출력
-  ​```
+          code 2 // code block 할 내용
 
+      code 3 // 정상적으로 출력
+    ​```
+    
 >  code 1
 >
 >      code 2 // code block 할 내용
@@ -156,7 +157,6 @@ last_modified_at: 2022-01-19
     * 유형 1. : `설명어`를 클릭하면 URL로 이동 [테스트 블로그](https://m2mkwt.github.io "마우스를 올려놓으면 말풍선이 나옵니다.")  
     * 유형 2. : URL 보여주고 `자동연결` <https://m2mkwt.github.io>  
     * 유형 3. : 동일 파일 내 `문단 이동`  [동일파일 내 문단 이동](## 2. 사용법)  
-
   ```
 
  * 출력화면
@@ -172,6 +172,7 @@ last_modified_at: 2022-01-19
  * 헤더를 구분할 때는 - 를 각 column에 3개 이상 사용해야한다.
 
  * 작성 방법
+
   ```text
     |First Header|Second Header|
     |---|---|
@@ -208,10 +209,10 @@ last_modified_at: 2022-01-19
  * 작성 방법
 
   ```text
-  | Left-aligned | Center-aligned | Right-aligned |
-  |:---|:---:|---:|
-  | git status   |   git status   |    git status |
-  | git diff     |    git diff    |      git diff |
+    | Left-aligned | Center-aligned | Right-aligned |
+    |:---|:---:|---:|
+    | git status   |   git status   |    git status |
+    | git diff     |    git diff    |      git diff |
   ```
 
  | Left-aligned | Center-aligned | Right-aligned |
