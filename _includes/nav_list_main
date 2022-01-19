@@ -86,8 +86,8 @@
             </ul>
             <ul>
                 {% for category in site.categories %}
-                    {% if category[0] == "Design & Pattern" %}
-                        <li><a href="/categories/design" class="">Design & Pattern ({{category[1].size}})</a></li>
+                    {% if category[0] == "Design" %}
+                        <li><a href="/categories/design" class="">Design Pattern ({{category[1].size}})</a></li>
                     {% endif %}
                 {% endfor %}
             </ul>
