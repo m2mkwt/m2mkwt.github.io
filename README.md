@@ -22,6 +22,8 @@
  * VSCode
  * Tools
 
-
-
-## 현재 jekyll 작업중
+ * 404오류 시 - 빈 내용 커밋후 푸쉬, 빌드
+```
+    git commit --allow-empty -m "rebuild"
+    git push origin main
+```

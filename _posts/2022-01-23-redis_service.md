@@ -61,10 +61,9 @@ last_modified_at: 2022-01-23
 
 ```xml
     <!-- 공통라이브러리에 포함되어야 함, 일단은 jedis로 대체 -->
-    <dependency> 
-        <groupId>redis.clients</groupId> 
-        <artifactId>jedis</artifactId> 
-        <version>2.9.0</version> 
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-redis</artifactId>
     </dependency>
 ```
 
@@ -106,7 +105,6 @@ last_modified_at: 2022-01-23
     /* 3. 값을 저장 (timeout시간만큼 저장되고, timeout이후에 자동 삭제됨) */
     public void put(String key, Object val, long timeout, TimeUnit timeUnit)
     //예제) redisManager.put(noticeKey, seq, 20, TimeUnit.SECONDS);
- 
  
     /* 4. List값을 저장 (timeout시간만큼 저장되고, timeout이후에 자동 삭제됨) */
     public void putList(String key, List<Object> list, long timeout, TimeUnit timeUnit)
@@ -599,6 +597,7 @@ last_modified_at: 2022-01-23
         public RedisConnectionFactory httpSessionConnectionFactory() {
             if (this.redisHttpSessionProperties.getCluster() == null) {
             log.debug("RedisManager Object - redisClientType : NONE");
+            // 커넥션풀링
             JedisConnectionFactory factory = new JedisConnectionFactory(httpSessionJedisPoolConfig());
             factory.setHostName(this.redisHttpSessionProperties.getHost());
             factory.setPort(this.redisHttpSessionProperties.getPort());
@@ -609,6 +608,7 @@ last_modified_at: 2022-01-23
             return factory;
             } 
             log.debug("RedisManager Object - redisClientType : CLUSTER");
+            // 클러스터링
             JedisConnectionFactory factory = new JedisConnectionFactory(new RedisClusterConfiguration(this.redisHttpSessionProperties.getCluster().getNodes()));
             
             factory.setTimeout((int)(this.redisHttpSessionProperties.getTimeout().toMillis() * 1000L));
