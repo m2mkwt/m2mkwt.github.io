@@ -17,8 +17,8 @@ last_modified_at: 2022-01-23
 
 # Redis 서비스 예제
  * Redis Object Caching 서비스
-   - RedisManager를 활용하여 Redis에 로직 Object 데이터 저장
-   - Obejct 캐시에서는 database 그룹으로 분리하여 업무별로 분산처리하여 redis 병목현상을 최소화한다
+   - RedisManager를 활용하여 Redis에 Object 데이터 저장
+   - 그룹으로 분리하여 업무별로 분산처리하여 redis 병목현상 최소화필요
 
  * Redis Sequence(채번) 서비스
    - redis sequence(채번)를  사용하기 위한 설정
@@ -27,9 +27,9 @@ last_modified_at: 2022-01-23
    - 로그인 세션정보
 
 ## 1. Redis Object 서비스 개발 가이드
- * 빠른 성능을 위한 Caching 서비스를 구현하기 위하여 ElastiCache(Redis)를 이용한 Redis Object 서비스이다.
- * 이 Redis Object 서비스는 Caching용도이므로 해당 key 값이 없어질 수 있으므로 유의하여야 한다.
- * 주의 : String을 포한한 Primitive외의 일반 Object는 반드시 Serializable 구현하거나 상속받아야 한다.
+ * 빠른 성능을 위한 Caching 서비스를 구현하기 위하여 ElastiCache(Redis)를 이용
+ * Caching용도이므로 해당 key 값이 없어질 수 있으므로 유의필요
+ * 주의: String을 포한한 Primitive외의 일반 Object는 반드시 Serializable 구현하거나 상속필요.
 
 ```java 
    - 예제) public class Board implements Serializable {
@@ -38,6 +38,7 @@ last_modified_at: 2022-01-23
 ### 1-1. Object Key 생성규칙
 
  * 이하 내용을 조합하여 key가 중복되지 않게 구성한다.
+
  ```
     프로젝트명 :   m2m-api
     파트명     :   dpart
@@ -47,6 +48,7 @@ last_modified_at: 2022-01-23
 
       예제) m2m-api:dpart:board:notice:num    => 해당 글번호의 Board를 저장
 ```
+
  * prefix 는 필히 변수명으로 분리하여 작성 되어야 한다 .
 
 ```java 
@@ -68,6 +70,7 @@ last_modified_at: 2022-01-23
 
  * application.yml  : Redis Object를 위한 ElastiCache(Redis)연결정보를 설정한다.
  * 해당 key값이 변경될수 있으므로, local 개발시에도 터널링등을 사용하여, 개발용 ElastCache(Redis)를 사용하여야 한다.
+
 ```yaml
     spring:
     redis:
@@ -267,6 +270,7 @@ last_modified_at: 2022-01-23
 
 ### 2-1. application.yml
  * Redis sequence(채번)을 위한 ElastiCache(Redis)연결정보를 설정한다.
+
 ```yaml
     spring:
     redis:
@@ -469,9 +473,8 @@ last_modified_at: 2022-01-23
 ```
 
 ### 3-2. RedisSessionConfig 생성
- * 프로젝트의 config 패키지에 RedisSessionConfig.java  생성한다 
-
- * RedisSessionConfig.java - BO
+ * 프로젝트의 config 패키지에 RedisSessionConfig.java  생성
+ * RedisSessionConfig.java
 
 ```java
     @Configuration
@@ -578,67 +581,66 @@ last_modified_at: 2022-01-23
 ```java
     @Configuration
     @Profile({"local", "dev", "prj"})
-    public class RedisHttpSessionCacheConfig
-    {
-    private static final Logger log = LoggerFactory.getLogger(RedisHttpSessionCacheConfig.class);
-    
-    @Autowired
-    protected RedisHttpSessionProperties redisHttpSessionProperties;
-
-    @Value("${spring.redis.object.max-pooling:100}")
-    private int maxPooling;
-    
-    @Value("${spring.redis.object.min-pooling:20}")
-    private int minPooling;
-
-    @Primary
-    @Bean(name = {"httpSessionConnectionFactory"})
-    @Profile({"awsredis"})
-    public RedisConnectionFactory httpSessionConnectionFactory() {
-        if (this.redisHttpSessionProperties.getCluster() == null) {
-        log.debug("RedisManager Object - redisClientType : NONE");
-        JedisConnectionFactory factory = new JedisConnectionFactory(httpSessionJedisPoolConfig());
-        factory.setHostName(this.redisHttpSessionProperties.getHost());
-        factory.setPort(this.redisHttpSessionProperties.getPort());
-        factory.setDatabase(this.redisHttpSessionProperties.getDatabase());
-        factory.setTimeout((int)(this.redisHttpSessionProperties.getTimeout().toMillis() * 1000L));
-        factory.setUsePool(true);
-        factory.afterPropertiesSet();
-        return factory;
-        } 
-        log.debug("RedisManager Object - redisClientType : CLUSTER");
-        JedisConnectionFactory factory = new JedisConnectionFactory(new RedisClusterConfiguration(this.redisHttpSessionProperties.getCluster().getNodes()));
+    public class RedisHttpSessionCacheConfig {
+        private static final Logger log = LoggerFactory.getLogger(RedisHttpSessionCacheConfig.class);
         
-        factory.setTimeout((int)(this.redisHttpSessionProperties.getTimeout().toMillis() * 1000L));
-        return factory;
-    }
-    
-    @Bean
-    @Profile({"awsredis"})
-    public static ConfigureRedisAction httpSessionConfigureRedisAction() { return ConfigureRedisAction.NO_OP; }
-    
-    @Bean
-    public JedisPoolConfig httpSessionJedisPoolConfig() {
-        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
-        jedisPoolConfig.setMaxIdle(this.maxPooling);
-        jedisPoolConfig.setMinIdle(this.minPooling);
-        jedisPoolConfig.setTestOnBorrow(true);
-        jedisPoolConfig.setTestOnReturn(true);
-        return jedisPoolConfig;
-    }
-    
-    @Bean(name = {"httpSessionRedisObjectTemplate"})
-    @Profile({"awsredis"})
-    public RedisTemplate httpSessionRedisObjectTemplate() {
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();
-        StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
-        redisTemplate.setKeySerializer(stringRedisSerializer);
-        redisTemplate.setValueSerializer(stringRedisSerializer);
-        redisTemplate.setHashKeySerializer(stringRedisSerializer);
-        redisTemplate.setHashValueSerializer(stringRedisSerializer);
-        redisTemplate.setDefaultSerializer(stringRedisSerializer);
-        redisTemplate.setConnectionFactory(httpSessionConnectionFactory());
-        return redisTemplate;
-    }
+        @Autowired
+        protected RedisHttpSessionProperties redisHttpSessionProperties;
+
+        @Value("${spring.redis.object.max-pooling:100}")
+        private int maxPooling;
+        
+        @Value("${spring.redis.object.min-pooling:20}")
+        private int minPooling;
+
+        @Primary
+        @Bean(name = {"httpSessionConnectionFactory"})
+        @Profile({"awsredis"})
+        public RedisConnectionFactory httpSessionConnectionFactory() {
+            if (this.redisHttpSessionProperties.getCluster() == null) {
+            log.debug("RedisManager Object - redisClientType : NONE");
+            JedisConnectionFactory factory = new JedisConnectionFactory(httpSessionJedisPoolConfig());
+            factory.setHostName(this.redisHttpSessionProperties.getHost());
+            factory.setPort(this.redisHttpSessionProperties.getPort());
+            factory.setDatabase(this.redisHttpSessionProperties.getDatabase());
+            factory.setTimeout((int)(this.redisHttpSessionProperties.getTimeout().toMillis() * 1000L));
+            factory.setUsePool(true);
+            factory.afterPropertiesSet();
+            return factory;
+            } 
+            log.debug("RedisManager Object - redisClientType : CLUSTER");
+            JedisConnectionFactory factory = new JedisConnectionFactory(new RedisClusterConfiguration(this.redisHttpSessionProperties.getCluster().getNodes()));
+            
+            factory.setTimeout((int)(this.redisHttpSessionProperties.getTimeout().toMillis() * 1000L));
+            return factory;
+        }
+        
+        @Bean
+        @Profile({"awsredis"})
+        public static ConfigureRedisAction httpSessionConfigureRedisAction() { return ConfigureRedisAction.NO_OP; }
+        
+        @Bean
+        public JedisPoolConfig httpSessionJedisPoolConfig() {
+            JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+            jedisPoolConfig.setMaxIdle(this.maxPooling);
+            jedisPoolConfig.setMinIdle(this.minPooling);
+            jedisPoolConfig.setTestOnBorrow(true);
+            jedisPoolConfig.setTestOnReturn(true);
+            return jedisPoolConfig;
+        }
+        
+        @Bean(name = {"httpSessionRedisObjectTemplate"})
+        @Profile({"awsredis"})
+        public RedisTemplate httpSessionRedisObjectTemplate() {
+            RedisTemplate<String, Object> redisTemplate = new RedisTemplate<String, Object>();
+            StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
+            redisTemplate.setKeySerializer(stringRedisSerializer);
+            redisTemplate.setValueSerializer(stringRedisSerializer);
+            redisTemplate.setHashKeySerializer(stringRedisSerializer);
+            redisTemplate.setHashValueSerializer(stringRedisSerializer);
+            redisTemplate.setDefaultSerializer(stringRedisSerializer);
+            redisTemplate.setConnectionFactory(httpSessionConnectionFactory());
+            return redisTemplate;
+        }
     }
 ```
