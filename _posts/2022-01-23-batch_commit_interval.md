@@ -165,10 +165,6 @@ last_modified_at: 2022-01-23
  * reader 에서 힌번에 몇건의 item을 취득하던 관계없이 doRead 메소드에서는 1건만을 리턴.
  * 즉, **commit-interval 건수는 reader의 취득건수와는 관계없음.**
 
-
-출처:  [Spread your wings](https://sheerheart.tistory.com/entry/Spring-Batch-commitinterval에-대한-정리?category=929972)
-
-
 # 2. skip-limit
 ## 2-1. Spring Batch skip 동작 방식
  * chunk 단위 처리할 때 skip-limit에 설정된 횟수만큼은 예외가 발생해도 예외를 skip하고 계속해서 job 수행
@@ -205,5 +201,7 @@ last_modified_at: 2022-01-23
  * **processor-transactional="true" 설정을 추가하면 writer부터 재수행**
    - 설정을 추가하면 processor 결과를 캐싱해두고 그것을 이용해서 writer부터 재수행
 
-## 추의
+## 주의
  * 재수행되면 DB 작업은 롤백으로 기존에 했던 작업은 취소되지만 DB 작업 이외의 작업들은 같은 작업이 두 번 수행될 수 있다는 점 유의필요
+
+#### 출처:  [Spread your wings](https://sheerheart.tistory.com/entry/Spring-Batch-commitinterval에-대한-정리?category=929972)
