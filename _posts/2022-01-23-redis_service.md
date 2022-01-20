@@ -18,7 +18,7 @@ last_modified_at: 2022-01-23
 # Redis 서비스 예제
  * Redis Object Caching 서비스
    - RedisManager를 활용하여 Redis에 Object 데이터 저장
-   - 그룹으로 분리하여 업무별로 분산처리하여 redis 병목현상 최소화필요
+   - 그룹으로 분리하여 업무별로 분산처리하여 redis 병목현상 최소화 필요
 
  * Redis Sequence(채번) 서비스
    - redis sequence(채번)를  사용하기 위한 설정
@@ -52,7 +52,7 @@ last_modified_at: 2022-01-23
  * prefix 는 필히 변수명으로 분리하여 작성 되어야 한다 .
 
 ```java 
-    public static final String  NOTICE_OBJECT="api:wt:board:notice:num";
+    public static final String  NOTICE_OBJECT="m2m-api:dpart:board:notice:num";
 ```    
 
 ### 1-2. 시작 준비
@@ -76,8 +76,8 @@ last_modified_at: 2022-01-23
     redis:
         #오브젝트용
         object:
-        host: [해당 End Point]  #rc-was-object.tnxx20.ng.0001.apn2.cache.amazonaws.com
-        port: 6379
+        host: [해당 End Point]  #rc-was-object.xxxxx.xx.0001.apn.cache.amazonaws.com
+        port: 5402
         database: 2
         timeout: 50
 ```
@@ -276,8 +276,8 @@ last_modified_at: 2022-01-23
     redis:
         #채번용
         sequence:
-        host: [해당 End Point]  #rc-was-object.tnxx20.ng.0001.apn2.cache.amazonaws.com
-        port: 6379
+        host: [해당 End Point]  #rc-was-object.xxxxxx.xx.0001.apn2.cache.amazonaws.com
+        port: 5402
         timeout: 50
 ```
 
@@ -457,7 +457,7 @@ last_modified_at: 2022-01-23
     spring:
         redis:
             session:
-            host: wt-dev-biz-redis.p0xuj6.0001.apn2.cache.amazonaws.com #end-point는 레퍼런스참고
+            host: wt-dev-biz-redis.xxxxxx.0001.apn2.cache.amazonaws.com #end-point
             port: 6379
             timeout: 50
     
@@ -469,7 +469,7 @@ last_modified_at: 2022-01-23
                 timeout: 50
                 cluster:
                     nodes:
-                    - wt-tst-biz-clust.yw5huo.clustercfg.apn2.cache.amazonaws.com:6379 #end-point는 레퍼런스참고
+                    - wt-tst-biz-clust.xxxxxx.clustercfg.apn2.cache.amazonaws.com:5402 #end-point
 ```
 
 ### 3-2. RedisSessionConfig 생성
