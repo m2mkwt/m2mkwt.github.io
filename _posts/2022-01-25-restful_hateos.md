@@ -287,6 +287,7 @@ last_modified_at: 2022-01-25
     //standard getters and setters
     }
 ```
+
 #### extends ResourceSupport 의 문제
 * @JsonUnwrapped로 해결:
    - beanSerializer이 json으로 만들때 자동으로 객체 변수를 참조하여 만드므로 event로 감싸지는데 wrapping을 unwrapping 하여 꺼내줌
@@ -357,7 +358,9 @@ last_modified_at: 2022-01-25
 ```
 
 * 결과 확인
+
    - curl http://localhost:8080/spring-security-rest/api/customers
+
 ```json
     {
         "__embedded": {
@@ -605,6 +608,7 @@ public class UserController {
 org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying bean of type 'org.springframework.plugin.core.PluginRegistry<org.springframework.hateoas.client.LinkDiscoverer, org.springframework.http.MediaType>' available: expected single matching bean but found 3: relProviderPluginRegistry,linkDiscovererRegistry,entityLinksPluginRegistry
 
 * 오류수정
+
 ```xml
      <parent>
         <groupId>org.springframework.boot</groupId>
