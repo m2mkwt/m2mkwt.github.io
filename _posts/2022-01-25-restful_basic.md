@@ -1,7 +1,7 @@
 ---
 layout: single
 title:  "[REST] - RESTful 기본 및 보안정리"
-excerpt: "RESTful의 설계시 기본 및 HATEOAS "
+excerpt: "RESTful의 설계시 기본"
 
 categories:
   - Design
