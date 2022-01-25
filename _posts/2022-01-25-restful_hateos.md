@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "[REST] - RESTful 서비스 작성 시 HATEOAS"
+title:  "[REST] - Spring HATEOAS을 이용한 RESTful 서비스 작성"
 excerpt: "Spring HATEOAS, HAL JSON"
 
 categories:
@@ -678,3 +678,4 @@ org.springframework.beans.factory.NoUniqueBeanDefinitionException: No qualifying
 
 ##### 참고
 > https://docs.spring.io/spring-hateoas/docs/current/reference/html/#reference
+> https://spring.io/projects/spring-hateoas
