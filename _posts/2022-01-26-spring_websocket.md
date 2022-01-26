@@ -68,8 +68,8 @@ HTTP/REST 방식을 사용하는 어플리케이션은 URL을 굉장히 많이 �
 
 HTTP 핸드셰이크 요청에 `Sec-WebSocket-Protocol` 헤더를 추가하면 웹소켓 클라이언트/서버도 고수준 메세지 프로토콜(e.g. STOMP)로 통신할 수 있다. 그렇지 않으면 자체 컨벤션을 만들어야 한다.
 
-### STOMP (Simple Text Oriented Messaging Protocol)
-* 스트리밍 텍스트 지향 메시지 프로토콜
+### STOMP
+* Simple Text Oriented Messaging Protocol(스트리밍 텍스트 지향 메시지 프로토콜)
 * 아래와 같은 형식
   - COMMAND에는 보통 SEND, SUBSCRIBE와 같은 명령 사용가능. 
   - 추가적인 header와 body 본문 내용을 통해 통신을 하는 방식
