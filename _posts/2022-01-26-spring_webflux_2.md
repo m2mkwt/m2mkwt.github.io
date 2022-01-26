@@ -4,9 +4,9 @@ title:  "[Spring WebFlux] - Spring Web on Reactive Stack(2)"
 excerpt: "스프링5 웹 리액티브 스택 웹플럭스 한글 번역 2편"
 
 categories:
-  - Spring WebFlux
+  - Spring Reactive
 tags:
-  - [Spring WebFlux, Reactive]
+  - [Spring WebFlux, Spring Reactive]
 
 toc: true
 toc_sticky: true
@@ -14,9 +14,7 @@ toc_sticky: true
 date: 2022-01-26
 last_modified_at: 2022-01-26
 ---
-
-# Web on Reactive Stack(2) (Version 5.2.6.RELEASE)
----
+* [출처 - 토리맘의 한글라이즈 프로젝트](https://godekdls.github.io/Reactive%20Spring/springwebflux/)
 
 ## 1.5. Functional Endpoints
 

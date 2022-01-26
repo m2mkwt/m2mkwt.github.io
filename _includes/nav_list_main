@@ -41,8 +41,8 @@
                     {% if category[0] == "Spring Boot" %}
                         <li><a href="/categories/spring-boot" class="">Spring Boot ({{category[1].size}})</a></li>
                     {% endif %}
-                    {% if category[0] == "Spring WebFlux" %}
-                        <li><a href="/categories/spring-webflux" class="">Spring WebFlux ({{category[1].size}})</a></li>
+                    {% if category[0] == "Spring Reactive" %}
+                        <li><a href="/categories/spring-webflux" class="">Spring Reactive ({{category[1].size}})</a></li>
                     {% endif %}                    
                     {% if category[0] == "Spring Cloud" %}
                         <li><a href="/categories/spring-cloud" class="">Spring Cloud ({{category[1].size}})</a></li>

@@ -4,9 +4,9 @@ title:  "[Spring WebFlux] - Spring Web on Reactive Stack(1)"
 excerpt: "스프링5 웹 리액티브 스택 웹플럭스 한글 번역 1편"
 
 categories:
-  - Spring WebFlux
+  - Spring Reactive
 tags:
-  - [Spring WebFlux, Reactive]
+  - [Spring WebFlux, Spring Reactive]
 
 toc: true
 toc_sticky: true
@@ -14,8 +14,8 @@ toc_sticky: true
 date: 2022-01-26
 last_modified_at: 2022-01-26
 ---
-
-# Web on Reactive Stack (Version 5.2.6.RELEASE)
+* Web on Reactive Stack (Version 5.2.6.RELEASE)
+* [출처 - 토리맘의 한글라이즈 프로젝트](https://godekdls.github.io/Reactive%20Spring/springwebflux/)
 
 스프링 프레임워크, 스프링 웹 MVC를 포함한 기존 웹 프레임워크는 서블릿 API와 서블릿 컨테이너를 위해 개발됐다. 5.0 버전에 추가된 스프링 웹플럭스는 리액티브 스택 웹 프레임워크다. 완전하게 논블로킹으로 동작하며, [Reactive Streams](https://www.reactive-streams.org/) back pressure를 지원하고, Netty, Undertow, 서블릿 3.1+ 컨테이너 서버에서 실행된다.
 
