@@ -4,7 +4,7 @@ title:  "[RxJava] - RxJava 프로그래밍"
 excerpt: "RxJava를 이용한 비동기 리액티브 프로그래밍"
 
 categories:
-  - Spring Reactive
+  - Java
 tags:
   - [Java, RxJava, Spring Reactive]
 
@@ -157,7 +157,7 @@ RxJava를 배우는 데는 자바 8을 사용하지 않아도 된다. RxJava는 
 ## 5. 마블 다이어그램 보는 법
 마블 다이어그램은 RxJava를 이해하는 핵심 도구이다. map(), flatMap() 함수 등의 수많은 리액티브 연산자들을 이해하는데 큰 도움을 준다. 마블 다이어그램은 예를 보면서 어떻게 활용하는지 배우는 것이 가장 좋다.
 
-![마블 다이어그램 1](./../images/rxjava/m_diagram.png)
+![마블 다이어그램 1](./../../images/rxjava/m_diagram.png)
 
 * 1. 위에 있는 실선은 Observable의 시간 표시줄(timeline)이다. 시간순으로 데이터가 발행되는 것을 표현한다.
 * 2. Observable에서 발행하는 데이터이다. 시간 순서대로 별, 삼각형, 오각형, 원 등의 도형을 발행한다. 데이터를 발행할때는 onNext 알림이 발생한다.
@@ -168,7 +168,7 @@ RxJava를 배우는 데는 자바 8을 사용하지 않아도 된다. RxJava는 
 
 그럼 조금 더 복잡한 마블 다이어그램을 살펴본다. RxJava의 combineLatest() 함수의 마블 다이어그램으로 2개 이상의 Observable을 처리할 수 있다. 이전 flip 함수 마블 다이어그램과 다른 점은 Observable의 시간 표시줄이 1개가 아니라 2개로 늘었다는 점이다.
 
-![마블 다이어그램 2](./../images/rxjava/m_diagram_02.png)
+![마블 다이어그램 2](./../../images/rxjava/m_diagram_02.png)
 
 * 1. 첫번째 Observable은 같은 모양(원)이지만 색깔이 다른 도형을 발행한다.
 * 2. 두번째 Observable은 모양은 다르지만 번호가 없는 도형을 발행한다.
@@ -209,11 +209,11 @@ Observable 클래스에는 Observable을 생성하는 팩토리 함수, 중간 �
 ### 1) just() 함수
 데이터를 발행하는 가장 쉬운 방법은 기존의 자료구조를 사용하는 것이다. just() 함수는 인자로 넣은 데이터를 차례로 발행하려고 Observable을 생성한다(실제 데이터의 발행은 subscribe() 함수를 호출해야 시작한다). 한 개의 값을 넣을 수도 있고 인자로 여러 개의 값(최대 10개)을 넣을 수도 있다. 단 타입은 모두 같아야 한다.
 
-![마블 다이어그램 3](./../images/rxjava/m_diagram_03.png)
+![마블 다이어그램 3](./../../images/rxjava/m_diagram_03.png)
 
 중앙의 원은 Observable에서 발행하는 데이터로 just() 함수를 거치면 입력한 원을 그대로 발행한다. 파이프(|) 표시는 모든 데이터 발행이 완료(onComplete 이벤트)되었음을 의미한다. 이번엔 인자가 2개 이상 N개인 just() 함수의 마블 다이어그램을 살펴본다.
 
-![마블 다이어그램 4](./../images/rxjava/m_diagram_04.png)
+![마블 다이어그램 4](./../../images/rxjava/m_diagram_04.png)
 
 just() 함수로 1~6의 원을 1개씩 발행한다(이때 데이터 내용을 변경하지 않고 그대로 발행한다). 모두 발행한 이후에는 완료(|)한다. 위의 마블다이어그램의 코드는 다음과 같다.
 
@@ -278,7 +278,7 @@ System.out.println("isDisposed() : " + d.isDisposed());
 ### 3) create() 함수
 just() 함수는 데이터를 인자로 넣으면 자동으로 알림 이벤트가 발생하지만 create() 함수는 onNext, onComplete, onError 같은 알림을 개발자가 직접 호출해야 한다. 그래서 create()는 라이브러리가 무언가를 해준다기보다 개발자가 무언가를 직접 하는 느낌이 강한 함수이다.
 
-![마블 다이어그램 5](./../images/rxjava/m_diagram_05.png)
+![마블 다이어그램 5](./../../images/rxjava/m_diagram_05.png)
 
 구독자에게 데이터를 발행하려면 onNext() 함수를 호출해야 하며 모든 데이터를 발행한 후에는 반드시 onComplete() 함수를 호출해야 한다. create() 함수의 원형은 아래와 같다.
 
@@ -449,7 +449,7 @@ Executors 클래스는 단일 스레드 실행자(SingleThreadExecutor) 뿐만 �
 ## Single 클래스
 Single 클래스는 RxJava 1.x 부터 존재하는 Observable의 특수한 형태이다. Observable 클래스는 데이터를 무한하게 발행할 수 있지만 Single 클래스는 오직 1개의 데이터만 발행하도록 한다. 보통 결과가 유일한 서버 API를 호출할때 유용하게 사용할 수 있다. 
 
-![마블 다이어그램 6](./../images/rxjava/m_diagram_06.png)
+![마블 다이어그램 6](./../../images/rxjava/m_diagram_06.png)
 
 * Single 클래스의 시간 표시줄은 왼쪽에서 오른쪽으로 흐른다.
 * Single 클래스에서 발행한 결과데이터이다.
@@ -520,7 +520,7 @@ Maybe 클래스는 RxJava 2에 처음 도입된 Observable의 또다른 특수 �
 
 Maybe의 마블 다이어그램은 다음과 같다.
 
-![마블 다이어그램 7](./../images/rxjava/m_diagram_07.png)
+![마블 다이어그램 7](./../../images/rxjava/m_diagram_07.png)
 
 상단부터 onSuccess 이벤트, onError 이벤트, onComplete 이벤트에 해당한다.
 
@@ -552,7 +552,7 @@ AsyncSubject 클래스는 Observable에서 발행한 마지막 데이터를 얻�
 
 다음 마블 다이어그램을 보면 어떻게 동작하는지 명확하게 알수 있다.
 
-![마블 다이어그램 8](./../images/rxjava/m_diagram_08.png)
+![마블 다이어그램 8](./../../images/rxjava/m_diagram_08.png)
 
 AsyncSubject 클래스는 지금까지와는 다르게 마블다이어그램의 아래쪽에 있는 구독자의 시간 표시줄이 여러개인 것이 다르다. 처리 흐름은 다음과 같다.
 * 1. 처음 구독자가 subscribe() 함수를 호출하다.
@@ -619,7 +619,7 @@ BehaviorSubject는 (구독자가) 구독을 하면 가장 최근 값 혹은 기�
 
 BehaviorSubject 클래스의 마블 다이어그램은 다음과 같다.
 
-![마블 다이어그램 9](./../images/rxjava/m_diagram_09.png)
+![마블 다이어그램 9](./../../images/rxjava/m_diagram_09.png)
 
 여기서 'PINK' 원은 BehaviorSubject 클래스를 생성할때 넘긴 기본값이다. 첫번째 구독자는 기본값을 받고 다음에 'RED' 원부터 수신한다. 두번째 구독자는 'GREEN' 원이 발행된 이후에 구독했으므로 'GREEN' 원을 맨처음 전달한다. 이를 소스 코드로 구현하면 다음과 같다.
 
@@ -643,7 +643,7 @@ BehaviorSubject 클래스는 AsyncSubject 클래스와는 다르게 createDefaul
 
 가장 평범한 Subject 클래스이다. 구독자가 subscribe() 함수를 호출하면 값을 발행하기 시작한다. AsyncSubject 클래스처럼 마지막 값만 발행하거나 BehaviorSubject 클래스처럼 발행한 값이 없을때 기본값을 대신 발행하지도 않는다. 오직 해당 시간에 발생한 데이터를 그대로 구독자에게 전달받는다.
 
-![마블 다이어그램 10](./../images/rxjava/m_diagram_10.png)
+![마블 다이어그램 10](./../../images/rxjava/m_diagram_10.png)
 
 위 마블 다이어그램은 아래 코드처럼 작성할 수 있다.
 
@@ -672,7 +672,7 @@ ReplaySubject 클래스는 구독자가 새로 생기면 항상 데이터의 처
 
 ReplaySubject 클래스의 마블 다이어그램은 아래와 같다.
 
-![마블 다이어그램 11](./../images/rxjava/m_diagram_11.png)
+![마블 다이어그램 11](./../../images/rxjava/m_diagram_11.png)
 
 위 마블 다이어그램은 아래처럼 작성할 수 있다.
 
@@ -712,7 +712,7 @@ ConnectableObservable 클래스는 Subject 클래스처럼 Cold Observable을 Ho
 
 ConnectableObservable 객체를 생성하려면 먼저 Observable에 publish() 함수를 호출해야 한다. 이 함수는 여러 구독자에게 데이터를 발행하기 위해 connect() 함수를 호출하기 전까지 데이터 발행을 유예하는 역할을 한다. ConnectableObservable.publish()의 마블 다이어그램은 다음과 같다.
 
-![마블 다이어그램 12](./../images/rxjava/m_diagram_12.png)
+![마블 다이어그램 12](./../../images/rxjava/m_diagram_12.png)
 
 기존의 마블 다이어그램과는 차이가 있다. 보통은 Observable에 subscribe() 함수를 호출해야 데이터발생을 시작하는데 이제는 아무런 일도 일어나지 않는다. 오로지 connect() 함수를 호출해야 그때까지 구독했던 구독자 모두에게 데이터를 발행한다. connect() 함수를 호출한 이후에 구독한 구독자에게는 구독이후에 발생한 데이터부터 발행한다.
 
