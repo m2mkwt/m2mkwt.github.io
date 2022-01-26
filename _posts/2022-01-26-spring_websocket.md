@@ -1,12 +1,12 @@
 ---
 layout: single
-title:  "[WebSocket] - Spring WebSocket"
+title:  "[WebSocket] - Spring WebSocket (feat. STOMP)"
 excerpt: "스프링5 웹 리액티브 스택 웹소켓 한글 번역"
 
 categories:
   - Spring Reactive
 tags:
-  - [WebSocket, Spring Reactive]
+  - [WebSocket, Spring Reactive, STOMP]
 
 toc: true
 toc_sticky: true
