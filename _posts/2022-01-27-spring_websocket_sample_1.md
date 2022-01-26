@@ -59,6 +59,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 ### 3. 컨트롤러
 * ChatController
+
 ```java
 @Controller
 @RequiredArgsConstructor
@@ -82,6 +83,7 @@ public class ChatController {
 ```
 
 * RoomController
+
 ```java
 @Controller
 @RequiredArgsConstructor
@@ -137,6 +139,7 @@ public class RoomController {
 
 ### 4. 서비스
 * ChatService
+
 ```java
 @Service
 @RequiredArgsConstructor
@@ -279,6 +282,3 @@ public class ChatService {
     }
 </script>
 ```
-
-### Redis 추가중 
-채팅 로그 Redis에 저장
