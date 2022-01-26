@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "[Spring WebClient] - Spring WebSockets"
+title:  "[WebSocket] - Spring WebSocket"
 excerpt: "스프링5 웹 리액티브 스택 웹소켓 한글 번역"
 
 categories:
