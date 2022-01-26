@@ -91,14 +91,12 @@ HTTP 핸드셰이크 요청에 `Sec-WebSocket-Protocol` 헤더를 추가하면 �
   - 메시지를 받을 endpoint는 /endpoint/..., /endpoint/** 등을 지원한다.
   - 서버의 모든 메시지는 특정 클라이언트 구독에 대한 응답이어야 하며 서버 메시지의 subscription-id 헤더는 클라이언트 구독의 id 헤더와 동일해야한다.
  
-
 * [장점]
   - raw websocket보다 더 많은 프로그래밍 모델을 지원
   - 여러 브로커(카프카, 등등)을 사용가능
   - spring framework를 사용하면 사용가능
   - 메시지 포맷을 정할 필요가 없다.
   - 애플리케이션 로직은 여러 @Controller 인스턴스로 구성될 수 있으며 주어진 연결에 대해 단일 WebSocketHandler를 사용하여 원시 WebSocket 메시지를 처리하는 대신 STOMP 대상 헤더를 기반으로 메시지를 라우팅할 수 있습니다.
- 
 
 * [기본 설정]
 
