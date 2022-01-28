@@ -70,9 +70,8 @@ HTTP 핸드셰이크 요청에 `Sec-WebSocket-Protocol` 헤더를 추가하면 �
 
 ### STOMP
 * Simple Text Oriented Messaging Protocol(스트리밍 텍스트 지향 메시지 프로토콜)
-* 아래와 같은 형식
-  - COMMAND에는 보통 SEND, SUBSCRIBE와 같은 명령 사용가능. 
-  - 추가적인 header와 body 본문 내용을 통해 통신을 하는 방식
+* 형식 1 : COMMAND에는 보통 SEND, SUBSCRIBE와 같은 명령 사용가능. 
+* 형식 2 : 추가적인 header와 body 본문 내용을 통해 통신을 하는 방식
 
 ```powershell
   COMMAND
@@ -83,22 +82,22 @@ HTTP 핸드셰이크 요청에 `Sec-WebSocket-Protocol` 헤더를 추가하면 �
   BODY^@
 ```
 
-* [주요 특징]
-  - @Controller → @MessageMapping으로 연결한 후 브로커에다가 보내는데 브로커는 메모리도 가능하고 RabbitMQ, ActiveMq등도 사용이 가능하다.
-  - spring은 브로커에 대한 tcp 연결을 유지하고 연결된 websocket client에게 메시지를 전달한다.
-  - client는 메시지를 받고 또 메시지를 수신한다.
-  - client에서 메시지를 보내면 @MessageMapping에서 받아서 처리한다.
-  - 메시지를 받을 endpoint는 /endpoint/..., /endpoint/** 등을 지원한다.
-  - 서버의 모든 메시지는 특정 클라이언트 구독에 대한 응답이어야 하며 서버 메시지의 subscription-id 헤더는 클라이언트 구독의 id 헤더와 동일해야한다.
+#### 주요 특징
+* @Controller → @MessageMapping으로 연결한 후 브로커에다가 보내는데 브로커는 메모리도 가능하고 RabbitMQ, ActiveMq등도 사용이 가능하다.
+* spring은 브로커에 대한 tcp 연결을 유지하고 연결된 websocket client에게 메시지를 전달한다.
+* client는 메시지를 받고 또 메시지를 수신한다.
+* client에서 메시지를 보내면 @MessageMapping에서 받아서 처리한다.
+* 메시지를 받을 endpoint는 /endpoint/..., /endpoint/** 등을 지원한다.
+* 서버의 모든 메시지는 특정 클라이언트 구독에 대한 응답이어야 하며 서버 메시지의 subscription-id 헤더는 클라이언트 구독의 id 헤더와 동일해야한다.
  
-* [장점]
-  - raw websocket보다 더 많은 프로그래밍 모델을 지원
-  - 여러 브로커(카프카, 등등)을 사용가능
-  - spring framework를 사용하면 사용가능
-  - 메시지 포맷을 정할 필요가 없다.
-  - 애플리케이션 로직은 여러 @Controller 인스턴스로 구성될 수 있으며 주어진 연결에 대해 단일 WebSocketHandler를 사용하여 원시 WebSocket 메시지를 처리하는 대신 STOMP 대상 헤더를 기반으로 메시지를 라우팅할 수 있습니다.
+#### 장점
+* raw websocket보다 더 많은 프로그래밍 모델을 지원
+* 여러 브로커(카프카, 등등)을 사용가능
+* spring framework를 사용하면 사용가능
+* 메시지 포맷을 정할 필요가 없다.
+* 애플리케이션 로직은 여러 @Controller 인스턴스로 구성될 수 있으며 주어진 연결에 대해 단일 WebSocketHandler를 사용하여 원시 WebSocket 메시지를 처리하는 대신 STOMP 대상 헤더를 기반으로 메시지를 라우팅할 수 있습니다.
 
-* [기본 설정]
+#### 기본 설정
 
 ```java
   import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
