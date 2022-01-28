@@ -33,9 +33,9 @@ Spring Framework 5.0.4.RELEASE가 나온 현재까지, 간편하게 Domain Event
 
 여기서 Domain Event에 대해서 다루지는 않겠지만 힌트 정도는 얻어 갈 수 있다고 생각한다.
 
-## 요구 사항
-회원이 가입하면 이메일과 SMS로 가입 축하 메시지를 보낸다.
-이메일과 SMS는 반드시 성공하지 않아도 괜찮다.
+## 요구사항
+* 회원이 가입하면 이메일과 SMS로 가입 축하 메시지를 보낸다.
+* 이메일과 SMS는 반드시 성공하지 않아도 괜찮다.
 
 ## 구현 1. 하나의 transaction으로 처리하기
 ### 의존성
@@ -141,15 +141,16 @@ public class SimpleMemberJoinService implements MemberJoinService {
 }
 ```
 
-* 성공, 실패
-성공
+### 결과
+* 성공
 
 ```
 INFO  [main] c.p.s.s.service.email.EmailService       : send JOIN email to test@test.com
 INFO  [main] c.p.s.s.service.sms.SuccessSmsService    : send JOIN sms to 012-3456-7890
 INFO  [main] c.p.s.s.SimpleEventApplication           : member count : 1
 ```
-실패
+
+* 실패
 
 ```
 INFO  [main] c.p.s.s.service.email.EmailService       : send JOIN email to test@test.com
@@ -199,8 +200,8 @@ public class AdvancedMemberJoinService implements MemberJoinService {
 }
 ```
 
-* 성공, 실패
-성공
+### 결과
+* 성공
 
 ```
 INFO  [main] c.p.s.s.service.email.EmailService       : send JOIN email to test@test.com
@@ -208,7 +209,7 @@ INFO  [main] c.p.s.s.service.sms.SuccessSmsService    : send JOIN sms to 012-345
 INFO  [main] c.p.s.s.SimpleEventApplication           : member count : 1
 ```
 
-실패
+* 실패
 
 ```
 INFO  [main] c.p.s.s.service.email.EmailService       : send JOIN email to test@test.com
@@ -224,7 +225,7 @@ Spring Framework 4.2.x부터는 더 좋은 게 있으므로 길게 설명하지 
 ## 구현 3. Event 사용하기
 이 구현부터 본격적으로 본문의 주제에 가까워진다. 우선 소스 코드로 어떻게 Spring Event를 이용할 수 있는지 확인해보자.
 
-* Spring Application Event 사용하기
+### Spring Application Event 사용하기
 
 ```java
 Publisher
@@ -259,14 +260,14 @@ public class EventMemberJoinService implements ApplicationEventPublisherAware, M
 }
 ```
 
-* 설명
+### 설명
 ApplicationEventPublisherAware 인터페이스를 구현하면, Spring이 자동으로 ApplicationEventPublisher를 주입해준다. Event를 발급하는 방법은 너무나 간단하다. ApplicationEventPublisher.publishEvent(Object event)를 호출하면 끝이다.
 
 MemberService는 이제 회원이 가입되었으면, 가입되었다는 Event를 발급한다.(MemberJoinedEvent) 어디선가 이 Event를 받아서 처리만 해주면 될 것이다. 이 Event를 어떻게 받아서 처리하는지 확인해보자.
 
 // gray zone이라고 붙인 곳은, 저 코드가 저 위치에 있는 것을 허용할 것이냐, 말 것이냐를 개발자들의 판단에 맡기고 싶어서 두었다. 본문에서는 refactoring의 대상이라 판단하고, 나중에 AOP로 제거할 것이다.
 
-* Listener
+### Listener
 
 ```java
 @Component
@@ -305,7 +306,7 @@ B에서 에러가발생해도 A까지 롤백x
 >   여러 타입이 선언된 경우에는 메서드의 파라미터는 비워둬야 한다.
 > *condition SpEL을 선언하여 true인 경우에 실행된다. |
 
-* 결과
+### 결과
 성공
 
 ```
@@ -358,14 +359,14 @@ public class EventMemberJoinService implements ApplicationEventPublisherAware, M
 ### 결합도
 현재는 하나의 Application에서만 Event를 사용하고 있어서 크게 와닿지 않을 수도 있을 것 같다. 좀 더 설명하기 쉽고, 거창해 보일 수 있도록 크기를 키워보자. 만약에 MSA와 같은 구조의 시스템에서 Event를 사용한다면 어떻게 될까?
 
-* 시스템 간 강결합 : HTTP Rest API 호출
+#### 시스템 간 강결합 : HTTP Rest API 호출
 
 ![시스템 간 강결합](./../../images/spring_event/event_system01.svg)
 
 강결합 상태의 시스템의 문제를 여기서 확인할 수 있다.
 MemberServer는 각 Server를 알고 있다. 호출해야 할 URI를 스스로 가지고 있다. 만약 MailServer에서 메일을 보내기 위한 URI가 변경이 된다면, MemberServer도 수정을 해야 한다. 메일 서버가 변경이 되었는데, 회원 가입 로직이 변경되어야 한다.
 
-* 느슨한 결합으로 : Event 방식
+#### 느슨한 결합으로 : Event 방식
 
 ![느슨한 결합](./../../images/spring_event/event_system02.svg)
 
@@ -375,7 +376,8 @@ MailServer, SmsServer의 로직 변화가 MemberServer에 영향을 주지 않�
 MemberServer는 자신의 업무(도메인) 영역만 잘 처리하면 된다.
 구현 4. Event도 비동기로 처리하기
 Spring Application 설정
-//..
+
+```java
 @EnableAsync(proxyTargetClass = true)
 @SpringBootApplication
 public class SimpleEventApplication implements CommandLineRunner {
@@ -398,21 +400,29 @@ public class MemberJoinedEventListener {
         smsService.sendSms(member.getPhoneNo(), SmsTemplateType.JOIN);
     }
 }
+```
+
 @Async를 사용하여 비동기로 구현할 수 있다.
 
-결과
-성공
+### 결과
+* 성공
 
+```
 INFO  [cTaskExecutor-1] c.p.s.s.service.email.EmailService       : send JOIN email to test@test.com
 INFO  [cTaskExecutor-1] c.p.s.s.service.sms.SuccessSmsService    : send JOIN sms to 012-3456-7890
 INFO  [           main] c.p.s.s.SimpleEventApplication           : member count : 1
-실패
+```
 
+* 실패
+
+```
 INFO  [cTaskExecutor-1] c.p.s.s.service.email.EmailService       : send JOIN email to test@test.com
 INFO  [cTaskExecutor-1] c.p.s.s.service.sms.FailSmsService       : send JOIN sms to 012-3456-7890
 INFO  [           main] c.p.s.s.SimpleEventApplication           : member count : 1
 ERROR [cTaskExecutor-1] .a.i.SimpleAsyncUncaughtExceptionHandler : Unexpected error occurred invoking async method 'public void com.parfait.study.simpleevent.service.event.AsyncMemberJoinedEventListener.handle(com.parfait.study.simpleevent.service.member.AsyncEventMemberJoinService$AsyncMemberJoinedEvent)'.
-설명
+```
+
+* 설명
 간단하게 spring에서 지원해주는 비동기를 사용할 수 있다. spring에서 어떻게 비동기를 지원해주는지는 본 문서에서는 설명하지 않겠다. 때문에 TaskExecutor도 따로 지정하지 않고 사용했다. spring에서 비동기를 사용하는 방법이 궁금하면 레퍼런스를 읽어보자.
 
 구현 5. AOP를 사용해서 Advisor에서 Event 발급하기
@@ -421,22 +431,29 @@ ERROR [cTaskExecutor-1] .a.i.SimpleAsyncUncaughtExceptionHandler : Unexpected er
 
 서비스에서 Event를 발급하겠다는 전자의 선택도 존중한다. AOP는 공통 관심사를 분리해서 더 나은 POJO를 만들 수 있게 해준다. 하지만 익숙하지 않은 개발자에게는, 전체 애플리케이션 동작을 파악하는 데에 애를 먹을 수 있다. 혼자 개발하는 개발자가 아니라면, 내가 속한 팀에서 어떠한 방법의 프로그래밍이 가장 큰 효율을 낼 수 있는지 파악해봐야 할 것이다.
 
-의존성 설정
+### 의존성 설정
 spring의 AOP를 사용할 것이니 관련된 의존성을 추가하자
 
+```xml
 dependencies {
   compile('org.springframework.boot:spring-boot-starter-aop')
 }
+```
+
 Spring Application 설정
-//..
+
+```java
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @SpringBootApplication
 public class SimpleEventApplication implements CommandLineRunner {
   // ...
 }
+```
+
 MemberJoinService
 최종적으로 아래 코드가 동작하도록 만들 것이다. 기존에 eventPublisher.publishEvent(new MemberJoinedEvent(member));가 없어졌다. 즉 MemberJoinService는 더 이상 ApplicationEventPublisher에 의존하지 않으며, 그 존재를 모르게 되었다.
 
+```java
 @Profile("aop-async-event")
 @Service
 @Transactional
@@ -452,10 +469,14 @@ public class AopAsyncEventMemberJoinService implements MemberJoinService {
         return member;
     }
 }
+```
+
 AOP는 @PublishEvent를 대상으로 실행된다. eventType을 보고 어떤 타입의 Event를 발급할 것이며, params를 해석해서 알맞은 생성자 파라미터를 던져준다.
 
-발행할 Event 정의
+### 발행할 Event 정의
 // 해당 소스의 구현체는 목적에 따라 기본 생성자 혹은 하나의 값을 받는 생성자를 가질 것.
+
+```java
 public interface EventHoldingValue<T> {
     T getValue();
 }
@@ -483,9 +504,13 @@ public class SendableParameter {
         return parameter;
     }
 }
+```
+
 value를 가지는 Event를 뜻하는 EventHoldingValue<T>를 정의하고 이를 구현한 AopAsyncMemberJoinedEvent를 위와 같이 정의했다. SendableParameter는 앞서 봤던 @PublishEvent(params)에서 정의된 SpEL이 실행되어 생성된다.
 
 AOP관련 코드
+
+```java
 @PublishEvent
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
@@ -501,9 +526,13 @@ public @interface PublishEvent {
     // 빈값, 문자열, SpEL('#{표현식}')을 사용할 수 있음
     String params() default "";
 }
+```
+
 Pointcut을 제공할 애노테이션을 정의한다.
 
 Advisor
+
+```java
 @Component
 @Aspect
 public class PublishEventAspect implements ApplicationEventPublisherAware {
@@ -562,30 +591,39 @@ public class PublishEventAspect implements ApplicationEventPublisherAware {
         this.eventPublisher = applicationEventPublisher;
     }
 }
-실행 결과
-성공
+```
+### 결과
 
+* 성공
+
+```
 INFO  [cTaskExecutor-1] c.p.s.s.service.email.EmailService       : send JOIN email to test@test.com
 INFO  [cTaskExecutor-1] c.p.s.s.service.sms.SuccessSmsService    : send JOIN sms to 012-3456-7890
 INFO  [           main] c.p.s.s.SimpleEventApplication           : member count : 1
-실패
+```
 
+* 실패
+
+```
 INFO  [cTaskExecutor-1] c.p.s.s.service.email.EmailService       : send JOIN email to test@test.com
 INFO  [cTaskExecutor-1] c.p.s.s.service.sms.FailSmsService       : send JOIN sms to 012-3456-7890
 INFO  [           main] c.p.s.s.SimpleEventApplication           : member count : 1
 ERROR [cTaskExecutor-1] .a.i.SimpleAsyncUncaughtExceptionHandler : Unexpected error occurred invoking async method 'public void com.parfait.study.simpleevent.service.event.AopAsyncMemberJoinedEventListener.handle(com.parfait.study.simpleevent.service.member.AopAsyncEventMemberJoinService$AopAsyncMemberJoinedEvent)'.
-설명
+```
+
+* 설명
 Event를 발급하는 공통된 행위를 애노테이션과 AOP를 사용해서 구현해보았다. 이로써 Service 계층의 로직에서는 특별한 일이 아니면 Event를 발급할 소스가 등장하지 않을 것이고, ApplicationEventPublisher와의 의존 관계도 끊을 수 있다.
 
 여기서 한 번 더 리팩토링하려고 한다. 아직도 문제점이 있다. 바로 이벤트 처리에 순서가 존재한다는 점이다.
 
-구현 6. 순서가 필요있나? Best Effort!
+## 구현 6. 순서가 필요있나? Best Effort!
 비동기를 처리하는 데 굳이 순서가 필요할까? 여태까지의 코드를 보면 Email이 성공해야 Sms가 성공한다. 실제로 우리의 로직은 이러한 순서를 필요로 하지 않는다. MemberJoinedEvent를 발급했을 때, 이를 처리할 핸들러를 여럿 등록하고 각각의 thread를 격리해보자.
 
 설명
 MemberJoinService의 구현체에서 달라진 부분은 없다
 
 EventListeners
+```java
 @Service
 public class EmailEventListener {
 
@@ -613,23 +651,31 @@ public class SmsEventListener {
         smsEventService.sendSms(request.getPhoneNo(), request.getSmsTemplateType());
     }
 }
-결과
-성공
+```
 
+### 결과
+* 성공
+
+```
 INFO  [cTaskExecutor-2] c.p.s.s.service.sms.SuccessSmsService    : send JOIN sms to 012-3456-7890
 INFO  [cTaskExecutor-1] c.p.s.s.service.email.EmailService       : send JOIN email to test@test.com
 INFO  [           main] c.p.s.s.SimpleEventApplication           : member count : 1
-실패
+```
 
+* 실패
+
+```
 INFO  [cTaskExecutor-1] c.p.s.s.service.email.EmailService       : send JOIN email to test@test.com
 INFO  [cTaskExecutor-2] c.p.s.s.service.sms.FailSmsService       : send JOIN sms to 012-3456-7890
 INFO  [           main] c.p.s.s.SimpleEventApplication           : member count : 1
 ERROR [cTaskExecutor-2] .a.i.SimpleAsyncUncaughtExceptionHandler : Unexpected error occurred invoking async method 'public void com.parfait.study.simpleevent.service.sms.SmsEventService.sendEmail(com.parfait.study.simpleevent.service.member.DistributedAopAsyncEventMemberJoinService$DistributedAopAsyncMemberJoinedEvent)'.
-설명
+```
+
+* 설명
 Email과 Sms를 다른 thread에서 보내고 있는 것을 확인할 수 있다.
 말만 어렵게 했지 내용은 간단하다. Event에 대한 Listener(subscriber, 혹은 handler)는 필요하면 언제든지 추가하면 된다. 또한 @Async 지원도 가능하다.
 
-마무리
+## 마무리
 Spring에서 지원하는 Event 처리 방법과 실제로 어떻게 사용할 수 있을지 살펴보았다. 가장 중요한 것은 Event를 사용하는 이유를 깨닫는 것이다. 가장 큰 이유는 Event 방식은 시스템 간의 결합도를 낮춰주는 것이다. 결합도를 낮춰서 서비스 로직에 집중하고, 장애 전파에 강한 애플리케이션을 작성할 수 있다. 비동기로 실행하는 것도 Spring의 지원을 받아 간단하게 처리할 수 있다.
 
 물론 이러한 Event 방식도 문제는 있다. Global Transaction을 어떻게 쥐고 갈 것인지 하는 것이다. 본문에서는 하나의 Application 내에서 Event를 발생시키고 처리했는데, Event-Driven Architecture의 MSA 환경을 구성하는 경우, 어떻게 Transaction과 Latency 사이에서 타협점을 찾을 것인가는, 현재 이 업계의 큰 이슈 중 하나가 아닐까? 아직까지는 Event를 사용하면서 완벽한 Transaction을 지원하는 것은 어려워 보인다. 서비스 간의 결합도를 떨어뜨리기 위해, Event를 위한 별도의 모듈(RabbitMQ, Kafka)을 사용하는 중에 데이터 손실 등 넘어야 할 난관도 많이 있다. 하지만 Event를 사용하는 구조 자체는 매우 매력적이며, 개발자에게 더 많은 선택지를 가져다준다.
