@@ -11,10 +11,10 @@ tags:
 toc: true
 toc_sticky: true
  
-date: 2022-02-22
-last_modified_at: 2022-02-22
+date: 2022-03-02
+last_modified_at: 2022-03-02
 ---
-# Reactive Programming 101 : 리액티브 프로그래밍이 뭔가요
+# Reactive Programming : 리액티브 프로그래밍이 뭔가요
 
 https://juneyr.dev/reactive-programming
 
