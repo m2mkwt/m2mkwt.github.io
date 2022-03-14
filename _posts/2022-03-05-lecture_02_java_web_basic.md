@@ -16,18 +16,25 @@ last_modified_at: 2022-03-05
 ---
 
 ## Spring - JDK 간 버전 호환
-Spring Framework 6.0.x: JDK 17-21 (expected)
-Spring Framework 5.3.x: JDK 8 - 19 (expected)
-Spring Framework 5.2.x: JDK 8 - 15`
-Spring Framework 5.1.x: JDK 8 - 12
-Spring Framework 5.0.x: JDK 8 - 10
-Spring Framework 4.3.x: JDK 6 -  8 (its official EOL(end-of-life))
+|:---:|:---:|
+|스프링 버전|지원JDK|
+|:---:|:---:|
+|Spring Framework 6.0.x | JDK 17-21 (expected) |
+|Spring Framework 5.3.x | JDK 8 - 19 (expected) |
+|Spring Framework 5.2.x | JDK 8 - 15 |
+|Spring Framework 5.1.x | JDK 8 - 12 |
+|Spring Framework 5.0.x | JDK 8 - 10 |
+|Spring Framework 4.3.x | JDK 6 -  8 (its official EOL(end-of-life)) |
  
 ## Spring Boot - JDK 간 버전 호환
-Spring Boot 2.3↑ with Java 9 and above
-Spring Boot 2.1↓ with Java 8 - 11
+|:---:|:---:|
+|스프링부트 버전|지원JDK|
+|:---:|:---:|
+|Spring Boot 2.3↑ | Java 9 and above|
+|Spring Boot 2.1↓ | Java 8 - 11|
 
 ## 서블릿 버젼별 사양정리
+
 |:---:|:---:|:---:|:---:|:---:|
 |버전|발표일|Java|Tomcat|주요내용|
 |:---:|:---:|:---:|:---:|:---|
