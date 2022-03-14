@@ -16,6 +16,7 @@ last_modified_at: 2022-03-05
 ---
 
 ## Spring - JDK 간 버전 호환
+
 |:---:|:---:|
 |스프링 버전|지원JDK|
 |:---:|:---:|
@@ -27,6 +28,7 @@ last_modified_at: 2022-03-05
 |Spring Framework 4.3.x | JDK 6 -  8 (its official EOL(end-of-life)) |
  
 ## Spring Boot - JDK 간 버전 호환
+
 |:---:|:---:|
 |스프링부트 버전|지원JDK|
 |:---:|:---:|
