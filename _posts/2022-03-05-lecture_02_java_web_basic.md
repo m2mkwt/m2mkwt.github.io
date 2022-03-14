@@ -48,3 +48,41 @@ last_modified_at: 2022-03-05
 |2.5|2005/09|5이후|6.0.X|자바SE 5	JavaSE 5가 필수, annotation 지원|
 |2.4|2003/11|J2EE 1.4|5.5.X|J2SE 1.3	web.xml에 XML 스키마 사용|
 
+
+## Spring MVC
+
+![Spring MVC 개념1](./../../images/lecture/spring_mvc01.png)
+
+1. 핸들러 조회 : 핸들러 매핑을 통해 요청 URL에 매핑된 핸들러(컨트롤러)를 조회한다.
+2. 핸들러 어댑터 조회 : 핸들러를 실행할 수 있는 핸들러 어댑터를 조회한다.
+3. 핸들러 어댑터 실행 : 핸들러 어댑터를 실행한다.
+4. 핸들러 실행 : 핸들러 어댑터가 실제 핸들러를 실행한다.
+5. ModelAndView 반환 : 핸들러 어댑터는 핸들러가 반환하는 정보를 ModelAndView로 변환해서
+반환한다.
+6. viewResolver 호출 : 뷰 리졸버를 찾고 실행한다.
+ - JSP의 경우: InternalResourceViewResolver 가 자동 등록되고, 사용된다.
+7. View반환 :뷰 리졸버는 뷰의 논리이름을 물리이름으로 바꾸고, 렌더링 역할을 담당하는 뷰 객체를 반환한다.
+ - JSP의 경우 InternalResourceView(JstlView) 를 반환하는데, 내부에 forward() 로직이 있다.
+8. 뷰 렌더링 : 뷰를 통해서 뷰를 렌더링한다.
+
+## Dispatcher Servlet
+
+![Dispatcher Servlet 개념1](./../../images/lecture/dispatcher_servlet_01.jpg)
+
+![Dispatcher Servlet 개념2](./../../images/lecture/dispatcher_servlet_02.png)
+
+### Dispatcher Servlet 역할
+1. 클라이언트의 요청을 디스패처 서블릿이 받음
+2. 요청 정보를 통해 요청을 위임할 핸들러(컨트롤러)를 찾음
+3. 요청을 컨트롤러로 위임 처리할 핸들러 어댑터를 찾음
+4. 핸들러 어댑터가 핸들러(컨트롤러)로 요청을 위임함
+5. 비지니스 로직이 처리됨
+6. 컨트롤러가 ResponseEntity를 반환함
+7. HandlerAdpater가 반환받은 ResponseEntity를 통해 Response 처리를 진행함
+8. 서버의 응답을 클라이언트로 반환함
+
+- 디스패처 서블릿은 어느 컨트롤러가 해당 요청을 처리할 수 있는지를 식별해야 하는데, 디스패처 서블릿은 모든 컨트롤러를 파싱하여 HashMap으로 (요청 정보, 요청을 처리할 대상)을 관리 (요청을 처리할 대상은 요청을 처리할 컨트롤러와 요청에 매핑되는 메소드)
+
+- 요청이 들어오면 요청 정보 객체를 만들어 Map에서 요청을 처리하는 컨트롤러 및 메소드를 찾습니다. 그리고 디스패처 서블릿에서 컨트롤러로 요청을 위임할 Adapter(RequestMappingHandlerAdapter)를 찾은 후에 해당 adapter를 통해 컨트롤러로 요청을 위임합니다. 이때 요청을 처리할 대상 정보에 컨트롤러의 메소드가 있으므로 Reflection으로 컨트롤러의 메소드를 호출
+
+- 컨트롤러가 ResponseEntity를 반환하면 MessageConverter 등을 통해 응답 처리를 진행한 후에 결과를 클라이언트에게 반환
