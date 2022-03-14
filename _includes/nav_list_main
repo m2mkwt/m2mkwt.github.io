@@ -125,7 +125,10 @@
                     {% endif %}
                     {% if category[0] == "ETC" %}
                         <li><a href="/categories/etc" class="">ETC. ({{category[1].size}})</a></li>
-                    {% endif %}                    
+                    {% endif %}
+                    {% if category[0] == "Lecture" %}
+                        <li><a href="/categories/lecture" class="">Lecture ({{category[1].size}})</a></li>
+                    {% endif %}                                               
                 {% endfor %}
             </ul>           
       </li>
