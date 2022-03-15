@@ -124,3 +124,38 @@ GitLab과 GitHub 모두 라이센스에 따라 받으실 수 있는 지원이 �
 - 커밋(commit)을 하게 되면 이전 커밋 상태부터 현재 상태까지의 변경 이력이 기론된 커밋이력이 생성.
 - 커밋은 시간순으로 차례대로 저장되기 때문에 과거 변경 이력과 내용을 파악가능.
 - 영문과 숫자로 이루어진 40자리의 해당 고유의 이름으로 각 커밋을 구분.
+
+```
+git config --global user.name "m2mkwt"
+git config --global user.email "wontae_k@m2mglobal.co.kr"
+
+//로컬 깃 저장소 생성(.git 폴더 생성)
+$ git init
+
+//Working directory -> Staging Area
+$ git add [directory]
+$ git add .
+
+//Staging Area -> repository(.git)
+$ git commit -m "commit message"
+
+//원격저장소와 연결
+$ git remote add origin [원격저장소 주소]
+$ git remote add origin https://github.com/m2mkwt/spring-mvc-demo.git
+
+//브랜치 명 바꾸기
+$ git branch -M [branch name(main)]
+$ git branch -m [현재 branch name] [바꾸고싶은 branch name]
+
+//(선택) README.md가 있다면 : push 보다 pull 먼저
+$ git pull origin [branch name(main)]
+
+//로컬 레포지토리 -> 원격 레포지토리
+$ git push -u origin [branch name(main)]
+
+//파일 수정 및 추가 이후 : 다음번 commit & push
+$ git pull origin [branch name] (선택:다른 장소에서 작업한게 없으면 안해도 됨)
+$ git add [directory]
+$ git commit -m "commit message"
+$ git push -u origin [branch name]
+```
