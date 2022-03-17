@@ -42,9 +42,12 @@ Spring Security Authentication Architecture
 
 5. DB에서 사용자 인증 정보를 가져올 UserDetailsService 객체에게 사용자 아이디를 넘겨주고 DB에서 인증에 사용할 사용자 정보(사용자 아이디, 암호화된 패스워드, 권한 등)를 UserDetails(인증용 객체와 도메인 객체를 분리하지 않기 위해서 실제 사용되는 도메인 객체에 UserDetails를 상속하기도 한다.)라는 객체로 전달 받는다.
 
-6. 7. AuthenticationProvider는 UserDetails 객체를 전달 받은 이후 실제 사용자의 입력정보와 UserDetails 객체를 가지고 인증을 시도한다.
+6. 
+7. AuthenticationProvider는 UserDetails 객체를 전달 받은 이후 실제 사용자의 입력정보와 UserDetails 객체를 가지고 인증을 시도한다.
 
-8. 9. 10. 인증이 완료되면 사용자 정보를 가진 Authentication 객체를 SecurityContextHolder에 담은 이후 AuthenticationSuccessHandle를 실행한다.(실패시 AuthenticationFailureHandler를 실행한다.)
+8. 
+9. 
+10. 인증이 완료되면 사용자 정보를 가진 Authentication 객체를 SecurityContextHolder에 담은 이후 AuthenticationSuccessHandle를 실행한다.(실패시 AuthenticationFailureHandler를 실행한다.)
 
 ### SecurityContextHolder 의 ThreadLocal 전략
 
@@ -255,10 +258,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 - user2 로그인
   > ConcurrentSessionControlAuthenticationStrategy에서 세션 허용 개수 확인 -> 허용 개수 초과 발생!
+  >
   > 1번 전략 : 인증 실패 전략 -> SessionAuthenticationException 예외 발생 -> 인증 실패
+  >
   > 2번 전략 : 이떄 SessionManagementFilter와 ConcurrentSessionFilter가 연계해서 처리
+  >
   > 세션 만료 전략 -> session.expireNow()로 기존 사용자 세션 만료 -> 위에 동일 하게 user2의 세션 고정 보호 기능 처리 및 세션 정보 등록 -> 인증 성공
-  > user1 Get호출 (세션 만료 전략으로 인해 user1 사용자의 세션은 만료 상태) -> session. isExpired() == true -> 세션 만료 -> 로그인 실패 (This session has been expired)
+  >
+  > user1 Get호출 (세션 만료 전략으로 인해 user1 사용자의 세션은 만료 상태) 
+  > session. isExpired() == true -> 세션 만료 -> 로그인 실패 (This session has been expired)
 
 ### ExceptionTranslationFilter
 - 인증과 인가 과정의 에러 처리를 담당.
