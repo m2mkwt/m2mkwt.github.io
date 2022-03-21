@@ -1,7 +1,7 @@
 ---
 layout: single
-title:  "[Lecture] - JAVA 및 Servlet, Spring, Spring Boot 정리"
-excerpt: "JAVA 및 서블릿, Spring 버젼별 스택정리"
+title:  "[Lecture] - vueJS 설치 및 BackEnd 연계"
+excerpt: "Windows환경 VueJS 설치 및 BackEnd 연계방법"
 
 categories:
   - Lecture
@@ -11,174 +11,189 @@ tags:
 toc: true
 toc_sticky: true
  
-date: 2022-03-05
-last_modified_at: 2022-03-05
+date: 2022-03-21
+last_modified_at: 2022-03-21
 ---
+# vueJS 개발환경 및 BadkEnd 연동
+## 1. vueJS 개발환경
+### 1-1. VSCode 설치
+#### 플러그인 설치
+- [공통]
+  - Auto close Tag : 자동 태그 닫기
+  - Color Highlight : 컬러 색상 미리보기
+  - Live Server : 코딩을 실시간으로 확인-적용시켜 작업하기 편리
+  - One dark pro : 어두운 테마로 작성하는 코딩이 눈에 잘 띔
+  - Korean Language Pack for Visual Studio Code : VSCode 한국어 지원
+  - Prettier : 코드 자동 정렬 ( ** 추후 추가 설정 필요 **)
+  - ESLint  : 소스코드를 분석해 문법 에러, 버그를 찾기 ( ** 추후 추가 설정 필요 **)
+  - vscode-icons : VSCode 내 파일의 아이콘을 설정하여 무슨 파일인지 한번에 파악가능
+  - project manager 
 
-## JDK 간 버전별 차이점
-### Java 8 (2014)
-- 오라클 인수 후 첫번째 버전
-- 2개 버전으로 나뉨(Oracle JDK, OpenJDK)
-- Lambda, new Date and Time API(LocalDateTime, …)
-- interface default method
-- Optional
-- PermGen Area 제거
+- [ Vue관련 ]
+  - Vetur : 문법 강조, vue.js 파일 코드의 하이라이팅 지원
+  - Vue VSCode Snippets : 코드 조작 지원, vue.js 파일 초기 구성 생성
+  - vue-beautify : 코드정렬
+  - Vetur Extension
+  - Vue 2 Snippets Extension
+  - Vue 3 Snippets Extension
+  - Vue peek
 
-### Java 9 (2017)
-- 모듈시스템 등장(jigsaw)
+### 1-2. nodeJS 환경구축
+- https://nodejs.org/ko/
+- NodeJS를 설치하면 자동으로 npm(NodeJS Package Manager)도 함께 설치되므로 별도로 설치할 필요는 없다. npm이란 자바스크립트 기반의 패키지를 쉽게 설치 및 관리할 수 있도록 도와주는 툴.
 
-### Java 10 (2018.03)
-- var 키워드
-- 병렬 처리 가비지 컬렉션 도입으로 인한 성능 향상
-- JVM 힙 영역을 시스템 메모리가 아닌 다른 종류의 메모리에도 할당 가능
+```
+PS C:\09_BLOG> node -v
+v16.14.1
+PS C:\09_BLOG> npm -v
+8.5.0
+```
 
-### Java 11 (2018.09)
-- Oracle JDK와 OpenJDK 통합
-- Oracle JDK가 구독형 유료 모델로 전환
-- 서드파티 JDK 로의 이전 필요
-- lambda 지역변수 사용법 변경
-   (var x, var y) -> x.process(y) => (x, y) -> x.process(y)
+### 1-3. Vue Devtools 설치
+- Vue Devtools는 웹 브라우저인 크롬이나 파이어폭스에서 사용할 수 있는 확장애플리케이션.
+- Vue를 사용한 애플리케이션을 개발할 때 도움을 주는 유용한 툴로서, 애플리케이션의 구조 및 데이터의 흐름을 디버깅할 때 유용하다. 별도로 설정을 변경하지 않으면 개발용 빌드에서는 사용할 수 있지만 배포용 빌드에서는 사용할 수 없다
 
-### Java 12 (2019.03)
-- switch문 확장
+### 1-4. Vue CLI 설치
+- Vue CLI의 설치를 위해서 먼저 터미널 혹은 CMD에 설치 명령어를 입력한다.
 
-### Java 13 (2019.09)
-- switch문 개선을 위한 yield 예약어 추가
+> $ npm install vue-cli -g
 
-### Java 14 (2020.03)
-- instanceof 패턴 매칭 (preview)
-- record (data object) 선언 기능 추가 (preview)
+> npm WARN deprecated har-validator@5.1.5: this library is no longer supported
+> npm WARN deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+> npm WARN deprecated request@2.88.2: request has been deprecated, see https://github.com/request/request/issues/3142
+> npm WARN deprecated coffee-script@1.12.7: CoffeeScript on NPM has moved to "coffeescript" (no hyphen)
+> npm WARN deprecated vue-cli@2.9.6: This package has been deprecated in favour of @vue/cli
+> 
+> added 245 packages, and audited 246 packages in 9s
+> 
+> 11 packages are looking for funding
+>   run `npm fund` for details
+> 
+> 4 moderate severity vulnerabilities
+> 
+> To address all issues (including breaking changes), run:
+>   npm audit fix --force
+> 
+> Run `npm audit` for details.
+>  
+> 
+> PS C:\09_BLOG> npm install vue-cli -g
+> npm WARN deprecated har-validator@5.1.5: this library is no longer supported
+> 142
+> npm WARN deprecated coffee-script@1.12.7: CoffeeScript on NPM has moved to "coffeescript" (no hyphen)
+> npm WARN deprecated vue-cli@2.9.6: This package has been deprecated in favour of @vue/cli
+> 
+> added 245 packages, and audited 246 packages in 9s
+> 
+> 11 packages are looking for funding
+>   run `npm fund` for details
+> 
+> 4 moderate severity vulnerabilities
+> 
+> To address all issues (including breaking changes), run:
+>   npm audit fix --force
+> 
+> Run `npm audit` for details.
+> PS C:\09_BLOG>
+> PS C:\09_BLOG> vue -V
+> vue : 이 시스템에서 스크립트를 실행할 수 없으므로 C:\Users\m2m-129\AppData\Roaming\npm\vue.ps1 파일을 로드할 수
+>  없습니다. 자세한 내용은 about_Execution_Policies(https://go.microsoft.com/fwlink/?LinkID=135170)를 참조하십시
+> + ~~~
+>     + CategoryInfo          : 보안 오류: (:) [], PSSecurityException
+>     + FullyQualifiedErrorId : UnauthorizedAccess
+> PS C:\09_BLOG>
+> 
+> PS C:\09_BLOG> vue.cmd create vue-cli
+> 
+>   vue create is a Vue CLI 3 only command and you are using Vue CLI 2.9.6.
+>   You may want to run the following to upgrade to Vue CLI 3:
+> 
+>   npm uninstall -g vue-cli
+>   npm install -g @vue/cli
+> 
+> PS C:\09_BLOG> get-executionpolicy
+> Restricted
+> PS C:\09_BLOG> set-executionpolicy remotesigned
+> PS C:\09_BLOG> get-executionpolicy
+> RemoteSigned
+> PS C:\09_BLOG> vue --version
+> @vue/cli 5.0.3
+> PS C:\09_BLOG> vue -V
+> @vue/cli 5.0.3  
+> PS C:\09_BLOG> vue init webpack m2mVueJSDemo
+> 
+> ? Project name m2m-vuejs-demo
+> ? Project description m2mglobal vueJS Demo
+> ? Author m2m
+> ? Vue build standalone
+> ? Install vue-router? Yes
+> ? Use ESLint to lint your code? Yes
+> ? Pick an ESLint preset Standard
+> ? Set up unit tests No
+> ? Setup e2e tests with Nightwatch? No
+> ? Should we run `npm install` for you after the project has been created? (recommended) npm
+> 
+>    vue-cli · Generated "m2mVueJSDemo".
+> 
+> 
+> # Installing project dependencies ...
+> # ========================
+> 
+> npm WARN deprecated source-map-url@0.4.1: See https://github.com/lydell/source-map-url#deprecated
+> npm WARN deprecated urix@0.1.0: Please see https://github.com/lydell/urix#deprecated
+> npm WARN deprecated source-map-resolve@0.5.3: See https://github.com/lydell/source-map-resolve#deprecated
+> npm WARN deprecated resolve-url@0.2.1: https://github.com/lydell/resolve-url#deprecated
+> npm WARN deprecated flatten@1.0.3: flatten is deprecated in favor of utility frameworks such as lodash.
+> npm WARN deprecated circular-json@0.3.3: CircularJSON is in maintenance only, flatted is its successor.
+> npm WARN deprecated eslint-loader@1.9.0: This loader has been deprecated. Please use eslint-webpack-plugin
+> npm WARN deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+> npm WARN deprecated querystring@0.2.0: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
+> npm WARN deprecated browserslist@2.11.3: Browserslist 2 could fail on reading Browserslist >3.0 config used in other tools.
+> npm WARN deprecated browserslist@1.7.7: Browserslist 2 could fail on reading Browserslist >3.0 config used in other tools.
+> npm WARN deprecated extract-text-webpack-plugin@3.0.2: Deprecated. Please use https://github.com/webpack-contrib/mini-css-extract-plugin
+> npm WARN deprecated browserslist@1.7.7: Browserslist 2 could fail on reading Browserslist >3.0 config used in other tools.
+> npm WARN deprecated html-webpack-plugin@2.30.1: out of support
+> npm WARN deprecated chokidar@2.1.8: Chokidar 2 does not receive security updates since 2019. Upgrade to chokidar 3 with 15x fewer dependencies
+> npm WARN deprecated browserslist@1.7.7: Browserslist 2 could fail on reading Browserslist >3.0 config used in other tools.
+> npm WARN deprecated babel-eslint@8.2.6: babel-eslint is now @babel/eslint-parser. This package will no longer receive updates.
+> npm WARN deprecated uglify-es@3.3.9: support for ECMAScript is superseded by `uglify-js` as of v3.13.0
+> npm WARN deprecated chokidar@2.1.8: Chokidar 2 does not receive security updates since 2019. Upgrade to chokidar 3 with 15x fewer dependencies
+> npm WARN deprecated bfj-node4@5.3.1: Switch to the `bfj` package for fixes and new features!
+> npm WARN deprecated svgo@0.7.2: This SVGO version is no longer supported. Upgrade to v2.x.x.
+> npm WARN deprecated svgo@1.3.2: This SVGO version is no longer supported. Upgrade to v2.x.x.
+> npm WARN deprecated core-js@2.6.12: core-js@<3.4 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Please, upgrade your dependencies to the actual version of core-js.
+> 
+> added 1437 packages, and audited 1438 packages in 38s
+> 
+> 64 packages are looking for funding
+>   run `npm fund` for details
+> 
+> 84 vulnerabilities (68 moderate, 16 high)
+> 
+> To address issues that do not require attention, run:
+>   npm audit fix
+> 
+> To address all issues (including breaking changes), run:
+>   npm audit fix --force
+> 
+> Run `npm audit` for details.
+> 
+> 
+> Running eslint --fix to comply with chosen preset rules...
+> # ========================
+> 
+> 
+> > m2m-vuejs-demo@1.0.0 lint
+> > eslint --ext .js,.vue src "--fix"
+> 
+> 
+> # Project initialization finished!
+> # ========================
+> 
+> To get started:
+> 
+>   cd m2mVueJSDemo
+>   npm run dev
+> 
 
-### Java 15 (2020.09)
-- EdDSA 암호화 알고리즘 추가
-- 패턴 매칭 (2차 preview, 상단 Java 14 참조)
-- 스케일링 가능한 낮은 지연의 가비지 컬렉터 추가(ZGC)
-- Solaris 및 SPARC 플랫폼 지원 제거
-- 외부 메모리 접근 API (인큐베이팅)
-- 레코드 (2차 preview, 상단 Java 14 참조)
-- 클래스 봉인 (preview)
-
-## 서블릿 버젼별 사양정리
-
-|:---:|:---:|:---:|:---:|:---:|
-|버전|발표일|Java|Tomcat|주요내용|
-|:---:|:---:|:---:|:---:|:---|
-|6.0|2021/10|JakartaEE 10(8이후)|-|사용되지 않는 기능 삭제 및 요청된 확장 기능 구현|
-|4.0|2017/09|8이후|9.0.X|HTTP/2 지원|
-|5.0|2020/10|JakartaEE 9(8이후)|10.0.X|API가 패키지 javax.servlet에서 jakarta.servlet로 이동|
-|3.1|2013/05|7이후|8.5.X|논블록킹 처리용 I/O API 추가, WebSocket 대응, 클라우드 지원|
-|3.0|2009/12|6이후|7.0.X|동적 설정(web.xml 대신 어노테이션 사용), 비동기 Servlet, 멀티파트 파일업로드|
-|2.5|2005/09|5이후|6.0.X|자바SE 5	JavaSE 5가 필수, annotation 지원|
-|2.4|2003/11|J2EE 1.4|5.5.X|J2SE 1.3	web.xml에 XML 스키마 사용|
-
-## Spring - JDK 간 버전 호환
-
-|:---:|:---:|
-|스프링 버전|지원JDK|
-|:---:|:---:|
-|Spring Framework 6.0.x | JDK 17-21 (expected) |
-|Spring Framework 5.3.x | JDK 8 - 19 (expected) |
-|Spring Framework 5.2.x | JDK 8 - 15 |
-|Spring Framework 5.1.x | JDK 8 - 12 |
-|Spring Framework 5.0.x | JDK 8 - 10 |
-|Spring Framework 4.3.x | JDK 6 -  8 (its official EOL(end-of-life)) |
- 
-## Spring Boot - JDK 간 버전 호환
-
-|:---:|:---:|
-|스프링부트 버전|지원JDK|
-|:---:|:---:|
-|Spring Boot 2.3↑ | Java 9 and above|
-|Spring Boot 2.1↓ | Java 8 - 11|
-
-
-## Spring MVC
-
-![Spring MVC 개념1](./../../images/lecture/spring_mvc01.png)
-
-1. 핸들러 조회 : 핸들러 매핑을 통해 요청 URL에 매핑된 핸들러(컨트롤러)를 조회한다.
-2. 핸들러 어댑터 조회 : 핸들러를 실행할 수 있는 핸들러 어댑터를 조회한다.
-3. 핸들러 어댑터 실행 : 핸들러 어댑터를 실행한다.
-4. 핸들러 실행 : 핸들러 어댑터가 실제 핸들러를 실행한다.
-5. ModelAndView 반환 : 핸들러 어댑터는 핸들러가 반환하는 정보를 ModelAndView로 변환해서
-반환한다.
-6. viewResolver 호출 : 뷰 리졸버를 찾고 실행한다.
- - JSP의 경우: InternalResourceViewResolver 가 자동 등록되고, 사용된다.
-7. View반환 :뷰 리졸버는 뷰의 논리이름을 물리이름으로 바꾸고, 렌더링 역할을 담당하는 뷰 객체를 반환한다.
- - JSP의 경우 InternalResourceView(JstlView) 를 반환하는데, 내부에 forward() 로직이 있다.
-8. 뷰 렌더링 : 뷰를 통해서 뷰를 렌더링한다.
-
-## Dispatcher Servlet
-
-![Dispatcher Servlet 개념1](./../../images/lecture/dispatcher_servlet_01.jpg)
-
-![Dispatcher Servlet 개념2](./../../images/lecture/dispatcher_servlet_02.png)
-
-### Dispatcher Servlet 역할
-1. 클라이언트의 요청을 디스패처 서블릿이 받음
-2. 요청 정보를 통해 요청을 위임할 핸들러(컨트롤러)를 찾음
-3. 요청을 컨트롤러로 위임 처리할 핸들러 어댑터를 찾음
-4. 핸들러 어댑터가 핸들러(컨트롤러)로 요청을 위임함
-5. 비지니스 로직이 처리됨
-6. 컨트롤러가 ResponseEntity를 반환함
-7. HandlerAdpater가 반환받은 ResponseEntity를 통해 Response 처리를 진행함
-8. 서버의 응답을 클라이언트로 반환함
-
-- 디스패처 서블릿은 어느 컨트롤러가 해당 요청을 처리할 수 있는지를 식별해야 하는데, 디스패처 서블릿은 모든 컨트롤러를 파싱하여 HashMap으로 (요청 정보, 요청을 처리할 대상)을 관리 (요청을 처리할 대상은 요청을 처리할 컨트롤러와 요청에 매핑되는 메소드)
-
-- 요청이 들어오면 요청 정보 객체를 만들어 Map에서 요청을 처리하는 컨트롤러 및 메소드를 찾습니다. 그리고 디스패처 서블릿에서 컨트롤러로 요청을 위임할 Adapter(RequestMappingHandlerAdapter)를 찾은 후에 해당 adapter를 통해 컨트롤러로 요청을 위임합니다. 이때 요청을 처리할 대상 정보에 컨트롤러의 메소드가 있으므로 Reflection으로 컨트롤러의 메소드를 호출
-
-- 컨트롤러가 ResponseEntity를 반환하면 MessageConverter 등을 통해 응답 처리를 진행한 후에 결과를 클라이언트에게 반환
-
-### layer 분리
-#### layer를 왜 분리할까? layer를 분리한다는 것에는 어떤 의미가 있는가?
-- 다른 layer의 모듈을 부품을 갈아끼우듯 변경할 수 있다. 각 layer가 자신의 세부사항을 몰라도 상관
-없도록, 잘 추상화해서 제공하고 있었다면 가능하다.
-- 컴포넌트 간의 의존 계층 관계를 깔끔하게 유지할 수 있다.
-- 각 layer를 넘나들면서 스파게티처럼 꼬여 있는 관계가 아니라, 위에서 아래로 떨어지는 간단한 구조 혹은 복잡한 참조는 같은 계층 내에서 끝내는 등 상대적으로 깔끔한 구조로 만들 수 있다.
-- layer들을 잘 분리하기 위한 개념으로, MVC 같은 디자인 패턴이 존재한다.
-
-#### MVC란?
-- Model, View, Controller 세 가지 요소 간의 관계를 이용해 Presentation layer와 Business layer를
-분리하는 패턴
-- MVC 패턴은, Presentation layer <> 나머지를 어떻게 잘 분리할 것이냐에 대한 패턴
-- presentation 분리가 주 목적이므로, Business layer 뒤쪽이 어떻게 구성되는지와는 관련이 없다.
-- Business layer가 Service sublayer를 별도로 두던, 어쩌든, MVC와는 별 상관이 없다
-
-#### 보편적으로 많이 사용하는 layer 구분
-- Web(Presentation) layer
-- Service layer
-- Repository layer(Persistence layer)
-
-![Spring Layer 개념](./../../images/lecture/spring_layer01.png)
-
-#### Presentation layer
-- UI와 표현과 관련된 코드가 위치한 layer
-- view가 jsp 인지, react 인지, app 인지, native GUI인지, CLI 인지는 여기서 결정한다. (다음 layer로 view에 따라 달라지는 specific한 내용을 전달하지 않는다.)
-- UI 변경 될 때 같이 변경되어야만 하는 대상은 대체로 presentation layer에 속할 확률이 크다.
-- Spring MVC Architecture에서는 View + Controller 로 정의할 수 있다.
-
-> Controller가 Presentation layer라는 이유
-> 1. Presentation은 Controller와 View 두 가지로 분리할 수 있다고 말하고 있다.
-> 2. 때때로 View에서 수행하지 못하는 Presentation 로직을 처리하기 위해서라도 Controller는 Presentation layer에 있는 것이 맞다고 봄.
-> 3. 애초에 MVC 자체가 Presentation code와 나머지 code를 어떻게 분리할것이냐에 대한 패턴이기도 함.
-> 4. UI를 Native GUI로 변경하거나, 앱으로 변경한다고 가정했을 때 Controller가 아예 제거되거나, 변경이 발생해야 함.
-> 5. 그리고 UI가 jsp라고 생각해보면, 어떤 jsp page에 결과를 전달할 것인지 선택하는 역할도 맡고 있다.
-
-#### Service layer
-- Domain Model을 묶어서 이 소프트웨어에서 사용 가능한 핵심 작업 집합을 설정하는 계층
-   - 이 소프트웨어가 수행해야 하는 작업은 무엇인가?
-   - 이 소프트웨어에 내릴 수 있는 명령은 무엇인가?
-- 보통 도메인 모델의 비즈니스 로직 하나를 호출하는 것 만으로는 복잡한 작업을 처리할 수 없음.
-- [도메인 모델 여러개를 불러와 요청을 가공하고, 비즈니스 로직을 호출하고, 응답을 조정해서 또 다른 비즈니스 로직을 호출] 이런 작업을 해주는 상위 layer가 있어야 함.
-- 여러 비즈니스 로직들을 의미있는 수준으로 묶어 제공하는게 Service layer의 역할
-- FE, Gateway 등 다양한 엔드포인트로부터 작업 요청을 받는 상황을 가정해 보면. 각 엔드포인트의 종류와 목적이 다르더라도, 공통적으로 사용하는 작업이 있다면 service layer에서 처리하는 것이 적절할 수 있음. (본질적으로 그 작업이 service에 들어가는게 맞느냐를 먼저 따져야 하지만, 이게 모호한 경우가 있다.)
-- 결국 가장 핵심에 가까운 API를 제공하는 계층이 Service layer라고 볼 수 있음.
-- Controller가 그래보이겠지만, 이건 UI layer에 가깝다.
-   - 요청이 UI를 통해 들어온거라면 Controller를 거치겠지만, 다른 경로로 들어왔다면? 내부 API 호출이라면? Controller를 거치지 않거나 다른 layer를 통해서 Service layer에 접근할 수도 있기 때문에...
-
-### presentation layer에 들어갈 대상과 service layer에 들어갈 대상을 구분하는 기준?
-- FE, Gateway 등 다양한 엔드포인트로부터 작업 요청을 받는 상황에서 각 엔드포인트의 종류와 목적이 다르더라도, 공통적으로 사용하는 작업이 있다면 service layer에서 처리하는 것이 적절, 즉 UI에 종속적인 로직인지, 아니면 그 소프트웨어의 핵심 api 로직인지 여부.
-- Service 에 cache적용 시 어떻게 나누는게 Performance 향상에 좋을지 고려.
-- Commit, rollback은 Service 단위이므로 Transaction 을 어떻게 분리할지 고려
 

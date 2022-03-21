@@ -156,42 +156,68 @@ https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
 
 ## 6. Docker MSSQL 설치 
 ### 6-1. Docker MSSQL - pull
-> docker pull mcr.microsoft.com/mssql/server:2019-latest
+```
+docker pull mcr.microsoft.com/mssql/server:2019-latest
+```
  
 ### 6-2. Docker MSSQL 설치 - run
-> docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=m2makstp!' -p 11433:1433 --name m2m-mssql -d mcr.microsoft.com/mssql/server:2019-latest
+
+```
+docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=m2makstp!' -p 11433:1433 --name m2m-mssql -d mcr.microsoft.com/mssql/server:2019-latest
+```
 
 ### 6-3. SA 암호 변경
-> docker exec -it m2m-mssql /opt/mssql-tools/bin/sqlcmd -S > localhost -U SA -P 'm2makstp!' -Q 'ALTER LOGIN SA WITH PASSWORD="m2makstp!"'
+
+```
+docker exec -it m2m-mssql /opt/mssql-tools/bin/sqlcmd -S > localhost -U SA -P 'm2makstp!' -Q 'ALTER LOGIN SA WITH PASSWORD="m2makstp!"'
+```
  
 ### 6-4. Container 진입
-> docker exec -it m2m-mssql "bash"
+
+```
+docker exec -it m2m-mssql "bash"
+```
  
 ### 6-5. MSSQL 접속
-> /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "m2makstp!"
- 
+
+```
+/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "m2makstp!"
+```
+
 ### 6-6. DATABASE 생성 및 사용자 계정 생성, 권한 부여 등 
 1. DB 생성
-> 1> CREATE DATABASE m2mDemoDB
-> 2> GO
+```
+1> CREATE DATABASE m2mDemoDB
+2> GO
+```
 
 2. DB설정
-> 1> USE m2mDemoDB
-> 2> GO
+```
+1> USE m2mDemoDB
+2> GO
+```
 
 3. 사용자 계정 생성
-> 1> CREATE LOGIN m2mDev WITH PASSWORD='m2mDev!@'
-> 2> GO
->
-> 1> CREATE USER m2mDev FOR LOGIN m2mDev;
-> 2> GO  
- 
+```
+1> CREATE LOGIN m2mDev WITH PASSWORD='m2mDev!@'
+2> GO
+```
+
+```
+1> CREATE USER m2mDev FOR LOGIN m2mDev;
+2> GO  
+```
+
 4. 계정 권한 할당
-> 1> exec sp_addrolemember 'db_owner', 'm2mDev';
-> 2> GO  
-> 
-> 1> exec sp_defaultdb @loginame='m2mDev', @defdb='m2mDemoDB' 
-> 2> GO 
+```
+1> exec sp_addrolemember 'db_owner', 'm2mDev';
+2> GO  
+```
+
+```
+1> exec sp_defaultdb @loginame='m2mDev', @defdb='m2mDemoDB' 
+2> GO 
+```
 
 ```
 PS C:\WINDOWS\system32> docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=m2makstp!' -p 11433:1433 --name m2m-mssql -d mcr.microsoft.com/mssql/server:2019-latest
@@ -231,27 +257,37 @@ https://docs.microsoft.com/ko-kr/sql/ssms/download-sql-server-management-studio-
   - password : m2mDev!@
 
 ### 7-3. 테스트용 테이블생성 
-> CREATE TABLE members (
->     MEMBER_NO INT IDENTITY (1, 1) NOT NULL
->   , MEMBER_ID NVARCHAR(20) NOT NULL
->   , FIRST_NAME NVARCHAR(40) NOT NULL
->   , LAST_NAME NVARCHAR(40) NOT NULL
->   , ADDRESS NVARCHAR(100) NULL
->   , CITY NVARCHAR(40) NULL
->   , STATE NVARCHAR(40) NULL
->   , PHONE NVARCHAR(40) NULL
->   , USE_YN NVARCHAR(2) DEFAULT 'N' NULL
->   , FIR_RG_DTM DATETIME DEFAULT(GETDATE())
->   , FIR_RG_ID NVARCHAR(20) NULL
->   CONSTRAINT PK_members PRIMARY KEY(MEMBER_NO)
-> )
-> 
-> GRANT SELECT, INSERT, DELETE, UPDATE ON members TO m2mDev;
-> 
-> INSERT INTO dbo.members (MEMBER_ID, FIRST_NAME, LAST_NAME, ADDRESS, CITY, STATE, PHONE, USE_YN, FIR_RG_DTM, FIR_RG_ID) VALUES ('100001', 'FNAME1', 'LNAME_TESTER01', 'AA 1-1-1', 'Seoul', 'GW', '01011112222', null, GETDATE(), 'SYS_REG');
-> INSERT INTO dbo.members (MEMBER_ID, FIRST_NAME, LAST_NAME, ADDRESS, CITY, STATE, PHONE, USE_YN, FIR_RG_DTM, FIR_RG_ID) VALUES ('100002', 'FNAME2', 'LNAME_TESTER02', 'AA 1-1-2', 'Seoul', 'GW', '01011113333', null, GETDATE(), 'SYS_REG');
-> INSERT INTO dbo.members (MEMBER_ID, FIRST_NAME, LAST_NAME, ADDRESS, CITY, STATE, PHONE, USE_YN, FIR_RG_DTM, FIR_RG_ID) VALUES ('100003', 'FNAME3', 'LNAME_TESTER03', 'AA 1-1-3', 'Seoul', 'GW', '01011114444', null, GETDATE(), 'SYS_REG');
-> GO
+```SQL
+ CREATE TABLE members (
+     MEMBER_NO INT IDENTITY (1, 1) NOT NULL
+   , MEMBER_ID NVARCHAR(20) NOT NULL
+   , FIRST_NAME NVARCHAR(40) NOT NULL
+   , LAST_NAME NVARCHAR(40) NOT NULL
+   , ADDRESS NVARCHAR(100) NULL
+   , CITY NVARCHAR(40) NULL
+   , STATE NVARCHAR(40) NULL
+   , PHONE NVARCHAR(40) NULL
+   , USE_YN NVARCHAR(2) DEFAULT 'N' NULL
+   , FIR_RG_DTM DATETIME DEFAULT(GETDATE())
+   , FIR_RG_ID NVARCHAR(20) NULL
+   CONSTRAINT PK_members PRIMARY KEY(MEMBER_NO)
+ )
+; 
+ 
+GRANT SELECT, INSERT, DELETE, UPDATE ON members TO m2mDev
+;
+ 
+INSERT INTO dbo.members (MEMBER_ID, FIRST_NAME, LAST_NAME, ADDRESS, CITY, STATE, PHONE, USE_YN, FIR_RG_DTM, FIR_RG_ID) VALUES ('100001', 'FNAME1', 'LNAME_TESTER01', 'AA 1-1-1', 'Seoul', 'GW', '01011112222', null, GETDATE(), 'SYS_REG')
+;
+
+INSERT INTO dbo.members (MEMBER_ID, FIRST_NAME, LAST_NAME, ADDRESS, CITY, STATE, PHONE, USE_YN, FIR_RG_DTM, FIR_RG_ID) VALUES ('100002', 'FNAME2', 'LNAME_TESTER02', 'AA 1-1-2', 'Seoul', 'GW', '01011113333', null, GETDATE(), 'SYS_REG')
+;
+
+INSERT INTO dbo.members (MEMBER_ID, FIRST_NAME, LAST_NAME, ADDRESS, CITY, STATE, PHONE, USE_YN, FIR_RG_DTM, FIR_RG_ID) VALUES ('100003', 'FNAME3', 'LNAME_TESTER03', 'AA 1-1-3', 'Seoul', 'GW', '01011114444', null, GETDATE(), 'SYS_REG')
+;
+
+GO
+```
 
 ## REDIS 설치(feat. Docker)
 ### 레디스 이미지 받아오기
@@ -280,6 +316,7 @@ https://docs.microsoft.com/ko-kr/sql/ssms/download-sql-server-management-studio-
 
 ### Docker의 redis-cli로 접속하기
 > docker run -it --link myredis:redis --rm redis redis-cli -h redis -p 6379
+>
 > redis:6379> set key value
 > OK
 > redis:6379> get key
