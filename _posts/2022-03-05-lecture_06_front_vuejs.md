@@ -1,12 +1,12 @@
 ---
 layout: single
-title:  "[Lecture] - vueJS 설치 및 BackEnd 연계"
+title:  "[vusJS] - vueJS 설치 및 BackEnd 연계"
 excerpt: "Windows환경 VueJS 설치 및 BackEnd 연계방법"
 
 categories:
-  - Lecture
+  - vusJS
 tags:
-  - [Lecture, Java, Servlet]
+  - [vusJS, vusJS, vusJS]
 
 toc: true
 toc_sticky: true
@@ -56,54 +56,17 @@ PS C:\09_BLOG> npm -v
 ### 1-4. Vue CLI 설치
 - Vue CLI의 설치를 위해서 먼저 터미널 혹은 CMD에 설치 명령어를 입력한다.
 
-> $ npm install vue-cli -g
-
-> npm WARN deprecated har-validator@5.1.5: this library is no longer supported
-> npm WARN deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
-> npm WARN deprecated request@2.88.2: request has been deprecated, see https://github.com/request/request/issues/3142
-> npm WARN deprecated coffee-script@1.12.7: CoffeeScript on NPM has moved to "coffeescript" (no hyphen)
-> npm WARN deprecated vue-cli@2.9.6: This package has been deprecated in favour of @vue/cli
+>
+> $ npm install vue-cli -g 
 > 
-> added 245 packages, and audited 246 packages in 9s
-> 
-> 11 packages are looking for funding
->   run `npm fund` for details
-> 
-> 4 moderate severity vulnerabilities
-> 
-> To address all issues (including breaking changes), run:
->   npm audit fix --force
-> 
-> Run `npm audit` for details.
->  
-> 
-> PS C:\09_BLOG> npm install vue-cli -g
-> npm WARN deprecated har-validator@5.1.5: this library is no longer supported
-> 142
-> npm WARN deprecated coffee-script@1.12.7: CoffeeScript on NPM has moved to "coffeescript" (no hyphen)
-> npm WARN deprecated vue-cli@2.9.6: This package has been deprecated in favour of @vue/cli
-> 
-> added 245 packages, and audited 246 packages in 9s
-> 
-> 11 packages are looking for funding
->   run `npm fund` for details
-> 
-> 4 moderate severity vulnerabilities
-> 
-> To address all issues (including breaking changes), run:
->   npm audit fix --force
-> 
-> Run `npm audit` for details.
-> PS C:\09_BLOG>
-> PS C:\09_BLOG> vue -V
+> $ vue -V
 > vue : 이 시스템에서 스크립트를 실행할 수 없으므로 C:\Users\m2m-129\AppData\Roaming\npm\vue.ps1 파일을 로드할 수
 >  없습니다. 자세한 내용은 about_Execution_Policies(https://go.microsoft.com/fwlink/?LinkID=135170)를 참조하십시
 > + ~~~
 >     + CategoryInfo          : 보안 오류: (:) [], PSSecurityException
 >     + FullyQualifiedErrorId : UnauthorizedAccess
-> PS C:\09_BLOG>
 > 
-> PS C:\09_BLOG> vue.cmd create vue-cli
+> $ vue.cmd create vue-cli
 > 
 >   vue create is a Vue CLI 3 only command and you are using Vue CLI 2.9.6.
 >   You may want to run the following to upgrade to Vue CLI 3:
@@ -111,16 +74,25 @@ PS C:\09_BLOG> npm -v
 >   npm uninstall -g vue-cli
 >   npm install -g @vue/cli
 > 
-> PS C:\09_BLOG> get-executionpolicy
+> $ get-executionpolicy
+>
 > Restricted
-> PS C:\09_BLOG> set-executionpolicy remotesigned
-> PS C:\09_BLOG> get-executionpolicy
+>
+> $ set-executionpolicy remotesigned
+>
+> $ get-executionpolicy
+>
 > RemoteSigned
-> PS C:\09_BLOG> vue --version
+>
+> $ vue --version
+>
 > @vue/cli 5.0.3
-> PS C:\09_BLOG> vue -V
+>
+> $ vue -V
+>
 > @vue/cli 5.0.3  
-> PS C:\09_BLOG> vue init webpack m2mVueJSDemo
+>
+> $ vue init webpack m2mVueJSDemo
 > 
 > ? Project name m2m-vuejs-demo
 > ? Project description m2mglobal vueJS Demo
@@ -139,61 +111,39 @@ PS C:\09_BLOG> npm -v
 > # Installing project dependencies ...
 > # ========================
 > 
-> npm WARN deprecated source-map-url@0.4.1: See https://github.com/lydell/source-map-url#deprecated
-> npm WARN deprecated urix@0.1.0: Please see https://github.com/lydell/urix#deprecated
-> npm WARN deprecated source-map-resolve@0.5.3: See https://github.com/lydell/source-map-resolve#deprecated
-> npm WARN deprecated resolve-url@0.2.1: https://github.com/lydell/resolve-url#deprecated
-> npm WARN deprecated flatten@1.0.3: flatten is deprecated in favor of utility frameworks such as lodash.
-> npm WARN deprecated circular-json@0.3.3: CircularJSON is in maintenance only, flatted is its successor.
-> npm WARN deprecated eslint-loader@1.9.0: This loader has been deprecated. Please use eslint-webpack-plugin
-> npm WARN deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
-> npm WARN deprecated querystring@0.2.0: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
-> npm WARN deprecated browserslist@2.11.3: Browserslist 2 could fail on reading Browserslist >3.0 config used in other tools.
-> npm WARN deprecated browserslist@1.7.7: Browserslist 2 could fail on reading Browserslist >3.0 config used in other tools.
-> npm WARN deprecated extract-text-webpack-plugin@3.0.2: Deprecated. Please use https://github.com/webpack-contrib/mini-css-extract-plugin
-> npm WARN deprecated browserslist@1.7.7: Browserslist 2 could fail on reading Browserslist >3.0 config used in other tools.
-> npm WARN deprecated html-webpack-plugin@2.30.1: out of support
-> npm WARN deprecated chokidar@2.1.8: Chokidar 2 does not receive security updates since 2019. Upgrade to chokidar 3 with 15x fewer dependencies
-> npm WARN deprecated browserslist@1.7.7: Browserslist 2 could fail on reading Browserslist >3.0 config used in other tools.
-> npm WARN deprecated babel-eslint@8.2.6: babel-eslint is now @babel/eslint-parser. This package will no longer receive updates.
-> npm WARN deprecated uglify-es@3.3.9: support for ECMAScript is superseded by `uglify-js` as of v3.13.0
-> npm WARN deprecated chokidar@2.1.8: Chokidar 2 does not receive security updates since 2019. Upgrade to chokidar 3 with 15x fewer dependencies
-> npm WARN deprecated bfj-node4@5.3.1: Switch to the `bfj` package for fixes and new features!
-> npm WARN deprecated svgo@0.7.2: This SVGO version is no longer supported. Upgrade to v2.x.x.
-> npm WARN deprecated svgo@1.3.2: This SVGO version is no longer supported. Upgrade to v2.x.x.
-> npm WARN deprecated core-js@2.6.12: core-js@<3.4 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Please, upgrade your dependencies to the actual version of core-js.
-> 
-> added 1437 packages, and audited 1438 packages in 38s
-> 
-> 64 packages are looking for funding
->   run `npm fund` for details
-> 
-> 84 vulnerabilities (68 moderate, 16 high)
-> 
-> To address issues that do not require attention, run:
->   npm audit fix
-> 
-> To address all issues (including breaking changes), run:
->   npm audit fix --force
-> 
-> Run `npm audit` for details.
-> 
-> 
-> Running eslint --fix to comply with chosen preset rules...
-> # ========================
-> 
-> 
-> > m2m-vuejs-demo@1.0.0 lint
-> > eslint --ext .js,.vue src "--fix"
-> 
-> 
 > # Project initialization finished!
 > # ========================
 > 
 > To get started:
 > 
 >   cd m2mVueJSDemo
+>
 >   npm run dev
 > 
+
+### vueJS 실행시 node-sass 관련 버전 오류발생의 경우
+
+> $ npm install
+>
+> $ npm run serve
+>
+> $ npm uninstall node-sass
+>
+> $ npm i -D sass
+>
+> $ npm run serve
+>
+
+### Docker 에 설치한 MS SQL 백업파일적용방법
+
+$ docker exec -it m2m-mssql "bash"
+mssql@3cf7ac76cf3c:/$ /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "m2makstp!"
+
+1> BACKUP DATABASE vuetest TO DISK = N'/var/opt/mssql/data/DB.bak'
+2> GO
+
+$ docker cp C:\00_WORK\01_LECTURE\Download\vuetest_20220322.bak 3cf7ac76cf3c:/var/opt/mssql/data
+
+$ BACKUP DATABASE vuetest TO DISK = N'3cf7ac76cf3c:/var/opt/mssql/data'
 
 
