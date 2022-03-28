@@ -142,6 +142,7 @@ https://wslstorestorage.blob.core.windows.net/wslblob/wsl_update_x64.msi
 
 - WSL2를 기본 버전으로 설정
 > PS C:\Windows\system32> wsl --set-default-version 2
+>
 > WSL 2와의 주요 차이점에 대한 자세한 내용은 https://aka.ms/wsl2를 참조하세요
 > 작업을 완료했습니다.
 
@@ -327,6 +328,10 @@ GO
 - exec 를 써서 redis 서버가 실행중인 서버에 접근 (컨테이너 안으로 들어와서 접근가능)
 - redis-cli 로 접근 불가X (컨테이너 밖에 있기 때문에....) 
 - -it 옵션 : -it 를 붙여줘야 명령어를 실행 한 후 계속 명령어를 적을 수 있다.
+
+
+docker ps
+
 
 > docker exec -it bf94cb09bcb1 redis-cli -p 6379
 >
