@@ -437,11 +437,9 @@ getNameFunction() 메소드로 얻어진 함수는 "Dave"라는 문자열을 리
 
               @Override
               public String get() {
-
                   return this.name;
               }
           };
-
           return getNamer;
       }
   }
@@ -456,19 +454,178 @@ getNameFunction() 메소드로 얻어진 함수는 "Dave"라는 문자열을 리
     private String name = "Dave";
 
         public Supplier<String> getNameFunction() {
-
             Supplier<String> getNamer = new Supplier<String>() {
-
+              
                 @Override
                 public String get() {
-
                     return Example.this.name;
                 }
             };
-
             return getNamer;
         }
   }
 ```
-  
+
 Supplier<String> 함수를 구현한 익명 클래스에서의 this는 익명 클래스 자체를 의미하기 때문에 name이라는 멤버가 존재하지 않는 것이다. 익명 클래스가 정의된 클래스의 멤버를 접근하려면 Example.this 처럼 클래스 이름을 주고, 그 뒤에 this를 붙여줘야 한다.
+
+
+# 사용예제
+## ■ 자바의 람다식
+- ✓ 람다식(lambda)
+  - 자바에서는 함수를 메서드라고 부르고 메서드의 형태로 존재
+  - 자바 람다식의 구조
+
+   . (argument) -> { body } 구문을 사용하여 작성
+
+- 자바의 람다식 구조
+  - ＠매개변수 리스트
+    - 함수에 전달되는 매개변수들이 나열
+    - 매개변수를 생략하면 컴파일러가 추론 기능을 이용하여 알아서 처리
+    - 매개변수가 하나인 경우 괄호를 생략 가능
+
+  - @애로우 토큰
+    - 매개변수 리스트와 함수 코드를 분리시키는 역할
+    - "->" 기호: 매개변수들을 전달하여 함수 바디 { }에 작성된 코드를 실행
+
+  - @함수 바디
+    - 함수의 코드
+    - 중괄호 ({ })로 둘러싸는 것이 일반적이지만, 한 문장인 경우 중괄호({ })를 생략 가능
+    - 한 문장이더라도 return 문이 있으면 반드시 중괄호로 둘러싸야함
+
+
+- 자바에서 람다식은 함수형 인터페이스에 선언된 추상 메서드를 구현하는 방식으로 작성
+- 함수형 인터페이스(functional interface) 작성
+
+   . 추상 메서드 하나만 있는 인터페이스
+```java   
+  @FunctionalInterface
+  interface MyFunction { // 함수형 인터페이스
+      int calc(int x, int y); // 추상 메소드
+  }
+```
+
+- @FunctionalInterface
+  컴파일러에게 함수형 인터페이스임을 알리는 annotation
+ => 컴파일러에게 인터페이스가 추상 메서드가 1개만 있는 함수형 인터페이스인지 확인하도록 하여,
+      처음부터 잘못된 인터페이스 작성을 막는 장점
+
+###### 인자 x, y를 받아들여 x+y를 리턴하는 람다식 만들기
+```java   
+  package practice;
+  
+  //인자 x, y를 받아들여 x+y를 리턴하는 람다식 만들기
+  //함수형 인터페이스
+  @FunctionalInterface
+  interface MyFunction {
+      int calc(int x, int y);
+  }
+  
+  public class LambdaEx {
+      public LambdaEx() {
+          MyFunction f1 = (x, y) -> {return x+y;};
+          System.out.println("f1의 결과: " + f1.calc(22, 100));
+          
+          MyFunction f2 = (x, y) -> {return x-y;};
+          System.out.println("f2의 결과: " + f2.calc(99, 9));
+      }
+      public static void main(String[] args) {
+          new LambdaEx();
+      }
+  }
+```
+
+###### 인자 x를 받아들여 제곱을 리턴하는 람다식 만들기
+```java
+  package practice;
+  
+  //인자 x를 받아들여 제곱을 리턴하는 람다식 만들기
+  //함수형 인터페이스
+  @FunctionalInterface
+  interface Myfunction2 {
+      int calc(int x);
+  }
+
+  public class LambdaEx2 {   
+      public LambdaEx2() {
+          Myfunction2 fsquare = (x) -> {return x*x;};
+          System.out.println("fsquare의 결과: "+fsquare.calc(5));
+      }
+
+      public static void main(String[] args) {
+          new LambdaEx2();
+      }
+  }
+```   
+
+###### 매개변수가 없는 람다식 만들기
+```java
+  package practice;
+
+  //매개변수가 없는 람다식 만들기
+  //함수형 인터페이스
+  @FunctionalInterface
+  interface MyFunction3 {
+      void print();
+  }
+  public class LambdaEx3 {
+      public LambdaEx3() {
+          MyFunction3 fprint = () -> {System.out.println("Yoon's Dev");};
+          fprint.print();
+      }
+      public static void main(String[] args) {
+          new LambdaEx3();
+      }
+  }
+```  
+
+###### 메서드의 인자로 람다식 전달
+```java
+  package practice;
+  
+  //메소드의 인자로 람다식 전달
+  //함수형 인터페이스
+  @FunctionalInterface
+  interface MyFunction4 {
+      int calc(int x, int y);
+  }
+  
+  public class LambdaEx4 {
+      //메소드 정의 (메소드의 인자로 람다식 전달)
+      static void printMultiply(int x, int y, MyFunction4 f) {
+          System.out.println("실행 결과: " + f.calc(x, y));
+      }
+      public LambdaEx4() {
+          printMultiply(100, 100, (x, y) -> {return x * y;});
+      }
+      public static void main(String[] args) {
+          new LambdaEx4();
+      }
+  }
+```
+
+###### 제네릭을 이용한 함수형 인터페이스
+```java   
+  package practice;
+  
+  //제네릭을 이용한 함수형 인터페이스
+  @FunctionalInterface
+  interface MyFunction5<T>{
+    void println(T x);
+  }
+  
+  public class lambdaEx5 {
+      public lambdaEx5() {
+        MyFunction5<String> f1 = x -> {System.out.println(x.toString());};
+        f1.println("String Generic 사용 람다식");
+        f1.println("Yoon's Dev");
+          
+        MyFunction5<Integer> f2 = x -> {System.out.println(x.toString());};
+        f2.println(Integer.valueOf(100));
+      }
+
+      public static void main(String[] args) {
+        new lambdaEx5();
+      }
+  }
+```
+ 
