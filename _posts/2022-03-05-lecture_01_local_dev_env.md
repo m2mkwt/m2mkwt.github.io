@@ -312,11 +312,11 @@ GO
 > docker network ls
 
 ### Redis 실행(서버)
-> docker run -d --name myredis -p 6379:6379 --network redis-net redis 
-> ( docker run --name myredis -d -p 6379:6379 redis )
+> docker run -d --name m2m-redis -p 6379:6379 --network redis-net redis 
+> ( docker run --name m2m-redis -d -p 6379:6379 redis )
 
 ### Docker의 redis-cli로 접속하기
-> docker run -it --link myredis:redis --rm redis redis-cli -h redis -p 6379
+> docker run -it --link m2m-redis:redis --net redis-net --rm redis redis-cli -h redis -p 6379
 >
 > redis:6379> set key value
 > OK
