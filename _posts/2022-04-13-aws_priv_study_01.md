@@ -414,5 +414,10 @@ vi /var/lib/jenkins/secrets/initialAdminPassword
 
 
 
-
+Gitlab runner 란?, AWS EC2 인스턴스 Gitlab Runner 등록하기
 https://nearhome.tistory.com/140
+
+
+젠킨스 파이프라인을 활용한 배포 자동화
+https://velog.io/@sihyung92/%EC%9A%B0%EC%A0%A0%EA%B5%AC2%ED%8E%B8-%EC%A0%A0%ED%82%A8%EC%8A%A4-%ED%8C%8C%EC%9D%B4%ED%94%84%EB%9D%BC%EC%9D%B8%EC%9D%84-%ED%99%9C%EC%9A%A9%ED%95%9C-%EB%B0%B0%ED%8F%AC-%EC%9E%90%EB%8F%99%ED%99%94
+
