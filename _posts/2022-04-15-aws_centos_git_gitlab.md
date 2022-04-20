@@ -51,16 +51,19 @@ https://about.gitlab.com/installation/#centos
 > $ sudo yum install postfix 
 > $ sudo systemctl enable postfix 
 > $ sudo systemctl start postfix 
-> $ sudo firewall-cmd --permanent --add-service=http 
-
-- 오류시 :
-firewalld명령어를 사용하는데 최소설치를 했을 때에는 자동으로 설치 되지 않기 때문에 firewalld 명령어를 사용 할 경우 firewall-cmd: command not found라는 오류 메시지가 발생. 이 오류 메시지는 간단하게 설치만 해주면 해결이되는데, yum을 통해서 설치.
 
 > $ sudo yum install firewalld
 > $ sudo systemctl unmask firewalld
 > $ sudo systemctl enable firewalld
 > $ sudo systemctl start firewalld
+
+> $ sudo firewall-cmd --permanent --add-service=http 
+> $ sudo firewall-cmd --permanent --add-service=https
+
 > 참고) $ sudo systemctl reload firewalld
+
+- firewalld명령어를 사용하는데 최소설치를 했을 때에는 자동으로 설치 되지 않기 때문에 firewalld 명령어를 사용 할 경우 firewall-cmd: command not found라는 오류 메시지가 발생. 이 오류 메시지는 간단하게 설치만 해주면 해결이되는데, yum을 통해서 설치.
+
 
 설치된 패키지 확인은 아래의 명령어로 확인 하시면 됩니다.
 
