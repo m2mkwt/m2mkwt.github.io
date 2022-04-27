@@ -78,11 +78,27 @@ javac 11.0.2
  - 리스타트 후 설정계속
  - D2코딩폰트 : https://github.com/naver/d2codingfont
 
+ #### Code Template, Formatter 적용
+ - git에서 프로젝트 파일을 가져왔을때 소스 Root 또는 README 파일에 Code Template, Formatter 파일에 대한 기술이 있을 경우 해당 파일적용
+ - Code Template 적용 : [Windows > Preferences > Java > Code Style > Code Templates]
+ - Import 버튼 클릭 후 *****code-template-file.xml 선택.
+ - Class 주석은 Class 윗부분에 커서를 위치시킨 후 [Shift + Alt + J] 를, Method 주석은 method안에 커서를 위치시킨 후 [Shift + Alt + J]
+
+ - Formatter 적용 : [Windows > Preferences > Java > Code Style > Formatter]
+ - Import 버튼 클릭 후 *****formatter-file.xml 선택.
+ - 파일에서 [ctrl + a](영역선택), [ctrl + shift + f] 으로 포메팅실행
+
 ## 3. lombok설치
 1. https://projectlombok.org/
 2. Download 1.18.22
 
+
+
+
+# 이하 설정은 개인로컬환경 설정에 필요없을 경우 굳이 안해도 됨.
+
 ## 4. GRADLE 설치
+- 폐쇄망 개발환경 등에서만 필요
 
 ## 5. DOCKER 설치
 도커는 컨테이너 기반의 오픈소스 가상화 플랫폼 이다.
