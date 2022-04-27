@@ -66,6 +66,7 @@ javac 11.0.2
 - STS 실행, 실행 시 Workspaces 지정
 
 ### 2-3. STS 설정
+
  - Eclipse Market 에서 web Developer 검색
    > Eclipse Enterprise Java~~~ 설치
  - Eclipse Market 에서 sonarlint 검색
@@ -76,9 +77,13 @@ javac 11.0.2
    > CSS, HTML, JSP => UTF-8 
  - JAVA - Installed JREs 에서 설치한 JDK 설정
  - 리스타트 후 설정계속
- - D2코딩폰트 : https://github.com/naver/d2codingfont
+
+ >
+ > D2코딩폰트 : https://github.com/naver/d2codingfont
+ >
 
  #### Code Template, Formatter 적용
+
  - git에서 프로젝트 파일을 가져왔을때 소스 Root 또는 README 파일에 Code Template, Formatter 파일에 대한 기술이 있을 경우 해당 파일적용
  - Code Template 적용 : [Windows > Preferences > Java > Code Style > Code Templates]
  - Import 버튼 클릭 후 *****code-template-file.xml 선택.
